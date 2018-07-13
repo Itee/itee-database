@@ -1,0 +1,21 @@
+{
+  "name": "itee-database",
+  "version": "1.0.0",
+  "description": "The abstract database side of the Itee solution for 3d web content, this package is design to work with an Itee server.",
+  "main": "builds/itee-database.cjs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "itee",
+    "database",
+    "library"
+  ],
+  "author": "Itee",
+  "license": "MIT",
+  "dependencies": {
+    "i-return": "^1.0.3",
+    "itee-utils": "^1.0.1",
+    "itee-validators": "^2.0.1"
+  }
+}
