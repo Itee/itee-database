@@ -191,7 +191,7 @@ gulp.task( 'build', ( done ) => {
         'use strict'
 
         let defaultOptions = {
-            fileName:     'itee-utils',
+            fileName:     'itee-database',
             inputPath:    path.join( __dirname, 'sources' ),
             outputPath:   path.join( __dirname, 'builds' ),
             environments: [ 'development', 'production' ],
