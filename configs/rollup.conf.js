@@ -23,6 +23,7 @@ const nodeResolve = require( 'rollup-plugin-node-resolve' )
 const commonJs    = require( 'rollup-plugin-commonjs' )
 const uglify      = require( 'rollup-plugin-uglify-es' )
 const strip       = require( 'rollup-plugin-strip' )
+const builtins    = require( 'rollup-plugin-node-builtins' )
 
 /**
  * Will create an appropriate configuration object for rollup, related to the given arguments.
@@ -38,7 +39,7 @@ const strip       = require( 'rollup-plugin-strip' )
  */
 function CreateRollupConfiguration ( fileName, inputPath, outputPath, format, onProduction, wantSourceMap ) {
 
-    const _format = (format === 'es') ? 'esm' : format
+    const _format        = (format === 'es') ? 'esm' : format
     const _onProduction  = onProduction || false
     const _wantSourceMap = wantSourceMap || false
 
@@ -53,10 +54,11 @@ function CreateRollupConfiguration ( fileName, inputPath, outputPath, format, on
             input:    inputFilePath,
             external: [],
             plugins:  [
+                nodeResolve(),
                 commonJs( {
                     include: 'node_modules/**'
                 } ),
-                nodeResolve(),
+                builtins(),
                 onProduction && strip(),
                 onProduction && uglify()
             ],
