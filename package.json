@@ -21,7 +21,6 @@
   "license": "MIT",
   "dependencies": {
     "i-return": "^1.0.3",
-    "itee-utils": "^1.0.1",
     "itee-validators": "^2.0.1"
   },
   "devDependencies": {
