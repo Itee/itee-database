@@ -10,9 +10,7 @@ import {
     isNullOrUndefined,
     isDefined,
     isArray,
-    isEmptyArray,
     isNotEmptyArray,
-    isObject,
     isNotEmptyObject
 } from 'itee-validators'
 
