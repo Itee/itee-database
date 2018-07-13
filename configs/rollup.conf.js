@@ -80,7 +80,7 @@ function CreateRollupConfiguration ( fileName, inputPath, outputPath, format, on
             // core options
             file:    outputFilePath,
             format:  format,
-            name:    'Itee.Utils',
+            name:    'Itee.Database',
             globals: {},
 
             // advanced options
