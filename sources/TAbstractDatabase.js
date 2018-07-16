@@ -102,7 +102,7 @@ class TAbstractDatabase {
         this._autoConnectionTimer = null
     }
 
-    close () {
+    close ( callback ) {
 
         console.error( 'TAbstractDatabase.close: Need to be reimplemented in inherited class !' )
 
