@@ -9,20 +9,18 @@
  */
 
 import path from 'path'
-import { extend } from 'itee-utils'
 
 class TAbstractDatabase {
 
-    constructor ( parameters ) {
+    constructor ( driver, plugins = [], autoReconnectTimeout = 10000 ) {
+
 
         this.routes = {}
 
-        this._dbDriver            = null
+        this._driver = driver
+        this._plugins = plugins
+        this._autoReconnectTimeout = autoReconnectTimeout
         this._autoConnectionTimer = null
-        this._parameters          = extend( {
-            autoReconnectTimeout: 10000,
-            plugins:              []
-        }, parameters )
 
         this.__init()
 
@@ -31,7 +29,7 @@ class TAbstractDatabase {
     __init () {
 
         const pluginsBasePath = path.join( __dirname, '..', 'node_modules' )
-        const pluginsNames    = this._parameters.plugins
+        const pluginsNames    = this._plugins
 
         for ( let index = 0, numberOfPlugins = pluginsNames.length ; index < numberOfPlugins ; index++ ) {
             const pluginPath = path.join( pluginsBasePath, pluginsNames[ index ] )
@@ -87,7 +85,7 @@ class TAbstractDatabase {
             return
         }
 
-        this._autoConnectionTimer = setInterval( this.connect.bind( this ), this._parameters.autoReconnectTimeout )
+        this._autoConnectionTimer = setInterval( this.connect.bind( this ), this._autoReconnectTimeout )
     }
 
     /**
