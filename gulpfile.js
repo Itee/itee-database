@@ -195,7 +195,7 @@ gulp.task( 'build', ( done ) => {
             inputPath:    path.join( __dirname, 'sources' ),
             outputPath:   path.join( __dirname, 'builds' ),
             environments: [ 'development', 'production' ],
-            formats:      [ 'amd', 'cjs', 'es', 'iife', 'umd' ],
+            formats:      [ 'cjs', 'umd' ],
             sourceMap:    false
         }
 

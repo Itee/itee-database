@@ -52,7 +52,10 @@ function CreateRollupConfiguration ( fileName, inputPath, outputPath, format, on
 
             // core options
             input:    inputFilePath,
-            external: [],
+            external: [
+                'path',
+                'fs'
+            ],
             plugins:  [
                 nodeResolve(),
                 commonJs( {
