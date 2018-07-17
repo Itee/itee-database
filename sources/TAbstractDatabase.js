@@ -9,6 +9,7 @@
  */
 
 import path from 'path'
+import { fileExistForPath } from 'itee-utils'
 
 class TAbstractDatabase {
 
@@ -32,7 +33,14 @@ class TAbstractDatabase {
         const pluginsNames    = this._plugins
 
         for ( let index = 0, numberOfPlugins = pluginsNames.length ; index < numberOfPlugins ; index++ ) {
+            const pluginName = pluginsNames[ index ]
             const pluginPath = path.join( pluginsBasePath, pluginsNames[ index ] )
+
+            if(!fileExistForPath(pluginPath)) {
+                console.error(`Unable to register plugin ${pluginName} the package doesn't seem to exist ! Skip it.`)
+                continue
+            }
+
             const plugin     = require( pluginPath )
             this.__registerPlugin( plugin )
         }
