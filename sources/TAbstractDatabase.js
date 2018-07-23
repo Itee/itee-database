@@ -26,8 +26,8 @@ class TAbstractDatabase {
 
     __init () {
 
+        // Register modules plugins
         const pluginsNames    = this._plugins
-
         for ( let index = 0, numberOfPlugins = pluginsNames.length ; index < numberOfPlugins ; index++ ) {
             const pluginName = pluginsNames[ index ]
             let plugin = undefined
@@ -54,6 +54,8 @@ class TAbstractDatabase {
 
     __registerPlugin ( plugin ) {
 
+        plugin.registerTo( this._driver )
+
         const routes = plugin.routes
         for ( let routeKey in routes ) {
 
@@ -65,14 +67,6 @@ class TAbstractDatabase {
             this.routes[ routeKey ] = routes[ routeKey ]
 
         }
-
-        this._registerPlugin( plugin )
-
-    }
-
-    _registerPlugin ( plugin ) {
-
-        console.error( 'TAbstractDatabase._registerPlugin: Need to be reimplemented in inherited class !' )
 
     }
 
