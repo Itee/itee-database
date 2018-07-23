@@ -54,18 +54,7 @@ class TAbstractDatabase {
     __registerPlugin ( plugin ) {
 
         plugin.registerTo( this._driver )
-
-        const routes = plugin.routes
-        for ( let routeKey in routes ) {
-
-            if ( this.routes[ routeKey ] ) {
-                console.warn( `Route controller for key ${routeKey} already exist, ignore it !` )
-                continue
-            }
-
-            this.routes[ routeKey ] = routes[ routeKey ]
-
-        }
+        this.routes = plugin.addRoutesTo( this.routes )
 
     }
 
