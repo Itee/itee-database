@@ -16,6 +16,29 @@ class TAbstractDatabasePlugin {
 
     }
 
+    registerTo( dbDriver ) {
+
+    }
+
+    addRoutesTo( routes ) {
+
+        let _routes = routes
+
+        for ( let routeKey in this.routes ) {
+
+            if ( _routes[ routeKey ] ) {
+                console.warn( `Route controller for key ${routeKey} already exist, ignore it !` )
+                continue
+            }
+
+            _routes[ routeKey ] = this.routes[ routeKey ]
+
+        }
+
+        return _routes
+
+    }
+
 }
 
 export { TAbstractDatabasePlugin }
