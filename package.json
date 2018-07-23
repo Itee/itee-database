@@ -1,6 +1,6 @@
 {
   "name": "itee-database",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "The abstract database side of the Itee solution for 3d web content, this package is design to work with an Itee server.",
   "main": "builds/itee-database.cjs.js",
   "scripts": {
