@@ -16,13 +16,12 @@ class TAbstractDatabase {
 
     constructor ( driver, plugins = [], autoReconnectTimeout = 10000 ) {
 
-
         this.routes = {};
 
-        this._driver = driver;
-        this._plugins = plugins;
+        this._driver               = driver;
+        this._plugins              = plugins;
         this._autoReconnectTimeout = autoReconnectTimeout;
-        this._autoConnectionTimer = null;
+        this._autoConnectionTimer  = null;
 
         this.__init();
 
@@ -31,15 +30,15 @@ class TAbstractDatabase {
     __init () {
 
         // Register modules plugins
-        const pluginsNames    = this._plugins;
+        const pluginsNames = this._plugins;
         for ( let index = 0, numberOfPlugins = pluginsNames.length ; index < numberOfPlugins ; index++ ) {
             const pluginName = pluginsNames[ index ];
-            let plugin = undefined;
+            let plugin       = undefined;
 
             try {
-                plugin     = require( pluginName );
-            } catch( error ) {
-                console.error(`Unable to register plugin ${pluginName} the package doesn't seem to exist ! Skip it.`);
+                plugin = require( pluginName );
+            } catch ( error ) {
+                console.error( `Unable to register plugin ${pluginName} the package doesn't seem to exist ! Skip it.` );
                 continue
             }
 
@@ -59,18 +58,7 @@ class TAbstractDatabase {
     __registerPlugin ( plugin ) {
 
         plugin.registerTo( this._driver );
-
-        const routes = plugin.routes;
-        for ( let routeKey in routes ) {
-
-            if ( this.routes[ routeKey ] ) {
-                console.warn( `Route controller for key ${routeKey} already exist, ignore it !` );
-                continue
-            }
-
-            this.routes[ routeKey ] = routes[ routeKey ];
-
-        }
+        this.routes = plugin.addRoutesTo( this.routes );
 
     }
 
@@ -132,6 +120,29 @@ class TAbstractDatabasePlugin {
     constructor ( parameters ) {
 
         this.routes = {};
+
+    }
+
+    registerTo( dbDriver ) {
+
+    }
+
+    addRoutesTo( routes ) {
+
+        let _routes = routes;
+
+        for ( let routeKey in this.routes ) {
+
+            if ( _routes[ routeKey ] ) {
+                console.warn( `Route controller for key ${routeKey} already exist, ignore it !` );
+                continue
+            }
+
+            _routes[ routeKey ] = this.routes[ routeKey ];
+
+        }
+
+        return _routes
 
     }
 
