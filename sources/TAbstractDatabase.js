@@ -8,9 +8,6 @@
  *
  */
 
-import path from 'path'
-import { fileExistForPath } from 'itee-utils'
-
 class TAbstractDatabase {
 
     constructor ( driver, plugins = [], autoReconnectTimeout = 10000 ) {
@@ -29,19 +26,19 @@ class TAbstractDatabase {
 
     __init () {
 
-        const pluginsBasePath = path.join( __dirname, '..', 'node_modules' )
+        // Register modules plugins
         const pluginsNames    = this._plugins
-
         for ( let index = 0, numberOfPlugins = pluginsNames.length ; index < numberOfPlugins ; index++ ) {
             const pluginName = pluginsNames[ index ]
-            const pluginPath = path.join( pluginsBasePath, pluginsNames[ index ] )
+            let plugin = undefined
 
-            if(!fileExistForPath(pluginPath)) {
+            try {
+                plugin     = require( pluginName )
+            } catch( error ) {
                 console.error(`Unable to register plugin ${pluginName} the package doesn't seem to exist ! Skip it.`)
                 continue
             }
 
-            const plugin     = require( pluginPath )
             this.__registerPlugin( plugin )
         }
 
@@ -57,6 +54,8 @@ class TAbstractDatabase {
 
     __registerPlugin ( plugin ) {
 
+        plugin.registerTo( this._driver )
+
         const routes = plugin.routes
         for ( let routeKey in routes ) {
 
@@ -68,14 +67,6 @@ class TAbstractDatabase {
             this.routes[ routeKey ] = routes[ routeKey ]
 
         }
-
-        this._registerPlugin( plugin )
-
-    }
-
-    _registerPlugin ( plugin ) {
-
-        console.error( 'TAbstractDatabase._registerPlugin: Need to be reimplemented in inherited class !' )
 
     }
 
