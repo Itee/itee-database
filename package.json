@@ -17,7 +17,7 @@
     "database",
     "library"
   ],
-  "author": "Itee",
+  "author": "Itee (Tristan VALCKE)",
   "license": "MIT",
   "dependencies": {
     "i-return": "^1.0.3",
