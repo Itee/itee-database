@@ -11,3 +11,4 @@
 export * from './TAbstractDatabase'
 export * from './TAbstractDatabasePlugin'
 export * from './TAbstractDataController'
+export * from './TAbstractFileConverter'
