@@ -102,7 +102,7 @@ class MemoryWriteStream extends Writable {
 
 ////////
 
-function FileToThreeBase () {
+function TAbstractFileConverter () {
     'use strict'
 
     this.dumpType = 'arraybuffer' // 'string', 'json'
@@ -113,9 +113,9 @@ function FileToThreeBase () {
 
 }
 
-FileToThreeBase.MAX_FILE_SIZE = 67108864
+TAbstractFileConverter.MAX_FILE_SIZE = 67108864
 
-FileToThreeBase.prototype.convert = function convert ( file, parameters, onSuccess, onProgress, onError ) {
+TAbstractFileConverter.prototype.convert = function convert ( file, parameters, onSuccess, onProgress, onError ) {
 
     this._filesQueue.push( {
         file,
@@ -131,7 +131,7 @@ FileToThreeBase.prototype.convert = function convert ( file, parameters, onSucce
 
 }
 
-FileToThreeBase.prototype._processQueue = function _processQueue () {
+TAbstractFileConverter.prototype._processQueue = function _processQueue () {
 
     if ( this._filesQueue.length === 0 ) {
 
@@ -194,7 +194,7 @@ FileToThreeBase.prototype._processQueue = function _processQueue () {
 
 }
 
-FileToThreeBase.prototype._dumpFileInMemoryAs = function ( dumpType, file, parameters, onSuccess, onProgress, onError ) {
+TAbstractFileConverter.prototype._dumpFileInMemoryAs = function ( dumpType, file, parameters, onSuccess, onProgress, onError ) {
     'use strict'
 
     let isOnError = false
@@ -255,16 +255,16 @@ FileToThreeBase.prototype._dumpFileInMemoryAs = function ( dumpType, file, param
 
 }
 
-FileToThreeBase.prototype._releaseMemory = function _releaseMemory () {
+TAbstractFileConverter.prototype._releaseMemory = function _releaseMemory () {
 
     this._fileData = null
 
 }
 
-FileToThreeBase.prototype._convert = function _convert ( parameters, onSuccess, onProgress, onError ) {
+TAbstractFileConverter.prototype._convert = function _convert ( parameters, onSuccess, onProgress, onError ) {
 
     console.error( '_convert: Need to be reimplemented in inherited class !' )
 
 }
 
-module.exports = FileToThreeBase
+module.exports = TAbstractFileConverter
