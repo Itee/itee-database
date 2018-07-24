@@ -8,8 +8,8 @@
  *
  */
 
-import { TAbstractDatabase } from './TAbstractDatabase'
-import { Mongoose as driver } from 'mongoose'
+const TAbstractDatabase = require( './TAbstractDatabase' )
+const driver            = require( 'mongoose' )
 
 class TMongoDBDatabase extends TAbstractDatabase {
 
@@ -49,4 +49,4 @@ class TMongoDBDatabase extends TAbstractDatabase {
 
 }
 
-export { TMongoDBDatabase }
+module.exports = TMongoDBDatabase

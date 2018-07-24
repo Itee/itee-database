@@ -8,9 +8,9 @@
  *
  */
 
-import * as fs from 'fs'
-import { Writable } from 'stream'
-////////
+const fs           = require( 'fs' )
+const { Writable } = require( 'stream' )
+const globalBuffer = require( 'buffer' )
 
 /* Writable memory stream */
 class MemoryWriteStream extends Writable {
@@ -19,7 +19,7 @@ class MemoryWriteStream extends Writable {
 
         super( options )
 
-        const bufferSize  = options.bufferSize
+        const bufferSize  = options.bufferSize || globalBuffer.kStringMaxLength
         this.memoryBuffer = Buffer.alloc( bufferSize )
         this.offset       = 0
     }
@@ -268,7 +268,7 @@ class TAbstractFileConverter {
 
 TAbstractFileConverter.MAX_FILE_SIZE = 67108864
 
-export {
+module.exports = {
     MemoryWriteStream,
     TAbstractFileConverter
 }
