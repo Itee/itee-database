@@ -98,4 +98,4 @@ class TAbstractDatabase {
 
 }
 
-export { TAbstractDatabase }
+module.exports = TAbstractDatabase
