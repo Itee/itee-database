@@ -16,11 +16,11 @@ class TAbstractDatabasePlugin {
 
     }
 
-    registerTo( dbDriver ) {
+    registerTo ( dbDriver ) {
 
     }
 
-    addRoutesTo( routes ) {
+    addRoutesTo ( routes ) {
 
         let _routes = routes
 
@@ -41,4 +41,4 @@ class TAbstractDatabasePlugin {
 
 }
 
-export { TAbstractDatabasePlugin }
+module.exports = TAbstractDatabasePlugin
