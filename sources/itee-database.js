@@ -8,7 +8,7 @@
  *
  */
 
-export * from './TAbstractDatabase'
-export * from './TAbstractDatabasePlugin'
-export * from './TAbstractDataController'
-export * from './TAbstractFileConverter'
+export * from './controllers/TAbstractDataController'
+export * from './converters/TAbstractFileConverter'
+export * from './databases/TAbstractDatabase'
+export * from './plugins/TAbstractDatabasePlugin'
