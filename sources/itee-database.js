@@ -8,8 +8,17 @@
  *
  */
 
-export * from './controllers/TAbstractDataController'
-export * from './converters/TAbstractFileConverter'
-export * from './databases/TAbstractDatabase'
-export * from './databases/TMongoDBDatabase'
-export * from './plugins/TAbstractDatabasePlugin'
+const TAbstractDataController                       = require( './controllers/TAbstractDataController' )
+const { MemoryWriteStream, TAbstractFileConverter } = require( './converters/TAbstractFileConverter' )
+const TAbstractDatabase                             = require( './databases/TAbstractDatabase' )
+const TMongoDBDatabase                              = require( './databases/TMongoDBDatabase' )
+const TAbstractDatabasePlugin                       = require( './plugins/TAbstractDatabasePlugin' )
+
+module.exports = {
+    TAbstractDataController,
+    MemoryWriteStream,
+    TAbstractFileConverter,
+    TAbstractDatabase,
+    TMongoDBDatabase,
+    TAbstractDatabasePlugin
+}
