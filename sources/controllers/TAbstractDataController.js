@@ -6,15 +6,15 @@
  * @classdesc The TDatabaseController is the base class to perform CRUD operations on the database
  */
 
-import {
-    isNullOrUndefined,
-    isDefined,
-    isArray,
-    isNotEmptyArray,
-    isNotEmptyObject
-} from 'itee-validators'
+const {
+          isNullOrUndefined,
+          isDefined,
+          isArray,
+          isNotEmptyArray,
+          isNotEmptyObject
+      } = require( 'itee-validators' )
 
-import I from 'i-return'
+const I = require( 'i-return' )
 
 class TAbstractDataController {
 
@@ -35,19 +35,19 @@ class TAbstractDataController {
      */
     static __checkData ( dataName, request, response ) {
 
-        const body = request.body
+        const body   = request.body
         const params = request.params
-        const query = request.query
+        const query  = request.query
 
-        if ( isDefined(body) && body[ dataName ] ) {
+        if ( isDefined( body ) && body[ dataName ] ) {
 
             return body[ dataName ]
 
-        } else if ( isDefined(params) && params[ dataName ] ) {
+        } else if ( isDefined( params ) && params[ dataName ] ) {
 
             return params[ dataName ]
 
-        } else if ( isDefined(query) && query[ dataName ] ) {
+        } else if ( isDefined( query ) && query[ dataName ] ) {
 
             return query[ dataName ]
 
@@ -226,4 +226,4 @@ class TAbstractDataController {
 
 }
 
-export { TAbstractDataController }
+module.exports = TAbstractDataController
