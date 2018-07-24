@@ -11,4 +11,5 @@
 export * from './controllers/TAbstractDataController'
 export * from './converters/TAbstractFileConverter'
 export * from './databases/TAbstractDatabase'
+export * from './databases/TMongoDBDatabase'
 export * from './plugins/TAbstractDatabasePlugin'
