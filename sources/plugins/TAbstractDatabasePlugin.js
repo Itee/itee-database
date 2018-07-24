@@ -10,32 +10,11 @@
 
 class TAbstractDatabasePlugin {
 
-    constructor ( parameters ) {
+    constructor () {}
 
-        this.routes = {}
+    registerTo ( application, driver, router ) {
 
-    }
-
-    registerTo ( dbDriver ) {
-
-    }
-
-    addRoutesTo ( routes ) {
-
-        let _routes = routes
-
-        for ( let routeKey in this.routes ) {
-
-            if ( _routes[ routeKey ] ) {
-                console.warn( `Route controller for key ${routeKey} already exist, ignore it !` )
-                continue
-            }
-
-            _routes[ routeKey ] = this.routes[ routeKey ]
-
-        }
-
-        return _routes
+        console.error('TAbstractDatabasePlugin: Need to reimplement registerTo method !')
 
     }
 
