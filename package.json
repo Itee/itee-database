@@ -21,8 +21,9 @@
   "license": "MIT",
   "dependencies": {
     "i-return": "^1.0.3",
+    "itee-utils": "^1.1.5",
     "itee-validators": "^2.0.1",
-    "itee-utils": "^1.1.5"
+    "mongoose": "^5.2.4"
   },
   "devDependencies": {
     "chai": "^4.1.2",
