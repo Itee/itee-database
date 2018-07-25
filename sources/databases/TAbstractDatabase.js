@@ -8,6 +8,9 @@
  *
  */
 
+const path = require( 'path' )
+const TAbstractDatabasePlugin = require('../plugins/TAbstractDatabasePlugin')
+
 class TAbstractDatabase {
 
     constructor ( driver, application, router, plugins = [], autoReconnectTimeout = 10000 ) {
@@ -35,9 +38,29 @@ class TAbstractDatabase {
             let plugin       = undefined
 
             try {
+
                 plugin = require( pluginName )
+                console.log( `Register package plugin: ${pluginName}` )
+
             } catch ( error ) {
-                console.error( `Unable to register plugin ${pluginName} the package doesn't seem to exist ! Skip it.` )
+
+                try {
+
+                    const localPluginsPath = path.join( __dirname, '../../', 'databases/plugins/', pluginName, pluginName, '.js' )
+                    plugin                 = require( localPluginsPath )
+                    console.log( `Register local plugin: ${pluginName}` )
+
+                } catch ( error ) {
+
+                    console.error( `Unable to register ${pluginName} the package or local plugin doesn't seem to exist ! Skip it.` )
+                    continue
+
+                }
+
+            }
+
+            if(!(plugin instanceof TAbstractDatabasePlugin)) {
+                console.error(`The plugin ${pluginName} doesn't seem to be an instance/child of TAbstractDatabasePlugin ! Skip it.`)
                 continue
             }
 
