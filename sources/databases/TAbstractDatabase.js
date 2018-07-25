@@ -8,8 +8,8 @@
  *
  */
 
-const path = require( 'path' )
-const TAbstractDatabasePlugin = require('../plugins/TAbstractDatabasePlugin')
+const path                    = require( 'path' )
+const TAbstractDatabasePlugin = require( '../plugins/TAbstractDatabasePlugin' )
 
 class TAbstractDatabase {
 
@@ -46,21 +46,21 @@ class TAbstractDatabase {
 
                 try {
 
-                    const localPluginsPath = path.join( __dirname, '../../', 'databases/plugins/', pluginName, pluginName, '.js' )
-                    plugin                 = require( localPluginsPath )
+                    const localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
+                    plugin                = require( localPluginPath )
                     console.log( `Register local plugin: ${pluginName}` )
 
                 } catch ( error ) {
 
-                    console.error( `Unable to register ${pluginName} the package or local plugin doesn't seem to exist ! Skip it.` )
+                    console.error( `Unable to register the plugin ${pluginName} the package or local folder doesn't seem to exist ! Skip it.` )
                     continue
 
                 }
 
             }
 
-            if(!(plugin instanceof TAbstractDatabasePlugin)) {
-                console.error(`The plugin ${pluginName} doesn't seem to be an instance/child of TAbstractDatabasePlugin ! Skip it.`)
+            if ( !(plugin instanceof TAbstractDatabasePlugin) ) {
+                console.error( `The plugin ${pluginName} doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
                 continue
             }
 
