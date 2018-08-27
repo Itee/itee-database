@@ -25,7 +25,16 @@ class TMongoDBDatabase extends TAbstractDatabase {
 
     connect () {
 
-        this._driver.connect( this.databaseUrl, {} )
+        const self = this
+        this._driver.connect( this.databaseUrl, { useNewUrlParser: true } )
+            .then( ( info ) => {
+                console.log( `MongoDB at ${this.databaseUrl} is connected !` )
+                self.stopAutoConnect()
+            } )
+            .catch( err => {
+                console.error( err )
+                self.startAutoConnect()
+            } )
 
     }
 
