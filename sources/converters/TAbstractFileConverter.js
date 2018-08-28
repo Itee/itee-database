@@ -159,18 +159,18 @@ class TAbstractFileConverter {
 
         this._isProcessing = true
 
-        const self              = this
-        const fileData          = this._filesQueue.shift()
-        const currentFile       = fileData.file
-        const currentParameters = fileData.parameters
-        const currentOnSuccess  = fileData.onSuccess
-        const currentOnProgress = fileData.onProgress
-        const currentOnError    = fileData.onError
+        const self       = this
+        const dataBloc   = this._queue.shift()
+        const data       = dataBloc.file
+        const parameters = dataBloc.parameters
+        const onSuccess  = dataBloc.onSuccess
+        const onProgress = dataBloc.onProgress
+        const onError    = dataBloc.onError
 
         self._dumpFileInMemoryAs(
             self._dumpType,
-            currentFile,
-            currentParameters,
+            data,
+            parameters,
             _onDumpSuccess,
             _onProcessProgress,
             _onProcessError
@@ -190,21 +190,20 @@ class TAbstractFileConverter {
 
         function _onProcessSuccess ( threeData ) {
 
-            self._releaseMemory()
-            currentOnSuccess( threeData )
+            onSuccess( threeData )
             self._processQueue()
 
         }
 
         function _onProcessProgress ( progress ) {
 
-            currentOnProgress( progress )
+            onProgress( progress )
 
         }
 
         function _onProcessError ( error ) {
 
-            currentOnError( error )
+            onError( error )
             self._processQueue()
 
         }
