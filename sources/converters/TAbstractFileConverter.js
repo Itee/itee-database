@@ -108,8 +108,8 @@ class TAbstractFileConverter {
         this._dumpType = dumpType
 
         this._isProcessing = false
-        this._filesQueue   = []
-        this._fileData     = undefined
+        this._queue        = []
+
     }
 
     get dumpType () {
@@ -134,7 +134,7 @@ class TAbstractFileConverter {
 
     convert ( file, parameters, onSuccess, onProgress, onError ) {
 
-        this._filesQueue.push( {
+        this._queue.push( {
             file,
             parameters,
             onSuccess,
@@ -150,7 +150,7 @@ class TAbstractFileConverter {
 
     _processQueue () {
 
-        if ( this._filesQueue.length === 0 ) {
+        if ( this._queue.length === 0 ) {
 
             this._isProcessing = false
             return
@@ -178,9 +178,9 @@ class TAbstractFileConverter {
 
         function _onDumpSuccess ( data ) {
 
-            self._fileData = data
             self._convert(
-                currentParameters,
+                data,
+                parameters,
                 _onProcessSuccess,
                 _onProcessProgress,
                 _onProcessError
@@ -272,13 +272,7 @@ class TAbstractFileConverter {
 
     }
 
-    _releaseMemory () {
-
-        this._fileData = null
-
-    }
-
-    _convert ( parameters, onSuccess, onProgress, onError ) {
+    _convert ( data, parameters, onSuccess, onProgress, onError ) {
 
         console.error( '_convert: Need to be reimplemented in inherited class !' )
 
