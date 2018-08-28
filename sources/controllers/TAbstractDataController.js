@@ -7,22 +7,17 @@
  */
 
 const {
-          isNullOrUndefined,
-          isDefined,
-          isArray,
-          isNotEmptyArray,
-          isNotEmptyObject
+          isNull, isUndefined, isNullOrUndefined, isDefined,
+          isNotString, isEmptyString, isBlankString,
+          isArray, isNotArray, isEmptyArray, isNotEmptyArray,
+          isObject, isNotObject, isEmptyObject, isNotEmptyObject,
       } = require( 'itee-validators' )
 
 const I = require( 'i-return' )
 
 class TAbstractDataController {
 
-    constructor ( parameters ) {
-
-        this._parameters = parameters
-
-    }
+    constructor () {}
 
     /**
      * Check if requested params named 'dataName' exist in request.body, request.params or request.query
@@ -63,24 +58,54 @@ class TAbstractDataController {
 
     create ( request, response ) {
 
-        const requestBody = request.body
-        if ( isNullOrUndefined( requestBody ) ) {
+        const data = request.body
+        if ( isNullOrUndefined( data ) ) {
+
+            //            throw new TypeError(`The request body cannot be null.`)
 
             I.returnError( {
                 title:   'Erreur de paramètre',
-                message: 'Aucun paramètre n\'a été reçu !'
+                message: 'Le corps de la requete ne peut pas être null ou indefini.'
             }, response )
             return
 
         }
 
-        if ( isArray( requestBody ) ) {
+        if ( isArray( data ) ) {
 
-            this._createSome( requestBody, response )
+            if ( isEmptyArray( data ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'Le tableau d\'objet de la requete ne peut pas être vide.'
+                }, response )
+                return
+
+            }
+
+            this._createMany( data, response )
+
+        } else if ( isObject( data ) ) {
+
+            if ( isEmptyObject( data ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'L\'objet de la requete ne peut pas être vide.'
+                }, response )
+                return
+
+            }
+
+            this._createOne( data, response )
 
         } else {
 
-            this._createOne( requestBody, response )
+            I.returnError( {
+                title:   'Erreur de paramètre',
+                message: 'Le type de donnée de la requete est invalide. Les paramètres valides sont objet ou un tableau d\'objet.'
+            }, response )
+            return
 
         }
 
@@ -88,125 +113,273 @@ class TAbstractDataController {
 
     _createOne ( data, response ) {}
 
-    _createSome ( datas, response ) {}
+    _createMany ( datas, response ) {}
 
     read ( request, response ) {
 
+        const id          = request.params[ 'id' ]
         const requestBody = request.body
-        const idParam     = request.params[ 'id' ]
+        const haveBody    = ( isDefined( requestBody ) )
+        const ids         = (haveBody) ? requestBody.ids : null
+        const query       = (haveBody) ? requestBody.query : null
+        const projection  = (haveBody) ? requestBody.projection : null
 
-        response.set( "Content-Type", "application/json" )
+        if ( isDefined( id ) ) {
 
-        if ( isDefined( requestBody ) ) {
-
-            if ( isNotEmptyObject( requestBody ) ) {
-
-                this._readByObject( requestBody, response )
-
-            } else if ( isNotEmptyArray( requestBody ) ) {
-
-                this._readByArray( requestBody, response )
-
-            } else {
+            if ( isNotString( id ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
-                    message: 'La requête ne contient pas de données !'
+                    message: 'L\'identifiant devrait être une chaine de caractères.'
                 }, response )
+
+            } else if ( isEmptyString( id ) || isBlankString( id ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
+                }, response )
+
+            } else {
+
+                this._readOne( id, projection, response )
 
             }
 
-        } else if ( isDefined( idParam ) ) {
+        } else if ( isDefined( ids ) ) {
 
-            this._readById( idParam, response )
+            if ( isNotArray( ids ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
+                }, response )
+
+            } else if ( isEmptyArray( ids ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'Le tableau d\'identifiants ne peut pas être vide.'
+                }, response )
+
+            } else {
+
+                this._readMany( ids, projection, response )
+
+            }
+
+        } else if ( isDefined( query ) ) {
+
+            if ( isNotObject( query ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'La requete devrait être un objet javascript.'
+                }, response )
+
+            } else if ( isEmptyObject( query ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'La requete ne peut pas être vide.'
+                }, response )
+
+            } else {
+
+                this._readWhere( query, projection, response )
+
+            }
 
         } else {
 
-            this._readAll( response )
+            this._readAll( projection, response )
 
         }
 
     }
 
-    _readById ( id, response ) {}
+    _readOne ( id, projection, response ) {}
 
-    _readByArray ( array, response ) {}
+    _readMany ( ids, projection, response ) {}
 
-    _readByObject ( object, response ) {}
+    _readWhere ( query, projection, response ) {}
 
-    _readAll ( response ) {}
+    _readAll ( projection, response ) {}
 
     update ( request, response ) {
 
+        const id          = request.params[ 'id' ]
         const requestBody = request.body
-        const idParam     = request.params[ 'id' ]
+        const haveBody    = ( isDefined( requestBody ) )
+        const ids         = (haveBody) ? requestBody.ids : null
+        const query       = (haveBody) ? requestBody.query : null
+        const update      = (haveBody) ? requestBody.update : null
 
-        if ( isDefined( requestBody ) ) {
+        if ( isNullOrUndefined( update ) ) {
 
-            if ( isNotEmptyObject( requestBody ) ) {
+            I.returnError( {
+                title:   'Erreur de paramètre',
+                message: 'La mise à jour a appliquer ne peut pas être null ou indefini.'
+            }, response )
+            return
 
-                this._updateByObject( requestBody, response )
+        }
 
-            } else if ( isNotEmptyArray( requestBody ) ) {
+        if ( isDefined( id ) ) {
 
-                this._updateByArray( requestBody, response )
-
-            } else {
+            if ( isNotString( id ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
-                    message: 'La requête ne contient pas de données !'
+                    message: 'L\'identifiant devrait être une chaine de caractères.'
                 }, response )
+
+            } else if ( isEmptyString( id ) || isBlankString( id ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
+                }, response )
+
+            } else {
+
+                this._updateOne( id, update, response )
 
             }
 
-        } else if ( isDefined( idParam ) ) {
+        } else if ( isDefined( ids ) ) {
 
-            this._updateById( idParam, response )
+            if ( isNotArray( ids ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
+                }, response )
+
+            } else if ( isEmptyArray( ids ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'Le tableau d\'identifiants ne peut pas être vide.'
+                }, response )
+
+            } else {
+
+                this._updateMany( ids, update, response )
+
+            }
+
+        } else if ( isDefined( query ) ) {
+
+            if ( isNotObject( query ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'La requete devrait être un objet javascript.'
+                }, response )
+
+            } else if ( isEmptyObject( query ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'La requete ne peut pas être vide.'
+                }, response )
+
+            } else {
+
+                this._updateWhere( query, update, response )
+
+            }
 
         } else {
 
-            this._updateAll( response )
+            this._updateAll( update, response )
 
         }
 
     }
 
-    _updateById ( id, response ) {}
+    _updateOne ( id, update, response ) {}
 
-    _updateByArray ( array, response ) {}
+    _updateMany ( ids, update, response ) {}
 
-    _updateByObject ( object, response ) {}
+    _updateWhere ( query, update, response ) {}
 
-    _updateAll ( response ) {}
+    _updateAll ( update, response ) {}
 
     delete ( request, response ) {
 
+        const id          = request.params[ 'id' ]
         const requestBody = request.body
-        const idParam     = request.params[ 'id' ]
+        const haveBody    = ( isDefined( requestBody ) )
+        const ids         = (haveBody) ? requestBody.ids : null
+        const query       = (haveBody) ? requestBody.query : null
 
-        if ( isDefined( requestBody ) ) {
+        if ( isDefined( id ) ) {
 
-            if ( isNotEmptyObject( requestBody ) ) {
-
-                this._deleteByObject( requestBody, response )
-
-            } else if ( isNotEmptyArray( requestBody ) ) {
-
-                this._deleteByArray( requestBody, response )
-
-            } else {
+            if ( isNotString( id ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
-                    message: 'La requête ne contient pas de données !'
+                    message: 'L\'identifiant devrait être une chaine de caractères.'
                 }, response )
+
+            } else if ( isEmptyString( id ) || isBlankString( id ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
+                }, response )
+
+            } else {
+
+                this._deleteOne( id, response )
 
             }
 
-        } else if ( isDefined( idParam ) ) {
+        } else if ( isDefined( ids ) ) {
 
-            this._deleteById( idParam, response )
+            if ( isNotArray( ids ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
+                }, response )
+
+            } else if ( isEmptyArray( ids ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'Le tableau d\'identifiants ne peut pas être vide.'
+                }, response )
+
+            } else {
+
+                this._deleteMany( ids, response )
+
+            }
+
+        } else if ( isDefined( query ) ) {
+
+            if ( isNotObject( query ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'La requete devrait être un objet javascript.'
+                }, response )
+
+            } else if ( isEmptyObject( query ) ) {
+
+                I.returnError( {
+                    title:   'Erreur de paramètre',
+                    message: 'La requete ne peut pas être vide.'
+                }, response )
+
+            } else {
+
+                this._deleteWhere( query, response )
+
+            }
 
         } else {
 
@@ -216,11 +389,11 @@ class TAbstractDataController {
 
     }
 
-    _deleteById ( id, response ) {}
+    _deleteOne ( id, response ) {}
 
-    _deleteByArray ( array, response ) {}
+    _deleteMany ( ids, response ) {}
 
-    _deleteByObject ( object, response ) {}
+    _deleteWhere ( query, response ) {}
 
     _deleteAll ( response ) {}
 
