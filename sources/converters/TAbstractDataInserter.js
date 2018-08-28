@@ -8,14 +8,14 @@
  *
  */
 
-class TAbstractDatabaseDataInserter {
+    // Todo: Extend from TDataQueueProcessor
+class TAbstractDataInserter {
 
     constructor ( driver ) {
 
         this._driver       = driver
         this._isProcessing = false
-        this._filesQueue   = []
-        this._fileData     = undefined
+        this._queue        = []
 
     }
 
@@ -31,7 +31,7 @@ class TAbstractDatabaseDataInserter {
             return
         }
 
-        this._filesQueue.push( {
+        this._queue.push( {
             data,
             parameters,
             onSuccess,
@@ -47,7 +47,7 @@ class TAbstractDatabaseDataInserter {
 
     _processQueue () {
 
-        if ( this._filesQueue.length === 0 ) {
+        if ( this._queue.length === 0 ) {
 
             this._isProcessing = false
             return
@@ -57,12 +57,12 @@ class TAbstractDatabaseDataInserter {
         this._isProcessing = true
 
         const self       = this
-        const fileData   = this._filesQueue.shift()
-        const data       = fileData.data
-        const parameters = fileData.parameters
-        const onSuccess  = fileData.onSuccess
-        const onProgress = fileData.onProgress
-        const onError    = fileData.onError
+        const dataBloc   = this._queue.shift()
+        const data       = dataBloc.data
+        const parameters = dataBloc.parameters
+        const onSuccess  = dataBloc.onSuccess
+        const onProgress = dataBloc.onProgress
+        const onError    = dataBloc.onError
 
         self._save(
             data,
@@ -96,10 +96,10 @@ class TAbstractDatabaseDataInserter {
 
     _save ( data, parameters, onSuccess, onProgress, onError ) {
 
-        console.error( "TAbstractDatabaseDataProvider: _save method need to be reimplemented !" )
+        console.error( "TAbstractDataInserter: _save method need to be reimplemented !" )
 
     }
 
 }
 
-module.exports = TAbstractDatabaseDataInserter
+module.exports = TAbstractDataInserter
