@@ -8,9 +8,10 @@
  *
  */
 
-const fs           = require( 'fs' )
-const { Writable } = require( 'stream' )
-const globalBuffer = require( 'buffer' )
+const fs                      = require( 'fs' )
+const { Writable }            = require( 'stream' )
+const globalBuffer            = require( 'buffer' )
+const { isNull, isUndefined } = require( 'itee-validators' )
 
 /* Writable memory stream */
 class MemoryWriteStream extends Writable {
@@ -102,13 +103,32 @@ class MemoryWriteStream extends Writable {
 
 class TAbstractFileConverter {
 
-    constructor () {
+    constructor ( dumpType = TAbstractFileConverter.DumpType.ArrayBuffer ) {
 
-        this.dumpType = 'arraybuffer' // 'string', 'json'
+        this._dumpType = dumpType
 
         this._isProcessing = false
         this._filesQueue   = []
         this._fileData     = undefined
+    }
+
+    get dumpType () {
+
+        return this._dumpType
+
+    }
+
+    set dumpType ( input ) {
+
+        if ( isNull( input ) ) {
+            throw new TypeError( 'Dump type cannot be null ! Expect a non empty string.' )
+        }
+
+        if ( isUndefined( input ) ) {
+            throw new TypeError( 'Dump type cannot be undefined ! Expect a non empty string.' )
+        }
+
+        this._dumpType = input
 
     }
 
@@ -148,7 +168,7 @@ class TAbstractFileConverter {
         const currentOnError    = fileData.onError
 
         self._dumpFileInMemoryAs(
-            this.dumpType,
+            self._dumpType,
             currentFile,
             currentParameters,
             _onDumpSuccess,
@@ -224,15 +244,15 @@ class TAbstractFileConverter {
 
             switch ( dumpType ) {
 
-                case 'arraybuffer':
+                case TAbstractFileConverter.DumpType.ArrayBuffer:
                     onSuccess( memoryWriteStream.toArrayBuffer() )
                     break
 
-                case 'string':
+                case TAbstractFileConverter.DumpType.String:
                     onSuccess( memoryWriteStream.toString() )
                     break
 
-                case 'json':
+                case TAbstractFileConverter.DumpType.JSON:
                     onSuccess( memoryWriteStream.toJSON() )
                     break
 
@@ -267,6 +287,12 @@ class TAbstractFileConverter {
 }
 
 TAbstractFileConverter.MAX_FILE_SIZE = 67108864
+
+TAbstractFileConverter.DumpType = Object.freeze( {
+    ArrayBuffer: 0,
+    String:      1,
+    JSON:        2
+} )
 
 module.exports = {
     MemoryWriteStream,
