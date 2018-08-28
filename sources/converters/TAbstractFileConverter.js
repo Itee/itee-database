@@ -8,9 +8,10 @@
  *
  */
 
-const fs           = require( 'fs' )
-const { Writable } = require( 'stream' )
-const globalBuffer = require( 'buffer' )
+const fs                      = require( 'fs' )
+const { Writable }            = require( 'stream' )
+const globalBuffer            = require( 'buffer' )
+const { isNull, isUndefined } = require( 'itee-validators' )
 
 /* Writable memory stream */
 class MemoryWriteStream extends Writable {
@@ -102,19 +103,38 @@ class MemoryWriteStream extends Writable {
 
 class TAbstractFileConverter {
 
-    constructor () {
+    constructor ( dumpType = TAbstractFileConverter.DumpType.ArrayBuffer ) {
 
-        this.dumpType = 'arraybuffer' // 'string', 'json'
+        this._dumpType = dumpType
 
         this._isProcessing = false
-        this._filesQueue   = []
-        this._fileData     = undefined
+        this._queue        = []
+
+    }
+
+    get dumpType () {
+
+        return this._dumpType
+
+    }
+
+    set dumpType ( input ) {
+
+        if ( isNull( input ) ) {
+            throw new TypeError( 'Dump type cannot be null ! Expect a non empty string.' )
+        }
+
+        if ( isUndefined( input ) ) {
+            throw new TypeError( 'Dump type cannot be undefined ! Expect a non empty string.' )
+        }
+
+        this._dumpType = input
 
     }
 
     convert ( file, parameters, onSuccess, onProgress, onError ) {
 
-        this._filesQueue.push( {
+        this._queue.push( {
             file,
             parameters,
             onSuccess,
@@ -130,7 +150,7 @@ class TAbstractFileConverter {
 
     _processQueue () {
 
-        if ( this._filesQueue.length === 0 ) {
+        if ( this._queue.length === 0 ) {
 
             this._isProcessing = false
             return
@@ -139,18 +159,18 @@ class TAbstractFileConverter {
 
         this._isProcessing = true
 
-        const self              = this
-        const fileData          = this._filesQueue.shift()
-        const currentFile       = fileData.file
-        const currentParameters = fileData.parameters
-        const currentOnSuccess  = fileData.onSuccess
-        const currentOnProgress = fileData.onProgress
-        const currentOnError    = fileData.onError
+        const self       = this
+        const dataBloc   = this._queue.shift()
+        const data       = dataBloc.file
+        const parameters = dataBloc.parameters
+        const onSuccess  = dataBloc.onSuccess
+        const onProgress = dataBloc.onProgress
+        const onError    = dataBloc.onError
 
         self._dumpFileInMemoryAs(
-            this.dumpType,
-            currentFile,
-            currentParameters,
+            self._dumpType,
+            data,
+            parameters,
             _onDumpSuccess,
             _onProcessProgress,
             _onProcessError
@@ -158,9 +178,9 @@ class TAbstractFileConverter {
 
         function _onDumpSuccess ( data ) {
 
-            self._fileData = data
             self._convert(
-                currentParameters,
+                data,
+                parameters,
                 _onProcessSuccess,
                 _onProcessProgress,
                 _onProcessError
@@ -170,21 +190,20 @@ class TAbstractFileConverter {
 
         function _onProcessSuccess ( threeData ) {
 
-            self._releaseMemory()
-            currentOnSuccess( threeData )
+            onSuccess( threeData )
             self._processQueue()
 
         }
 
         function _onProcessProgress ( progress ) {
 
-            currentOnProgress( progress )
+            onProgress( progress )
 
         }
 
         function _onProcessError ( error ) {
 
-            currentOnError( error )
+            onError( error )
             self._processQueue()
 
         }
@@ -224,15 +243,15 @@ class TAbstractFileConverter {
 
             switch ( dumpType ) {
 
-                case 'arraybuffer':
+                case TAbstractFileConverter.DumpType.ArrayBuffer:
                     onSuccess( memoryWriteStream.toArrayBuffer() )
                     break
 
-                case 'string':
+                case TAbstractFileConverter.DumpType.String:
                     onSuccess( memoryWriteStream.toString() )
                     break
 
-                case 'json':
+                case TAbstractFileConverter.DumpType.JSON:
                     onSuccess( memoryWriteStream.toJSON() )
                     break
 
@@ -252,13 +271,7 @@ class TAbstractFileConverter {
 
     }
 
-    _releaseMemory () {
-
-        this._fileData = null
-
-    }
-
-    _convert ( parameters, onSuccess, onProgress, onError ) {
+    _convert ( data, parameters, onSuccess, onProgress, onError ) {
 
         console.error( '_convert: Need to be reimplemented in inherited class !' )
 
@@ -267,6 +280,12 @@ class TAbstractFileConverter {
 }
 
 TAbstractFileConverter.MAX_FILE_SIZE = 67108864
+
+TAbstractFileConverter.DumpType = Object.freeze( {
+    ArrayBuffer: 0,
+    String:      1,
+    JSON:        2
+} )
 
 module.exports = {
     MemoryWriteStream,

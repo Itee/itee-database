@@ -8,6 +8,7 @@
  *
  */
 
+// Todo: Extend sort of Factory
 class TAbstractConverterManager {
 
     constructor () {
