@@ -13,6 +13,7 @@ const { MemoryWriteStream, TAbstractFileConverter } = require( './converters/TAb
 const TAbstractDataInserter                         = require( './converters/TAbstractDataInserter' )
 const TAbstractDatabase                             = require( './databases/TAbstractDatabase' )
 const TMongoDBDatabase                              = require( './databases/TMongoDBDatabase' )
+const TPostgresDatabase                             = require( './databases/TPostgresDatabase' )
 const TAbstractDatabasePlugin                       = require( './plugins/TAbstractDatabasePlugin' )
 
 module.exports = {
@@ -22,5 +23,6 @@ module.exports = {
     TAbstractDataInserter,
     TAbstractDatabase,
     TMongoDBDatabase,
+    TPostgresDatabase,
     TAbstractDatabasePlugin
 }
