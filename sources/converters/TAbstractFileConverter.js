@@ -105,7 +105,7 @@ class TAbstractFileConverter {
 
     constructor ( dumpType = TAbstractFileConverter.DumpType.ArrayBuffer ) {
 
-        this._dumpType = dumpType
+        this.dumpType = dumpType
 
         this._isProcessing = false
         this._queue        = []
@@ -118,17 +118,19 @@ class TAbstractFileConverter {
 
     }
 
-    set dumpType ( input ) {
+    set dumpType ( value ) {
 
-        if ( isNull( input ) ) {
-            throw new TypeError( 'Dump type cannot be null ! Expect a non empty string.' )
-        }
+        if ( isNull( value ) ) { throw new TypeError( 'Dump type cannot be null ! Expect a non empty string.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Dump type cannot be undefined ! Expect a non empty string.' ) }
 
-        if ( isUndefined( input ) ) {
-            throw new TypeError( 'Dump type cannot be undefined ! Expect a non empty string.' )
-        }
+        this._dumpType = value
 
-        this._dumpType = input
+    }
+
+    setDumpType ( value ) {
+
+        this.dumpType = value
+        return this
 
     }
 
