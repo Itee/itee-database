@@ -1,6 +1,6 @@
 {
   "name": "itee-database",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "The abstract database side of the Itee solution for 3d web content, this package is design to work with an Itee server.",
   "main": "sources/itee-database.js",
   "scripts": {
