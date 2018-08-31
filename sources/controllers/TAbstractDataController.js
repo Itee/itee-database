@@ -61,8 +61,6 @@ class TAbstractDataController {
         const data = request.body
         if ( isNullOrUndefined( data ) ) {
 
-            //            throw new TypeError(`The request body cannot be null.`)
-
             I.returnError( {
                 title:   'Erreur de paramètre',
                 message: 'Le corps de la requete ne peut pas être null ou indefini.'
