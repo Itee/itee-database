@@ -12,7 +12,7 @@ class TAbstractDatabasePlugin {
 
     constructor () {}
 
-    registerTo ( application, driver, router ) {
+    registerTo ( driver, application, router ) {
 
         console.error('TAbstractDatabasePlugin: Need to reimplement registerTo method !')
 
