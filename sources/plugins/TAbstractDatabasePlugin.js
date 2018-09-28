@@ -80,7 +80,7 @@ class TAbstractDatabasePlugin {
 
     addController ( value ) {
 
-        this._controllers[ value.constructor.name ] = value
+        this._controllers[ value.name ] = value
         return this
 
     }
