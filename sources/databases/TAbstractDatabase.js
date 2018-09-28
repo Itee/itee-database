@@ -40,7 +40,8 @@ class TAbstractDatabase {
 
             try {
 
-                plugin = require( pluginName )
+                plugin           = require( pluginName )
+                plugin.__dirname = path.dirname( require.resolve( pluginName ) )
                 console.log( `Register package plugin: ${pluginName}` )
 
             } catch ( error ) {
@@ -49,6 +50,7 @@ class TAbstractDatabase {
 
                     const localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
                     plugin                = require( localPluginPath )
+                    plugin.__dirname      = path.dirname( require.resolve( localPluginPath ) )
                     console.log( `Register local plugin: ${pluginName}` )
 
                 } catch ( error ) {

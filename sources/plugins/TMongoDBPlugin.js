@@ -20,9 +20,9 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
         super( TMongooseController )
     }
 
-    static _registerTypesTo ( Mongoose ) {
+    static _registerTypesTo ( Mongoose, dirname ) {
 
-        const typesBasePath   = path.join( __dirname, 'types' )
+        const typesBasePath   = path.join( dirname, 'types' )
         const typesFilesPaths = getFilesPathsUnder( typesBasePath )
         let typeFilePath      = ''
         let typeFile          = undefined
@@ -53,9 +53,9 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
     }
 
-    static _registerSchemasTo ( Mongoose ) {
+    static _registerSchemasTo ( Mongoose, dirname ) {
 
-        const localSchemasBasePath   = path.join( __dirname, 'schemas' )
+        const localSchemasBasePath   = path.join( dirname, 'schemas' )
         const localSchemasFilesPaths = getFilesPathsUnder( localSchemasBasePath )
         let localSchemaFilePath      = ''
         let localSchemaFile          = undefined
@@ -94,8 +94,8 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     beforeRegisterRoutes ( Mongoose ) {
         super.beforeRegisterRoutes( Mongoose )
 
-        TMongoDBPlugin._registerTypesTo( Mongoose )
-        TMongoDBPlugin._registerSchemasTo( Mongoose )
+        TMongoDBPlugin._registerTypesTo( Mongoose, this.__dirname )
+        TMongoDBPlugin._registerSchemasTo( Mongoose, this.__dirname )
 
     }
 
