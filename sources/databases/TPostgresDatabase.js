@@ -9,20 +9,18 @@
  */
 
 const TAbstractDatabase = require( './TAbstractDatabase' )
-const driver            = require( 'pg-promise' )({})
+const PgPromise         = require( 'pg-promise' )( {} )
 
 class TPostgresDatabase extends TAbstractDatabase {
 
     constructor ( app, router, plugins, parameters ) {
 
-        super( driver(parameters.databaseUrl), app, router, plugins, parameters )
+        super( PgPromise(parameters.databaseUrl), app, router, plugins, parameters )
 
     }
 
-    _init () {}
-
     connect () {}
- 
+
     close ( onCloseCallback ) {}
 
     on ( eventName, callback ) {}
