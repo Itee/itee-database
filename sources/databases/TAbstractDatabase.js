@@ -15,8 +15,6 @@ class TAbstractDatabase {
 
     constructor ( driver, application, router, plugins = [], autoReconnectTimeout = 10000 ) {
 
-        this.routes = {}
-
         this._driver               = driver
         this._application          = application
         this._router               = router
@@ -24,11 +22,14 @@ class TAbstractDatabase {
         this._autoReconnectTimeout = autoReconnectTimeout
         this._autoConnectionTimer  = null
 
-        this.__init()
+        this._initDatabase()
+        this._registerPlugins()
 
     }
 
-    __init () {
+    _initDatabase () {}
+
+    _registerPlugins () {
 
         // Register modules plugins
         const pluginsNames = this._plugins
@@ -67,14 +68,6 @@ class TAbstractDatabase {
             plugin.registerTo( this._driver, this._application, this._router )
 
         }
-
-        this._init()
-
-    }
-
-    _init () {
-
-        console.error( 'TAbstractDatabase._init: Need to be reimplemented in inherited class !' )
 
     }
 
