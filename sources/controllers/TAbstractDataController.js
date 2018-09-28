@@ -17,7 +17,12 @@ const I = require( 'i-return' )
 
 class TAbstractDataController {
 
-    constructor () {}
+    constructor ( driver, options ) {
+
+        this._driver = driver
+        this._options = options
+
+    }
 
     /**
      * Check if requested params named 'dataName' exist in request.body, request.params or request.query
