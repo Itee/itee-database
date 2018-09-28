@@ -8,11 +8,9 @@
  *
  */
 
-const { isNull, isUndefined } = require( 'itee-validators' )
-
 class TAbstractDataConverter {
 
-    constructor ( ) {
+    constructor () {
 
         this._isProcessing = false
         this._queue        = []
@@ -84,11 +82,7 @@ class TAbstractDataConverter {
 
     }
 
-    _convert ( data, parameters, onSuccess, onProgress, onError ) {
-
-        console.error( '_convert: Need to be reimplemented in inherited class !' )
-
-    }
+    _convert ( data, parameters, onSuccess, onProgress, onError ) {}
 
 }
 

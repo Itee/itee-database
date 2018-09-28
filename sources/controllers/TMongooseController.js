@@ -12,10 +12,10 @@ const i                       = require( 'i-return' )
 
 class TMongooseController extends TAbstractDataController {
 
-    constructor ( databaseSchema ) {
-        super()
+    constructor ( Mongoose, options ) {
+        super( Mongoose, options )
 
-        this.databaseSchema = databaseSchema
+        this.databaseSchema = Mongoose.model( options.schemaName )
 
     }
 
@@ -34,7 +34,7 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
-    setDatabaseSchema( value ) {
+    setDatabaseSchema ( value ) {
 
         this.databaseSchema = value
         return this
@@ -46,60 +46,13 @@ class TMongooseController extends TAbstractDataController {
         super._createOne( data, response )
 
         this._databaseSchema.create( data, i.return( response ) )
+
     }
 
     _createMany ( datas, response ) {
         super._createMany( datas, response )
 
         this._databaseSchema.create( datas, i.return( response ) )
-
-        //        const numberOfDatas = datas.length
-        //        let numberOfReturns = 0
-        //        let errors          = []
-        //        let results         = []
-        //
-        //        for ( let index = 0 ; index < numberOfDatas ; index++ ) {
-        //
-        //            this._databaseSchema.create( datas[ index ], onEnd )
-        //
-        //        }
-        //
-        //        function onEnd ( error, result ) {
-        //
-        //            if ( error ) {
-        //                errors.push( error )
-        //            }
-        //
-        //            if ( result ) {
-        //                results.push( result )
-        //            }
-        //
-        //            numberOfReturns++
-        //            if ( numberOfReturns < numberOfDatas - 1 ) {
-        //                return
-        //            }
-        //
-        //            const haveErrors = ( errors.length > 0 )
-        //            const haveDatas  = ( results.length > 0 )
-        //            if ( haveErrors && haveDatas ) {
-        //
-        //                i.returnErrorAndData( errors, results, response )
-        //
-        //            } else if ( haveErrors && !haveDatas ) {
-        //
-        //                i.returnError( errors, response )
-        //
-        //            } else if ( !haveErrors && haveDatas ) {
-        //
-        //                i.returnData( results, response )
-        //
-        //            } else {
-        //
-        //                i.return( response )
-        //
-        //            }
-        //
-        //        }
 
     }
 
@@ -184,8 +137,8 @@ class TMongooseController extends TAbstractDataController {
                 return
             }
 
-            const haveErrors = ( errors.length > 0 )
-            const haveDatas  = ( results.length > 0 )
+            const haveErrors = (errors.length > 0)
+            const haveDatas  = (results.length > 0)
             if ( haveErrors && haveDatas ) {
 
                 i.returnErrorAndData( errors, results, response )
@@ -229,6 +182,7 @@ class TMongooseController extends TAbstractDataController {
         this._databaseSchema
             .findByIdAndDelete( id )
             .exec( i.return( response ) )
+
     }
 
     _deleteMany ( ids, response ) {

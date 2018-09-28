@@ -8,18 +8,16 @@
  *
  */
 
-// Todo: Extend sort of Factory
+    // Todo: Extend sort of Factory
 class TAbstractConverterManager {
 
     constructor () {
 
         this._converters = {}
-        this._rules = {}
-        this._inserter = undefined
+        this._rules      = {}
+        this._inserter   = undefined
 
     }
-
-
 
 }
 

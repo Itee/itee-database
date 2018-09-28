@@ -15,8 +15,6 @@ class TAbstractDatabase {
 
     constructor ( driver, application, router, plugins = [], autoReconnectTimeout = 10000 ) {
 
-        this.routes = {}
-
         this._driver               = driver
         this._application          = application
         this._router               = router
@@ -24,11 +22,14 @@ class TAbstractDatabase {
         this._autoReconnectTimeout = autoReconnectTimeout
         this._autoConnectionTimer  = null
 
-        this.__init()
+        this._initDatabase()
+        this._registerPlugins()
 
     }
 
-    __init () {
+    _initDatabase () {}
+
+    _registerPlugins () {
 
         // Register modules plugins
         const pluginsNames = this._plugins
@@ -39,7 +40,8 @@ class TAbstractDatabase {
 
             try {
 
-                plugin = require( pluginName )
+                plugin           = require( pluginName )
+                plugin.__dirname = path.dirname( require.resolve( pluginName ) )
                 console.log( `Register package plugin: ${pluginName}` )
 
             } catch ( error ) {
@@ -48,6 +50,7 @@ class TAbstractDatabase {
 
                     const localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
                     plugin                = require( localPluginPath )
+                    plugin.__dirname      = path.dirname( require.resolve( localPluginPath ) )
                     console.log( `Register local plugin: ${pluginName}` )
 
                 } catch ( error ) {
@@ -68,21 +71,9 @@ class TAbstractDatabase {
 
         }
 
-        this._init()
-
     }
 
-    _init () {
-
-        console.error( 'TAbstractDatabase._init: Need to be reimplemented in inherited class !' )
-
-    }
-
-    connect () {
-
-        console.error( 'TAbstractDatabase.connect: Need to be reimplemented in inherited class !' )
-
-    }
+    connect () {}
 
     /**
      * startAutoConnect
@@ -107,17 +98,9 @@ class TAbstractDatabase {
         this._autoConnectionTimer = null
     }
 
-    close ( callback ) {
+    close ( callback ) {}
 
-        console.error( 'TAbstractDatabase.close: Need to be reimplemented in inherited class !' )
-
-    }
-
-    on ( eventName, callback ) {
-
-        console.error( 'TAbstractDatabase.on: Need to be reimplemented in inherited class !' )
-
-    }
+    on ( eventName, callback ) {}
 
 }
 
