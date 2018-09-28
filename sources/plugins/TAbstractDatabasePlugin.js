@@ -45,8 +45,8 @@ class TAbstractDatabasePlugin {
             handlerNameForMany: 'create'
         } : can.create
         if ( canCreate ) {
-            if ( canCreate.one ) {router.put( '/', controller[ canCreate.handlerName ].bind( controller ) ) }
-            if ( canCreate.many ) { router.put( '/:id', controller[ canCreate.handlerName ].bind( controller ) ) }
+            if ( canCreate.one ) {router.put( '/', controller[ canCreate.handlerNameForOne ].bind( controller ) ) }
+            if ( canCreate.many ) { router.put( '/:id', controller[ canCreate.handlerNameForMany ].bind( controller ) ) }
         }
 
         const canRead = (can.read === undefined) ? {
@@ -56,8 +56,8 @@ class TAbstractDatabasePlugin {
             handlerNameForMany: 'read'
         } : can.read
         if ( canRead ) {
-            if ( canRead.one ) { router.post( '/', controller[ canRead.handlerName ].bind( controller ) ) }
-            if ( canRead.many ) { router.post( '/:id', controller[ canRead.handlerName ].bind( controller ) ) }
+            if ( canRead.one ) { router.post( '/', controller[ canRead.handlerNameForOne ].bind( controller ) ) }
+            if ( canRead.many ) { router.post( '/:id', controller[ canRead.handlerNameForMany ].bind( controller ) ) }
         }
 
         const canUpdate = (can.update === undefined) ? {
@@ -67,8 +67,8 @@ class TAbstractDatabasePlugin {
             handlerNameForMany: 'update'
         } : can.update
         if ( canUpdate ) {
-            if ( canUpdate.one ) { router.patch( '/', controller[ canUpdate.handlerName ].bind( controller ) ) }
-            if ( canUpdate.many ) { router.patch( '/:id', controller[ canUpdate.handlerName ].bind( controller ) ) }
+            if ( canUpdate.one ) { router.patch( '/', controller[ canUpdate.handlerNameForOne ].bind( controller ) ) }
+            if ( canUpdate.many ) { router.patch( '/:id', controller[ canUpdate.handlerNameForMany ].bind( controller ) ) }
         }
 
         const canDelete = (can.delete === undefined) ? {
@@ -78,8 +78,8 @@ class TAbstractDatabasePlugin {
             handlerNameForMany: 'delete'
         } : can.delete
         if ( canDelete ) {
-            if ( canDelete.one ) { router.delete( '/', controller[ canDelete.handlerName ].bind( controller ) ) }
-            if ( canDelete.many ) { router.delete( '/:id', controller[ canDelete.handlerName ].bind( controller ) ) }
+            if ( canDelete.one ) { router.delete( '/', controller[ canDelete.handlerNameForOne ].bind( controller ) ) }
+            if ( canDelete.many ) { router.delete( '/:id', controller[ canDelete.handlerNameForMany ].bind( controller ) ) }
         }
 
         // Todo: i return not found
