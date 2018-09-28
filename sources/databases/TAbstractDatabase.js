@@ -78,11 +78,7 @@ class TAbstractDatabase {
 
     }
 
-    connect () {
-
-        console.error( 'TAbstractDatabase.connect: Need to be reimplemented in inherited class !' )
-
-    }
+    connect () {}
 
     /**
      * startAutoConnect
@@ -107,17 +103,9 @@ class TAbstractDatabase {
         this._autoConnectionTimer = null
     }
 
-    close ( callback ) {
+    close ( callback ) {}
 
-        console.error( 'TAbstractDatabase.close: Need to be reimplemented in inherited class !' )
-
-    }
-
-    on ( eventName, callback ) {
-
-        console.error( 'TAbstractDatabase.on: Need to be reimplemented in inherited class !' )
-
-    }
+    on ( eventName, callback ) {}
 
 }
 
