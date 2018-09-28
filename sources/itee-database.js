@@ -8,27 +8,37 @@
  *
  */
 
-const TAbstractDataController                       = require( './controllers/TAbstractDataController' )
-const TMongooseController                    	    = require( './controllers/TMongooseController' )
+// Controllers
+const TAbstractDataController = require( './controllers/TAbstractDataController' )
+const TMongooseController     = require( './controllers/TMongooseController' )
+
+// Converters
 const { MemoryWriteStream, TAbstractFileConverter } = require( './converters/TAbstractFileConverter' )
 const TAbstractDataConverter                        = require( './converters/TAbstractDataConverter' )
 const TAbstractDataInserter                         = require( './converters/TAbstractDataInserter' )
-const TAbstractDatabase                             = require( './databases/TAbstractDatabase' )
-const TMongoDBDatabase                              = require( './databases/TMongoDBDatabase' )
-const TPostgresDatabase                             = require( './databases/TPostgresDatabase' )
-const TAbstractDatabasePlugin                       = require( './plugins/TAbstractDatabasePlugin' )
+
+// Databases
+const TAbstractDatabase = require( './databases/TAbstractDatabase' )
+const TMongoDBDatabase  = require( './databases/TMongoDBDatabase' )
+const TPostgresDatabase = require( './databases/TPostgresDatabase' )
+
+// Plugins interfaces
+const TAbstractDatabasePlugin = require( './plugins/TAbstractDatabasePlugin' )
 const TMongoDBPlugin          = require( './plugins/TMongoDBPlugin' )
 
 module.exports = {
     TAbstractDataController,
     TMongooseController,
+
     MemoryWriteStream,
     TAbstractFileConverter,
     TAbstractDataConverter,
     TAbstractDataInserter,
+
     TAbstractDatabase,
     TMongoDBDatabase,
     TPostgresDatabase,
-    TAbstractDatabasePlugin
+
+    TAbstractDatabasePlugin,
     TMongoDBPlugin
 }

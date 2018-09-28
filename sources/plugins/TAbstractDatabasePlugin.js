@@ -78,20 +78,20 @@ class TAbstractDatabasePlugin {
 
     }
 
-    addController( value ) {
+    addController ( value ) {
 
-        this._controllers[value.constructor.name] = value
+        this._controllers[ value.constructor.name ] = value
         return this
 
     }
 
-    getController( name ) {
+    getController ( name ) {
 
         return (name) ? this._controllers[ name ] : this._controllers._default
 
     }
 
-    addDescriptor( value ) {
+    addDescriptor ( value ) {
 
         this._descriptors.push( value )
         return this
@@ -106,7 +106,7 @@ class TAbstractDatabasePlugin {
             const descriptor = descriptors[ index ]
 
             const ControllerCtor = this.getController()
-            const controller = new ControllerCtor( Mongoose, descriptor.controller.options )
+            const controller     = new ControllerCtor( Mongoose, descriptor.controller.options )
 
             Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( Router, controller, descriptor.controller.can ) )
 
@@ -114,14 +114,13 @@ class TAbstractDatabasePlugin {
 
     }
 
-    beforeRegisterRoutes( driver ) {}
+    beforeRegisterRoutes ( driver ) {}
 
     registerTo ( driver, application, router ) {
 
         this.beforeRegisterRoutes( driver )
 
         this._registerRoutesTo( driver, application, router )
-
 
     }
 

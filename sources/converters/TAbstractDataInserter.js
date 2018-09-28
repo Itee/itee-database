@@ -94,11 +94,7 @@ class TAbstractDataInserter {
 
     }
 
-    _save ( data, parameters, onSuccess, onProgress, onError ) {
-
-        console.error( "TAbstractDataInserter: _save method need to be reimplemented !" )
-
-    }
+    _save ( data, parameters, onSuccess, onProgress, onError ) {}
 
 }
 

@@ -15,7 +15,7 @@ class TPostgresDatabase extends TAbstractDatabase {
 
     constructor ( app, router, plugins, parameters ) {
 
-        super( PgPromise(parameters.databaseUrl), app, router, plugins, parameters )
+        super( PgPromise( parameters.databaseUrl ), app, router, plugins, parameters )
 
     }
 

@@ -7,10 +7,17 @@
  */
 
 const {
-          isNull, isUndefined, isNullOrUndefined, isDefined,
-          isNotString, isEmptyString, isBlankString,
-          isArray, isNotArray, isEmptyArray, isNotEmptyArray,
-          isObject, isNotObject, isEmptyObject, isNotEmptyObject,
+          isDefined,
+          isNotDefined,
+          isNotString,
+          isEmptyString,
+          isBlankString,
+          isArray,
+          isNotArray,
+          isEmptyArray,
+          isObject,
+          isNotObject,
+          isEmptyObject
       } = require( 'itee-validators' )
 
 const I = require( 'i-return' )
@@ -19,7 +26,7 @@ class TAbstractDataController {
 
     constructor ( driver, options ) {
 
-        this._driver = driver
+        this._driver  = driver
         this._options = options
 
     }
@@ -55,7 +62,7 @@ class TAbstractDataController {
 
             I.returnError( {
                 title:   'Erreur de paramètre',
-                message: dataName + " n'existe pas dans les paramètres !"
+                message: `${dataName} n'existe pas dans les paramètres !`
             }, response )
 
         }
@@ -64,17 +71,15 @@ class TAbstractDataController {
     create ( request, response ) {
 
         const data = request.body
-        if ( isNullOrUndefined( data ) ) {
+
+        if ( isNotDefined( data ) ) {
 
             I.returnError( {
                 title:   'Erreur de paramètre',
                 message: 'Le corps de la requete ne peut pas être null ou indefini.'
             }, response )
-            return
 
-        }
-
-        if ( isArray( data ) ) {
+        } else if ( isArray( data ) ) {
 
             if ( isEmptyArray( data ) ) {
 
@@ -82,11 +87,12 @@ class TAbstractDataController {
                     title:   'Erreur de paramètre',
                     message: 'Le tableau d\'objet de la requete ne peut pas être vide.'
                 }, response )
-                return
+
+            } else {
+
+                this._createMany( data, response )
 
             }
-
-            this._createMany( data, response )
 
         } else if ( isObject( data ) ) {
 
@@ -96,11 +102,12 @@ class TAbstractDataController {
                     title:   'Erreur de paramètre',
                     message: 'L\'objet de la requete ne peut pas être vide.'
                 }, response )
-                return
+
+            } else {
+
+                this._createOne( data, response )
 
             }
-
-            this._createOne( data, response )
 
         } else {
 
@@ -108,7 +115,6 @@ class TAbstractDataController {
                 title:   'Erreur de paramètre',
                 message: 'Le type de donnée de la requete est invalide. Les paramètres valides sont objet ou un tableau d\'objet.'
             }, response )
-            return
 
         }
 
@@ -122,7 +128,7 @@ class TAbstractDataController {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
-        const haveBody    = ( isDefined( requestBody ) )
+        const haveBody    = (isDefined( requestBody ))
         const ids         = (haveBody) ? requestBody.ids : null
         const query       = (haveBody) ? requestBody.query : null
         const projection  = (haveBody) ? requestBody.projection : null
@@ -213,22 +219,19 @@ class TAbstractDataController {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
-        const haveBody    = ( isDefined( requestBody ) )
+        const haveBody    = (isDefined( requestBody ))
         const ids         = (haveBody) ? requestBody.ids : null
         const query       = (haveBody) ? requestBody.query : null
         const update      = (haveBody) ? requestBody.update : null
 
-        if ( isNullOrUndefined( update ) ) {
+        if ( isNotDefined( update ) ) {
 
             I.returnError( {
                 title:   'Erreur de paramètre',
                 message: 'La mise à jour a appliquer ne peut pas être null ou indefini.'
             }, response )
-            return
 
-        }
-
-        if ( isDefined( id ) ) {
+        } else if ( isDefined( id ) ) {
 
             if ( isNotString( id ) ) {
 
@@ -314,7 +317,7 @@ class TAbstractDataController {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
-        const haveBody    = ( isDefined( requestBody ) )
+        const haveBody    = (isDefined( requestBody ))
         const ids         = (haveBody) ? requestBody.ids : null
         const query       = (haveBody) ? requestBody.query : null
 
