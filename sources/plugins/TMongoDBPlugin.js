@@ -100,3 +100,5 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     }
 
 }
+
+module.exports = TMongoDBPlugin
