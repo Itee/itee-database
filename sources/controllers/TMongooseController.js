@@ -12,10 +12,10 @@ const i                       = require( 'i-return' )
 
 class TMongooseController extends TAbstractDataController {
 
-    constructor ( databaseSchema ) {
-        super()
+    constructor ( Mongoose, options ) {
+        super( Mongoose, options )
 
-        this.databaseSchema = databaseSchema
+        this.databaseSchema = Mongoose.model( options.schemaName )
 
     }
 
