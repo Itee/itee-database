@@ -10,7 +10,31 @@
 
 class TAbstractDatabasePlugin {
 
-    static _populateRouter ( Router, controller, can ) {
+    constructor ( DefaultController ) {
+
+        this._controllers = {
+            undefined: DefaultController
+        }
+        this._descriptors = []
+
+        this.__dirname = undefined
+
+    }
+
+    static _registerRoutesTo ( Mongoose, Application, Router, ControllerCtors, descriptors ) {
+
+        for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
+
+            const descriptor = descriptors[ index ]
+            const controller = new ControllerCtors[ descriptor.controller.name ]( Mongoose, descriptor.controller.options )
+
+            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( Router, controller, descriptor.controller.can ) )
+
+        }
+
+    }
+
+    static _populateRouter ( Router, controller, can = {} ) {
 
         const router = Router( { mergeParams: true } )
 
@@ -69,25 +93,10 @@ class TAbstractDatabasePlugin {
 
     }
 
-    constructor ( DefaultController ) {
-
-        this._controllers = {
-            _default: DefaultController
-        }
-        this._descriptors = []
-
-    }
-
     addController ( value ) {
 
         this._controllers[ value.name ] = value
         return this
-
-    }
-
-    getController ( name ) {
-
-        return (name) ? this._controllers[ name ] : this._controllers._default
 
     }
 
@@ -98,29 +107,13 @@ class TAbstractDatabasePlugin {
 
     }
 
-    _registerRoutesTo ( Mongoose, Application, Router ) {
-
-        const descriptors = this._descriptors
-        for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
-
-            const descriptor = descriptors[ index ]
-
-            const ControllerCtor = this.getController()
-            const controller     = new ControllerCtor( Mongoose, descriptor.controller.options )
-
-            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( Router, controller, descriptor.controller.can ) )
-
-        }
-
-    }
-
     beforeRegisterRoutes ( driver ) {}
 
     registerTo ( driver, application, router ) {
 
         this.beforeRegisterRoutes( driver )
 
-        this._registerRoutesTo( driver, application, router )
+        TAbstractDatabasePlugin._registerRoutesTo( driver, application, router, this._controllers, this._descriptors )
 
     }
 
