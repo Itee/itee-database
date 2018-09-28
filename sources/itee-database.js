@@ -17,6 +17,7 @@ const TAbstractDatabase                             = require( './databases/TAbs
 const TMongoDBDatabase                              = require( './databases/TMongoDBDatabase' )
 const TPostgresDatabase                             = require( './databases/TPostgresDatabase' )
 const TAbstractDatabasePlugin                       = require( './plugins/TAbstractDatabasePlugin' )
+const TMongoDBPlugin          = require( './plugins/TMongoDBPlugin' )
 
 module.exports = {
     TAbstractDataController,
@@ -29,4 +30,5 @@ module.exports = {
     TMongoDBDatabase,
     TPostgresDatabase,
     TAbstractDatabasePlugin
+    TMongoDBPlugin
 }
