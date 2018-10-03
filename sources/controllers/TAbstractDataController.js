@@ -27,7 +27,9 @@ class TAbstractDataController {
     constructor ( driver, options ) {
 
         this._driver  = driver
-        this._options = options
+        this._options = Object.assign({
+            useNext: false
+        }, options )
 
     }
 
@@ -68,7 +70,7 @@ class TAbstractDataController {
         }
     }
 
-    create ( request, response ) {
+    create ( request, response, next ) {
 
         const data = request.body
 
@@ -77,7 +79,7 @@ class TAbstractDataController {
             I.returnError( {
                 title:   'Erreur de paramètre',
                 message: 'Le corps de la requete ne peut pas être null ou indefini.'
-            }, response )
+            }, ( this._options.useNext ) ? next : response )
 
         } else if ( isArray( data ) ) {
 
@@ -86,11 +88,11 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'Le tableau d\'objet de la requete ne peut pas être vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._createMany( data, response )
+                this._createMany( data, response, next )
 
             }
 
@@ -101,11 +103,11 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'L\'objet de la requete ne peut pas être vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._createOne( data, response )
+                this._createOne( data, response, next )
 
             }
 
@@ -114,17 +116,17 @@ class TAbstractDataController {
             I.returnError( {
                 title:   'Erreur de paramètre',
                 message: 'Le type de donnée de la requete est invalide. Les paramètres valides sont objet ou un tableau d\'objet.'
-            }, response )
+            }, ( this._options.useNext ) ? next : response )
 
         }
 
     }
 
-    _createOne ( data, response ) {}
+    _createOne ( data, response, next ) {}
 
-    _createMany ( datas, response ) {}
+    _createMany ( datas, response, next ) {}
 
-    read ( request, response ) {
+    read ( request, response, next ) {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
@@ -140,18 +142,18 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'L\'identifiant devrait être une chaine de caractères.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyString( id ) || isBlankString( id ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._readOne( id, projection, response )
+                this._readOne( id, projection, response, next )
 
             }
 
@@ -162,18 +164,18 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyArray( ids ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'Le tableau d\'identifiants ne peut pas être vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._readMany( ids, projection, response )
+                this._readMany( ids, projection, response, next )
 
             }
 
@@ -184,38 +186,38 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'La requete devrait être un objet javascript.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyObject( query ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'La requete ne peut pas être vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._readWhere( query, projection, response )
+                this._readWhere( query, projection, response, next )
 
             }
 
         } else {
 
-            this._readAll( projection, response )
+            this._readAll( projection, response, next )
 
         }
 
     }
 
-    _readOne ( id, projection, response ) {}
+    _readOne ( id, projection, response, next ) {}
 
-    _readMany ( ids, projection, response ) {}
+    _readMany ( ids, projection, response, next ) {}
 
-    _readWhere ( query, projection, response ) {}
+    _readWhere ( query, projection, response, next ) {}
 
-    _readAll ( projection, response ) {}
+    _readAll ( projection, response, next ) {}
 
-    update ( request, response ) {
+    update ( request, response, next ) {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
@@ -229,7 +231,7 @@ class TAbstractDataController {
             I.returnError( {
                 title:   'Erreur de paramètre',
                 message: 'La mise à jour a appliquer ne peut pas être null ou indefini.'
-            }, response )
+            }, ( this._options.useNext ) ? next : response )
 
         } else if ( isDefined( id ) ) {
 
@@ -238,18 +240,18 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'L\'identifiant devrait être une chaine de caractères.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyString( id ) || isBlankString( id ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._updateOne( id, update, response )
+                this._updateOne( id, update, response, next )
 
             }
 
@@ -260,18 +262,18 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyArray( ids ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'Le tableau d\'identifiants ne peut pas être vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._updateMany( ids, update, response )
+                this._updateMany( ids, update, response, next )
 
             }
 
@@ -282,38 +284,38 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'La requete devrait être un objet javascript.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyObject( query ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'La requete ne peut pas être vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._updateWhere( query, update, response )
+                this._updateWhere( query, update, response, next )
 
             }
 
         } else {
 
-            this._updateAll( update, response )
+            this._updateAll( update, response, next )
 
         }
 
     }
 
-    _updateOne ( id, update, response ) {}
+    _updateOne ( id, update, response, next ) {}
 
-    _updateMany ( ids, update, response ) {}
+    _updateMany ( ids, update, response, next ) {}
 
-    _updateWhere ( query, update, response ) {}
+    _updateWhere ( query, update, response, next ) {}
 
-    _updateAll ( update, response ) {}
+    _updateAll ( update, response, next ) {}
 
-    delete ( request, response ) {
+    delete ( request, response, next ) {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
@@ -328,18 +330,18 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'L\'identifiant devrait être une chaine de caractères.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyString( id ) || isBlankString( id ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._deleteOne( id, response )
+                this._deleteOne( id, response, next )
 
             }
 
@@ -350,18 +352,18 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyArray( ids ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'Le tableau d\'identifiants ne peut pas être vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._deleteMany( ids, response )
+                this._deleteMany( ids, response, next )
 
             }
 
@@ -372,36 +374,36 @@ class TAbstractDataController {
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'La requete devrait être un objet javascript.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else if ( isEmptyObject( query ) ) {
 
                 I.returnError( {
                     title:   'Erreur de paramètre',
                     message: 'La requete ne peut pas être vide.'
-                }, response )
+                }, ( this._options.useNext ) ? next : response )
 
             } else {
 
-                this._deleteWhere( query, response )
+                this._deleteWhere( query, response, next )
 
             }
 
         } else {
 
-            this._deleteAll( response )
+            this._deleteAll( response, next )
 
         }
 
     }
 
-    _deleteOne ( id, response ) {}
+    _deleteOne ( id, response, next ) {}
 
-    _deleteMany ( ids, response ) {}
+    _deleteMany ( ids, response, next ) {}
 
-    _deleteWhere ( query, response ) {}
+    _deleteWhere ( query, response, next ) {}
 
-    _deleteAll ( response ) {}
+    _deleteAll ( response, next ) {}
 
 }
 

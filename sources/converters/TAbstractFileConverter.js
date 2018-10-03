@@ -273,11 +273,7 @@ class TAbstractFileConverter {
 
     }
 
-    _convert ( data, parameters, onSuccess, onProgress, onError ) {
-
-        console.error( '_convert: Need to be reimplemented in inherited class !' )
-
-    }
+    _convert ( data, parameters, onSuccess, onProgress, onError ) {}
 
 }
 
