@@ -13,9 +13,10 @@ const TAbstractDataController = require( './controllers/TAbstractDataController'
 const TMongooseController     = require( './controllers/TMongooseController' )
 
 // Converters
-const { MemoryWriteStream, TAbstractFileConverter } = require( './converters/TAbstractFileConverter' )
+const TAbstractConverterManager                     = require( './converters/TAbstractConverterManager' )
 const TAbstractDataConverter                        = require( './converters/TAbstractDataConverter' )
 const TAbstractDataInserter                         = require( './converters/TAbstractDataInserter' )
+const { MemoryWriteStream, TAbstractFileConverter } = require( './converters/TAbstractFileConverter' )
 
 // Databases
 const TAbstractDatabase = require( './databases/TAbstractDatabase' )
@@ -30,10 +31,11 @@ module.exports = {
     TAbstractDataController,
     TMongooseController,
 
-    MemoryWriteStream,
-    TAbstractFileConverter,
+    TAbstractConverterManager,
     TAbstractDataConverter,
     TAbstractDataInserter,
+    MemoryWriteStream,
+    TAbstractFileConverter,
 
     TAbstractDatabase,
     TMongoDBDatabase,
