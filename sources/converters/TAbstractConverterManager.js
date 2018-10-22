@@ -55,23 +55,16 @@ class TAbstractConverterManager {
         this._inserter.save(
             data,
             this._convertersOptions,
-            //            {
-            //                parentId:        this._parentId,
-            //                disableRootNode: this._disableRootNode
-            //            },
-            ( success ) => {
-
-                this._checkEndOfReturns( response, [
-                    {
-                        title:   'Succées',
-                        message: `Sauvegarder sous l'identifiant ${success}`
-                    }
-                ], next )
-
-            },
+            this._fileInsertionSuccessCallback.bind( this, response, next ),
             this._fileConversionProgressCallback.bind( this, response ),
-            this._fileConversionErrorCallback.bind( this, response )
+            this._fileConversionErrorCallback.bind( this, response, next )
         )
+
+    }
+
+    _fileInsertionSuccessCallback ( response, next, data ) {
+
+        this._checkEndOfReturns( response, next, data )
 
     }
 
