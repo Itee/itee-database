@@ -9,6 +9,7 @@
 const {
           isDefined,
           isNotDefined,
+          isString,
           isNotString,
           isEmptyString,
           isBlankString,
@@ -17,7 +18,8 @@ const {
           isEmptyArray,
           isObject,
           isNotObject,
-          isEmptyObject
+          isEmptyObject,
+          isFunction
       } = require( 'itee-validators' )
 
 const I = require( 'i-return' )
