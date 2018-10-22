@@ -84,11 +84,11 @@ class TAbstractConverterManager {
     _fileConversionErrorCallback ( response, next, error ) {
 
         this._errors.push( error )
-        this._checkEndOfReturns( response, null, next )
+        this._checkEndOfReturns( response, next, null )
 
     }
 
-    _checkEndOfReturns ( response, data, next ) {
+    _checkEndOfReturns ( response, next, data ) {
 
         if ( this._errors.length > 0 ) {
 
