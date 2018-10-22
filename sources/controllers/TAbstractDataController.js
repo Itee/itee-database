@@ -70,6 +70,78 @@ class TAbstractDataController {
         }
     }
 
+    /**
+     * Normalize error that can be in different format like single string, object, array of string, or array of object.
+     *
+     * @example <caption>Normalized error are simple literal object like:</caption>
+     * {
+     *     title: 'error',
+     *     message: 'the error message'
+     * }
+     *
+     * @param {String|Object|Array.<String>|Array.<Object>} error - The error object to normalize
+     * @returns {Array.<Object>}
+     * @private
+     */
+    static _formatError ( error ) {
+        let errorsList = []
+
+        if ( isArray( error ) ) {
+
+            for ( let i = 0, l = error.length ; i < l ; ++i ) {
+                errorsList = errorsList.concat( TAbstractDataController._formatError( error[ i ] ) )
+            }
+
+        } else if ( isObject( error ) ) {
+
+            if ( error.name === 'ValidationError' ) {
+
+                let _message  = ''
+                let subsError = error.errors
+
+                for ( let property in subsError ) {
+                    if ( !subsError.hasOwnProperty( property ) ) { continue }
+                    _message += subsError[ property ].message + '<br>'
+                }
+
+                errorsList.push( {
+                    title:   'Erreur de validation',
+                    message: _message || 'Aucun message d\'erreur... Gloups !'
+                } )
+
+            } else if ( error.name === 'VersionError' ) {
+
+                errorsList.push( {
+                    title:   'Erreur de base de donnée',
+                    message: 'Aucun document correspondant n\'as put être trouvé pour la requete !'
+                } )
+
+            } else {
+
+                errorsList.push( {
+                    title:   error.title || 'Erreur',
+                    message: error.message || 'Aucun message d\'erreur... Gloups !'
+                } )
+
+            }
+
+        } else if ( isString( error ) ) {
+
+            errorsList.push( {
+                title:   'Erreur',
+                message: error
+            } )
+
+        } else {
+
+            throw new Error( `Unknown error type: ${error} !` )
+
+        }
+
+        return errorsList
+
+    }
+
     create ( request, response, next ) {
 
         const data = request.body
