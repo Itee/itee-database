@@ -48,7 +48,17 @@ class TAbstractDatabase {
 
                 try {
 
-                    const localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
+                    // todo: improve local plugin path management
+                    let localPluginPath = undefined
+                    if( pluginName.includes('/') ) {
+
+                        const splits = pluginName.split('/')
+                        localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, splits[1] + '.js' )
+
+                    } else {
+                        localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
+                    }
+
                     plugin                = require( localPluginPath )
                     plugin.__dirname      = path.dirname( require.resolve( localPluginPath ) )
                     console.log( `Register local plugin: ${pluginName}` )

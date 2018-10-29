@@ -247,11 +247,11 @@ class TAbstractDataController {
         response.format( {
 
             'application/json': () => {
-                response.status( 520 ).json( result )
+                response.status( 416 ).json( result )
             },
 
             'default': () => {
-                response.status( 406 ).send( 'Not Acceptable' )
+                response.status( 416 ).send( 'Range Not Satisfiable' )
             }
 
         } )

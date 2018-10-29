@@ -6,7 +6,7 @@
  * @classdesc The TMongooseController is the base class to perform CRUD operations on the database
  */
 
-const { isNull, isUndefined } = require( 'itee-validators' )
+const { isNull, isUndefined, isEmptyArray } = require( 'itee-validators' )
 const TAbstractDataController = require( './TAbstractDataController' )
 
 class TMongooseController extends TAbstractDataController {
@@ -63,7 +63,15 @@ class TMongooseController extends TAbstractDataController {
             .findById( id, projection )
             .lean()
             .exec()
-            .then( data => TAbstractDataController.returnData( data, response ) )
+            .then( (data) => {
+
+                if( isNull(data) ) {
+                    TAbstractDataController.returnNotFound( response )
+                } else {
+                    TAbstractDataController.returnData( data, response )
+                }
+
+            } )
             .catch( error => TAbstractDataController.returnError( error, response ) )
 
     }
@@ -75,7 +83,17 @@ class TMongooseController extends TAbstractDataController {
             .find( { '_id': { $in: ids } }, projection )
             .lean()
             .exec()
-            .then( data => TAbstractDataController.returnData( data, response ) )
+            .then( (data) => {
+
+                if( isNull(data) || isEmptyArray(data) ) {
+                    TAbstractDataController.returnNotFound( response )
+                } else if( ids.length !== data.length ) {
+                    TAbstractDataController.returnErrorAndData( {title: 'Missing data', message: 'Some requested objects could not be found.'}, data, response )
+                } else {
+                    TAbstractDataController.returnData( data, response )
+                }
+
+            } )
             .catch( error => TAbstractDataController.returnError( error, response ) )
 
     }
