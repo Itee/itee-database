@@ -149,20 +149,13 @@ class TAbstractFileConverter {
             onError
         } )
 
-        if ( !this._isProcessing ) {
-            this._processQueue()
-        }
+        this._processQueue()
 
     }
 
     _processQueue () {
 
-        if ( this._queue.length === 0 ) {
-
-            this._isProcessing = false
-            return
-
-        }
+        if ( this._queue.length === 0 || this._isProcessing ) { return }
 
         this._isProcessing = true
 
@@ -198,6 +191,8 @@ class TAbstractFileConverter {
         function _onProcessSuccess ( threeData ) {
 
             onSuccess( threeData )
+
+            self._isProcessing = false
             self._processQueue()
 
         }
@@ -211,6 +206,8 @@ class TAbstractFileConverter {
         function _onProcessError ( error ) {
 
             onError( error )
+
+            self._isProcessing = false
             self._processQueue()
 
         }
