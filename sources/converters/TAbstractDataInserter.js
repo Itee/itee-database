@@ -8,7 +8,7 @@
  *
  */
 
-    // Todo: Extend from TDataQueueProcessor
+// Todo: Extend from TDataQueueProcessor
 class TAbstractDataInserter {
 
     constructor ( driver ) {
@@ -39,20 +39,13 @@ class TAbstractDataInserter {
             onError
         } )
 
-        if ( !this._isProcessing ) {
-            this._processQueue()
-        }
+        this._processQueue()
 
     }
 
     _processQueue () {
 
-        if ( this._queue.length === 0 ) {
-
-            this._isProcessing = false
-            return
-
-        }
+        if ( this._queue.length === 0 || this._isProcessing ) { return }
 
         this._isProcessing = true
 
@@ -75,6 +68,8 @@ class TAbstractDataInserter {
         function _onSaveSuccess ( result ) {
 
             onSuccess( result )
+
+            self._isProcessing = false
             self._processQueue()
 
         }
@@ -88,6 +83,8 @@ class TAbstractDataInserter {
         function _onSaveError ( error ) {
 
             onError( error )
+
+            self._isProcessing = false
             self._processQueue()
 
         }

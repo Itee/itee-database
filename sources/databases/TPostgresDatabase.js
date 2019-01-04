@@ -17,9 +17,19 @@ class TPostgresDatabase extends TAbstractDatabase {
 
         super( PgPromise( parameters.databaseUrl ), app, router, plugins, parameters )
 
+        this.databaseUrl = parameters.databaseUrl
     }
 
-    connect () {}
+    connect () {
+
+        this._driver.one( ` SELECT 1 `, [] )
+            .then( ( data ) => {
+                console.log( `PostgreSQL at ${this.databaseUrl.host}:${this.databaseUrl.port}/${this.databaseUrl.database} is connected` )
+            } )
+            .catch( ( error ) => {
+                console.log( 'PostgreSQL - Connection error ', error )
+            } )
+    }
 
     close ( onCloseCallback ) {}
 
