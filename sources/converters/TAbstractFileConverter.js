@@ -136,6 +136,11 @@ class TAbstractFileConverter {
 
     convert ( file, parameters, onSuccess, onProgress, onError ) {
 
+        if ( !file ) {
+            onError( 'File cannot be null or empty, aborting file convertion !!!' )
+            return
+        }
+
         this._queue.push( {
             file,
             parameters,
