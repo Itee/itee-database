@@ -160,7 +160,7 @@ class TMongooseController extends TAbstractDataController {
 
             numberOfUpdate++
 
-            if ( numberOfUpdate < numberOfUpdate - 1 ) {
+            if ( numberOfUpdate < numberOfDatas - 1 ) {
                 return
             }
 
