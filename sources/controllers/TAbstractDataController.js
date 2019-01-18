@@ -209,10 +209,12 @@ class TAbstractDataController {
         if ( isFunction( response ) ) { return response( null, data ) }
         if ( response.headersSent ) { return }
 
+        const _data = isArray( data ) ? data : [ data ]
+
         response.format( {
 
             'application/json': () => {
-                response.status( 200 ).json( data )
+                response.status( 200 ).json( _data )
             },
 
             'default': () => {
