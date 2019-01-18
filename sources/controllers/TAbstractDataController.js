@@ -456,10 +456,7 @@ class TAbstractDataController {
 
             } else if ( isEmptyObject( query ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'La requete ne peut pas être vide.'
-                }, (this._options.useNext) ? next : response )
+                this._readAll( projection, response, next )
 
             } else {
 
@@ -469,7 +466,10 @@ class TAbstractDataController {
 
         } else {
 
-            this._readAll( projection, response, next )
+            TAbstractDataController.returnError( {
+                title:   'Erreur de paramètre',
+                message: 'La requete ne peut pas être null.'
+            }, (this._options.useNext) ? next : response )
 
         }
 
@@ -554,10 +554,7 @@ class TAbstractDataController {
 
             } else if ( isEmptyObject( query ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'La requete ne peut pas être vide.'
-                }, (this._options.useNext) ? next : response )
+                this._updateAll( update, response, next )
 
             } else {
 
@@ -567,7 +564,10 @@ class TAbstractDataController {
 
         } else {
 
-            this._updateAll( update, response, next )
+            TAbstractDataController.returnError( {
+                title:   'Erreur de paramètre',
+                message: 'La requete ne peut pas être vide.'
+            }, (this._options.useNext) ? next : response )
 
         }
 
@@ -644,10 +644,7 @@ class TAbstractDataController {
 
             } else if ( isEmptyObject( query ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'La requete ne peut pas être vide.'
-                }, (this._options.useNext) ? next : response )
+                this._deleteAll( response, next )
 
             } else {
 
@@ -657,7 +654,10 @@ class TAbstractDataController {
 
         } else {
 
-            this._deleteAll( response, next )
+            TAbstractDataController.returnError( {
+                title:   'Erreur de paramètre',
+                message: 'La requete ne peut pas être vide.'
+            }, (this._options.useNext) ? next : response )
 
         }
 
