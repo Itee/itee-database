@@ -137,68 +137,21 @@ class TMongooseController extends TAbstractDataController {
     _updateMany ( ids, update, response ) {
         super._updateMany( ids, update, response )
 
-        const numberOfDatas = ids.length
-        let numberOfUpdate  = 0
-        let errors          = []
-        let results         = []
-
-        for ( let dataIndex = 0 ; dataIndex < numberOfDatas ; dataIndex++ ) {
-
-            this._databaseSchema.update( { _id: ids[ dataIndex ] }, update, onEnd )
-
-        }
-
-        function onEnd ( error, result ) {
-
-            if ( error ) {
-                errors.push( error )
-            }
-
-            if ( result ) {
-                results.push( result )
-            }
-
-            numberOfUpdate++
-
-            if ( numberOfUpdate < numberOfDatas - 1 ) {
-                return
-            }
-
-            const haveErrors = (errors.length > 0)
-            const haveDatas  = (results.length > 0)
-            if ( haveErrors && haveDatas ) {
-
-                TAbstractDataController.returnErrorAndData( errors, results, response )
-
-            } else if ( haveErrors && !haveDatas ) {
-
-                TAbstractDataController.returnError( errors, response )
-
-            } else if ( !haveErrors && haveDatas ) {
-
-                TAbstractDataController.returnData( results, response )
-
-            } else {
-
-                TAbstractDataController.returnNotFound( response )
-
-            }
-
-        }
+        this._databaseSchema.update( { _id: { $in: ids } }, update, { multi: true }, this.return( response ) )
 
     }
 
     _updateWhere ( query, update, response ) {
         super._updateWhere( query, update, response )
 
-        this._databaseSchema.update( query, update, this.return( response ) )
+        this._databaseSchema.update( query, update, { multi: true }, this.return( response ) )
 
     }
 
     _updateAll ( update, response ) {
         super._updateAll( update, response )
 
-        // Not allowed !
+        this._databaseSchema.update( {}, update, { multi: true }, this.return( response ) )
 
     }
 
