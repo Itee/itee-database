@@ -14,7 +14,6 @@ const PgPromise         = require( 'pg-promise' )( {} )
 class TPostgresDatabase extends TAbstractDatabase {
 
     constructor ( app, router, plugins, parameters ) {
-
         super( PgPromise( parameters.databaseUrl ), app, router, plugins, parameters )
 
         this.databaseUrl = parameters.databaseUrl
@@ -30,7 +29,7 @@ class TPostgresDatabase extends TAbstractDatabase {
                 console.log( 'PostgreSQL - Connection error ', error )
             } )
     }
-
+ 
     close ( onCloseCallback ) {}
 
     on ( eventName, callback ) {}
