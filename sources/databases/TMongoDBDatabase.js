@@ -21,6 +21,12 @@ class TMongoDBDatabase extends TAbstractDatabase {
 
     }
 
+    close ( onCloseCallback ) {
+
+        this._driver.connection.close( onCloseCallback )
+
+    }
+
     connect () {
 
         const self = this
@@ -33,12 +39,6 @@ class TMongoDBDatabase extends TAbstractDatabase {
                 console.error( err )
                 self.startAutoConnect()
             } )
-
-    }
-
-    close ( onCloseCallback ) {
-
-        this._driver.connection.close( onCloseCallback )
 
     }
 

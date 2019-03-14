@@ -25,6 +25,21 @@ class MemoryWriteStream extends Writable {
         this.offset       = 0
     }
 
+    toString () {
+
+        const string = this.memoryBuffer.toString()
+        this._releaseMemory()
+
+        return string
+
+    }
+
+    _final ( callback ) {
+
+        callback()
+
+    }
+
     _write ( chunk, encoding, callback ) {
 
         // our memory store stores things in buffers
@@ -52,19 +67,13 @@ class MemoryWriteStream extends Writable {
 
     }
 
-    _final ( callback ) {
-
-        callback()
-
-    }
+    ////
 
     _releaseMemory () {
 
         this.memoryBuffer = null
 
     }
-
-    ////
 
     toArrayBuffer () {
 
@@ -79,15 +88,6 @@ class MemoryWriteStream extends Writable {
         this._releaseMemory()
 
         return arrayBuffer
-
-    }
-
-    toString () {
-
-        const string = this.memoryBuffer.toString()
-        this._releaseMemory()
-
-        return string
 
     }
 

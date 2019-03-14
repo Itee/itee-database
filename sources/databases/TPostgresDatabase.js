@@ -19,6 +19,8 @@ class TPostgresDatabase extends TAbstractDatabase {
         this.databaseUrl = parameters.databaseUrl
     }
 
+    close ( onCloseCallback ) {}
+
     connect () {
 
         this._driver.one( ` SELECT 1 `, [] )
@@ -29,8 +31,6 @@ class TPostgresDatabase extends TAbstractDatabase {
                 console.log( 'PostgreSQL - Connection error ', error )
             } )
     }
-
-    close ( onCloseCallback ) {}
 
     on ( eventName, callback ) {}
 
