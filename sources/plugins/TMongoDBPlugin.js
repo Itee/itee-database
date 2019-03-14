@@ -8,11 +8,11 @@
  *
  */
 
-const path                                = require( 'path' )
-const { fileIsEmpty, getFilesPathsUnder } = require( 'itee-utils' )
-const { isFunction }                      = require( 'itee-validators' )
-const TAbstractDatabasePlugin             = require( './TAbstractDatabasePlugin' )
-const TMongooseController                 = require( '../controllers/TMongooseController' )
+const path                                                        = require( 'path' )
+const { getFilesPathsUnder, isInvalidDirectoryPath, isEmptyFile } = require( 'itee-utils' )
+const { isFunction }                                              = require( 'itee-validators' )
+const TAbstractDatabasePlugin                                     = require( './TAbstractDatabasePlugin' )
+const TMongooseController                                         = require( '../controllers/TMongooseController' )
 
 class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
@@ -23,9 +23,8 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     static _registerTypesTo ( Mongoose, dirname ) {
 
         const typesBasePath = path.join( dirname, 'types' )
-        // Todo: getFilesPathsUnder should throw in case of unexisting path ?
-        if ( !fs.existsSync( typesBasePath ) ) {
-            console.warn( 'Unable to find "types" folder for path "' + typesBasePath + '"' )
+        if ( isInvalidDirectoryPath( typesBasePath ) ) {
+            console.warn( `Unable to find "types" folder for path "${typesBasePath}"` )
             return
         }
 
@@ -37,9 +36,11 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
             typeFilePath = typesFilesPaths[ typeIndex ]
 
-            if ( fileIsEmpty( typeFilePath, 200 ) ) {
+            if ( isEmptyFile( typeFilePath, 200 ) ) {
+
                 console.warn( `Skip empty core database schema: ${typeFilePath}` )
                 continue
+
             }
 
             typeFile = require( typeFilePath )
@@ -62,9 +63,8 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     static _registerSchemasTo ( Mongoose, dirname ) {
 
         const localSchemasBasePath = path.join( dirname, 'schemas' )
-        // Todo: getFilesPathsUnder should throw in case of unexisting path ?
-        if ( !fs.existsSync( localSchemasBasePath ) ) {
-            console.warn( 'Unable to find "schemas" folder for path "' + localSchemasBasePath + '"' )
+        if ( isInvalidDirectoryPath( localSchemasBasePath ) ) {
+            console.warn( `Unable to find "schemas" folder for path "${localSchemasBasePath}"` )
             return
         }
 
@@ -75,10 +75,11 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
             localSchemaFilePath = localSchemasFilesPaths[ schemaIndex ]
 
-            if ( fileIsEmpty( localSchemaFilePath ) ) {
+            if ( isEmptyFile( localSchemaFilePath ) ) {
 
                 console.warn( `Skip empty local database schema: ${localSchemaFilePath}` )
                 continue
+
             }
 
             localSchemaFile = require( localSchemaFilePath )

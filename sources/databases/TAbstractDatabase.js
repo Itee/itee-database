@@ -46,26 +46,36 @@ class TAbstractDatabase {
 
             } catch ( error ) {
 
-                try {
+                if ( error.code && error.code === 'MODULE_NOT_FOUND' ) {
 
-                    // todo: improve local plugin path management
-                    let localPluginPath = undefined
-                    if ( pluginName.includes( '/' ) ) {
+                    try {
 
-                        const splits    = pluginName.split( '/' )
-                        localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, splits[ 1 ] + '.js' )
+                        // todo: improve local plugin path management
+                        let localPluginPath = undefined
+                        if ( pluginName.includes( '/' ) ) {
 
-                    } else {
-                        localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
+                            const splits    = pluginName.split( '/' )
+                            localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, splits[ 1 ] + '.js' )
+
+                        } else {
+                            localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
+                        }
+
+                        plugin           = require( localPluginPath )
+                        plugin.__dirname = path.dirname( require.resolve( localPluginPath ) )
+                        console.log( `Register local plugin: ${pluginName}` )
+
+                    } catch ( error ) {
+
+                        console.error( `Unable to register the plugin ${pluginName} the package or local folder doesn't seem to exist ! Skip it.` )
+                        continue
+
                     }
 
-                    plugin           = require( localPluginPath )
-                    plugin.__dirname = path.dirname( require.resolve( localPluginPath ) )
-                    console.log( `Register local plugin: ${pluginName}` )
+                } else {
 
-                } catch ( error ) {
-
-                    console.error( `Unable to register the plugin ${pluginName} the package or local folder doesn't seem to exist ! Skip it.` )
+                    console.error( `The plugin "${pluginName}" seems to encounter internal error !` )
+                    console.error( error )
                     continue
 
                 }
