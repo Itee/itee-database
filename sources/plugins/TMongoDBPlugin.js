@@ -22,10 +22,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
     static _registerTypesTo ( Mongoose, dirname ) {
 
-        const typesBasePath   = path.join( dirname, 'types' )
+        const typesBasePath = path.join( dirname, 'types' )
         // Todo: getFilesPathsUnder should throw in case of unexisting path ?
         if ( !fs.existsSync( typesBasePath ) ) {
-            console.warn( 'Unable to find "types" folder for path "' + typesBasePath + '"' );
+            console.warn( 'Unable to find "types" folder for path "' + typesBasePath + '"' )
             return
         }
 
@@ -61,10 +61,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
     static _registerSchemasTo ( Mongoose, dirname ) {
 
-        const localSchemasBasePath   = path.join( dirname, 'schemas' )
+        const localSchemasBasePath = path.join( dirname, 'schemas' )
         // Todo: getFilesPathsUnder should throw in case of unexisting path ?
         if ( !fs.existsSync( localSchemasBasePath ) ) {
-            console.warn( 'Unable to find "schemas" folder for path "' + localSchemasBasePath + '"' );
+            console.warn( 'Unable to find "schemas" folder for path "' + localSchemasBasePath + '"' )
             return
         }
 

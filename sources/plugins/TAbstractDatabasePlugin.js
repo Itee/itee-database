@@ -27,7 +27,7 @@ class TAbstractDatabasePlugin {
 
             const descriptor = descriptors[ index ]
             const controller = new ControllerCtors[ descriptor.controller.name ]( Driver, descriptor.controller.options )
-            const router = Router( { mergeParams: true } )
+            const router     = Router( { mergeParams: true } )
 
             Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) )
 
@@ -39,9 +39,9 @@ class TAbstractDatabasePlugin {
 
         for ( let _do in can ) {
 
-            const action = can[_do]
+            const action = can[ _do ]
 
-            router[action.on]( action.over, controller[ _do ].bind( controller ) )
+            router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
 
         }
 

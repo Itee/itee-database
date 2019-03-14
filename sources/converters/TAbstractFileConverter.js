@@ -28,7 +28,7 @@ class MemoryWriteStream extends Writable {
     _write ( chunk, encoding, callback ) {
 
         // our memory store stores things in buffers
-        const buffer = (Buffer.isBuffer( chunk )) ? chunk : new Buffer( chunk, encoding )
+        const buffer = ( Buffer.isBuffer( chunk ) ) ? chunk : new Buffer( chunk, encoding )
 
         // concat to the buffer already there
         for ( let byteIndex = 0, numberOfByte = buffer.length ; byteIndex < numberOfByte ; byteIndex++ ) {
