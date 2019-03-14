@@ -50,17 +50,17 @@ class TAbstractDatabase {
 
                     // todo: improve local plugin path management
                     let localPluginPath = undefined
-                    if( pluginName.includes('/') ) {
+                    if ( pluginName.includes( '/' ) ) {
 
-                        const splits = pluginName.split('/')
-                        localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, splits[1] + '.js' )
+                        const splits    = pluginName.split( '/' )
+                        localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, splits[ 1 ] + '.js' )
 
                     } else {
                         localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
                     }
 
-                    plugin                = require( localPluginPath )
-                    plugin.__dirname      = path.dirname( require.resolve( localPluginPath ) )
+                    plugin           = require( localPluginPath )
+                    plugin.__dirname = path.dirname( require.resolve( localPluginPath ) )
                     console.log( `Register local plugin: ${pluginName}` )
 
                 } catch ( error ) {
@@ -72,7 +72,7 @@ class TAbstractDatabase {
 
             }
 
-            if ( !(plugin instanceof TAbstractDatabasePlugin) ) {
+            if ( !( plugin instanceof TAbstractDatabasePlugin ) ) {
                 console.error( `The plugin ${pluginName} doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
                 continue
             }

@@ -29,7 +29,7 @@ class TPostgresDatabase extends TAbstractDatabase {
                 console.log( 'PostgreSQL - Connection error ', error )
             } )
     }
- 
+
     close ( onCloseCallback ) {}
 
     on ( eventName, callback ) {}

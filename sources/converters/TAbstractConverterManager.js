@@ -22,8 +22,8 @@ class TAbstractConverterManager {
         this._rules             = options.rules || {}
         this._inserter          = new options.inserter( Driver ) || {}
 
-        this._errors                = []
-        this._processedFiles        = []
+        this._errors         = []
+        this._processedFiles = []
 
     }
 
@@ -204,7 +204,7 @@ class TAbstractConverterManager {
             } else {
 
                 this._converters[ converterNames ].convert(
-                    files[0].file,
+                    files[ 0 ].file,
                     parameters,
                     this._fileConversionSuccessCallback.bind( this, response, next, null ),
                     this._fileConversionProgressCallback.bind( this, response ),
