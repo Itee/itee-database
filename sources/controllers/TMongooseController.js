@@ -40,13 +40,6 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
-    _createMany ( datas, response ) {
-        super._createMany( datas, response )
-
-        this._databaseSchema.create( datas, this.return( response ) )
-
-    }
-
     // Create
     _createOne ( data, response ) {
         super._createOne( data, response )
@@ -54,48 +47,31 @@ class TMongooseController extends TAbstractDataController {
         this._databaseSchema.create( data, this.return( response ) )
 
     }
-    
-    // Delete
-    _deleteAll ( response ) {
-        super._deleteAll( response )
 
-        this._databaseSchema.collection.drop( this.return( response ) )
+    _createMany ( datas, response ) {
+        super._createMany( datas, response )
 
-    }
-
-    _deleteMany ( ids, response ) {
-        super._deleteMany( ids, response )
-
-        this._databaseSchema.deleteMany( { '_id': { $in: ids } }, this.return( response ) )
-
-    }
-
-    _deleteOne ( id, response ) {
-        super._deleteOne( id, response )
-
-        this._databaseSchema
-            .findByIdAndDelete( id )
-            .then( data => TAbstractDataController.returnData( data, response ) )
-            .catch( error => TAbstractDataController.returnError( error, response ) )
-
-    }
-
-    _deleteWhere ( query, response ) {
-        super._deleteWhere( query, response )
-
-        this._databaseSchema.deleteMany( query, this.return( response ) )
+        this._databaseSchema.create( datas, this.return( response ) )
 
     }
 
     // Read
-    _readAll ( projection, response ) {
-        super._readAll( projection, response )
+    _readOne ( id, projection, response ) {
+        super._readOne( id, projection, response )
 
         this._databaseSchema
-            .find( {}, projection )
+            .findById( id, projection )
             .lean()
             .exec()
-            .then( data => TAbstractDataController.returnData( data, response ) )
+            .then( ( data ) => {
+
+                if ( isNull( data ) ) {
+                    TAbstractDataController.returnNotFound( response )
+                } else {
+                    TAbstractDataController.returnData( data, response )
+                }
+
+            } )
             .catch( error => TAbstractDataController.returnError( error, response ) )
 
     }
@@ -125,26 +101,6 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
-    _readOne ( id, projection, response ) {
-        super._readOne( id, projection, response )
-
-        this._databaseSchema
-            .findById( id, projection )
-            .lean()
-            .exec()
-            .then( ( data ) => {
-
-                if ( isNull( data ) ) {
-                    TAbstractDataController.returnNotFound( response )
-                } else {
-                    TAbstractDataController.returnData( data, response )
-                }
-
-            } )
-            .catch( error => TAbstractDataController.returnError( error, response ) )
-
-    }
-
     _readWhere ( query, projection, response ) {
         super._readWhere( query, projection, response )
 
@@ -157,21 +113,19 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
+    _readAll ( projection, response ) {
+        super._readAll( projection, response )
+
+        this._databaseSchema
+            .find( {}, projection )
+            .lean()
+            .exec()
+            .then( data => TAbstractDataController.returnData( data, response ) )
+            .catch( error => TAbstractDataController.returnError( error, response ) )
+
+    }
+
     // Update
-    _updateAll ( update, response ) {
-        super._updateAll( update, response )
-
-        this._databaseSchema.update( {}, update, { multi: true }, this.return( response ) )
-
-    }
-
-    _updateMany ( ids, update, response ) {
-        super._updateMany( ids, update, response )
-
-        this._databaseSchema.update( { _id: { $in: ids } }, update, { multi: true }, this.return( response ) )
-
-    }
-
     _updateOne ( id, update, response ) {
         super._updateOne( id, update, response )
 
@@ -183,10 +137,56 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
+    _updateMany ( ids, updates, response ) {
+        super._updateMany( ids, updates, response )
+
+        this._databaseSchema.update( { _id: { $in: ids } }, updates, { multi: true }, this.return( response ) )
+
+    }
+
     _updateWhere ( query, update, response ) {
         super._updateWhere( query, update, response )
 
         this._databaseSchema.update( query, update, { multi: true }, this.return( response ) )
+
+    }
+
+    _updateAll ( update, response ) {
+        super._updateAll( update, response )
+
+        this._databaseSchema.update( {}, update, { multi: true }, this.return( response ) )
+
+    }
+
+    // Delete
+    _deleteOne ( id, response ) {
+        super._deleteOne( id, response )
+
+        this._databaseSchema
+            .findByIdAndDelete( id )
+            .then( data => TAbstractDataController.returnData( data, response ) )
+            .catch( error => TAbstractDataController.returnError( error, response ) )
+
+    }
+
+    _deleteMany ( ids, response ) {
+        super._deleteMany( ids, response )
+
+        this._databaseSchema.deleteMany( { '_id': { $in: ids } }, this.return( response ) )
+
+    }
+
+    _deleteWhere ( query, response ) {
+        super._deleteWhere( query, response )
+
+        this._databaseSchema.deleteMany( query, this.return( response ) )
+
+    }
+
+    _deleteAll ( response ) {
+        super._deleteAll( response )
+
+        this._databaseSchema.collection.drop( this.return( response ) )
 
     }
 
