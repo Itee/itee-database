@@ -575,7 +575,7 @@ class TAbstractDataController {
 
     _updateOne ( id, update, response, next ) {}
 
-    _updateMany ( ids, update, response, next ) {}
+    _updateMany ( ids, updates, response, next ) {}
 
     _updateWhere ( query, update, response, next ) {}
 
