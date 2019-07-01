@@ -18,6 +18,7 @@ class TAbstractDatabasePlugin {
             const controller = new ControllerCtors[ descriptor.controller.name ]( Driver, descriptor.controller.options )
             const router     = Router( { mergeParams: true } )
 
+            console.log( `\tAdd controller for base route: ${descriptor.route}` )
             Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) )
 
         }
@@ -30,6 +31,7 @@ class TAbstractDatabasePlugin {
 
             const action = can[ _do ]
 
+            console.log( `\t\tMap route ${action.over} on (${action.on}) to ${controller.constructor.name}.${_do} method.` )
             router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
 
         }
