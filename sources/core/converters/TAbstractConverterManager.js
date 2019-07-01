@@ -14,19 +14,6 @@ const path = require( 'path' )
 // Todo: Extend sort of Factory
 class TAbstractConverterManager {
 
-    constructor ( Driver, options ) {
-
-        this._useNext           = options.useNext || false
-        this._converters        = options.converters || {}
-        this._convertersOptions = undefined
-        this._rules             = options.rules || {}
-        this._inserter          = new options.inserter( Driver ) || {}
-
-        this._errors         = []
-        this._processedFiles = []
-
-    }
-
     static _convertFilesObjectToArray ( files ) {
 
         const fileArray = []
@@ -42,6 +29,19 @@ class TAbstractConverterManager {
         }
 
         return fileArray
+
+    }
+
+    constructor ( Driver, options ) {
+
+        this._useNext           = options.useNext || false
+        this._converters        = options.converters || {}
+        this._convertersOptions = undefined
+        this._rules             = options.rules || {}
+        this._inserter          = new options.inserter( Driver ) || {}
+
+        this._errors         = []
+        this._processedFiles = []
 
     }
 

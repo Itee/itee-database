@@ -8,7 +8,7 @@
  *
  */
 
-const TAbstractDatabase = require( './TAbstractDatabase' )
+const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
 const Mongoose          = require( 'mongoose' )
 
 class TMongoDBDatabase extends TAbstractDatabase {

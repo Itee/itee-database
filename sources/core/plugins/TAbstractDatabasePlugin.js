@@ -10,17 +10,6 @@
 
 class TAbstractDatabasePlugin {
 
-    constructor ( DefaultController ) {
-
-        this._controllers = {
-            undefined: DefaultController
-        }
-        this._descriptors = []
-
-        this.__dirname = undefined
-
-    }
-
     static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors ) {
 
         for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
@@ -46,6 +35,17 @@ class TAbstractDatabasePlugin {
         }
 
         return router
+
+    }
+
+    constructor ( DefaultController ) {
+
+        this._controllers = {
+            undefined: DefaultController
+        }
+        this._descriptors = []
+
+        this.__dirname = undefined
 
     }
 

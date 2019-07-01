@@ -24,15 +24,6 @@ const {
 
 class TAbstractDataController {
 
-    constructor ( driver, options ) {
-
-        this._driver  = driver
-        this._options = Object.assign( {
-            useNext: false
-        }, options )
-
-    }
-
     /**
      * Check if requested params named 'dataName' exist in request.body, request.params or request.query
      *
@@ -142,10 +133,6 @@ class TAbstractDataController {
 
     }
 
-    ////////////
-    // Return //
-    ////////////
-
     /**
      * In case database call return nothing consider that is a not found.
      * If response parameter is a function consider this is a returnNotFound callback function to call,
@@ -162,6 +149,10 @@ class TAbstractDataController {
         response.status( 204 ).end()
 
     }
+
+    ////////////
+    // Return //
+    ////////////
 
     /**
      * In case database call return an error.
@@ -257,6 +248,15 @@ class TAbstractDataController {
             }
 
         } )
+
+    }
+
+    constructor ( driver, options ) {
+
+        this._driver  = driver
+        this._options = Object.assign( {
+            useNext: false
+        }, options )
 
     }
 

@@ -11,14 +11,10 @@
 const path                                                        = require( 'path' )
 const { getFilesPathsUnder, isInvalidDirectoryPath, isEmptyFile } = require( 'itee-utils' )
 const { isFunction }                                              = require( 'itee-validators' )
-const TAbstractDatabasePlugin                                     = require( './TAbstractDatabasePlugin' )
-const TMongooseController                                         = require( '../controllers/TMongooseController' )
+const TAbstractDatabasePlugin                                     = require( '../core/plugins/TAbstractDatabasePlugin' )
+const TMongooseController                                         = require( './TMongooseController' )
 
 class TMongoDBPlugin extends TAbstractDatabasePlugin {
-
-    constructor () {
-        super( TMongooseController )
-    }
 
     static _registerTypesTo ( Mongoose, dirname ) {
 
@@ -102,6 +98,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
         }
 
+    }
+
+    constructor () {
+        super( TMongooseController )
     }
 
     beforeRegisterRoutes ( Mongoose ) {
