@@ -8,3 +8,8 @@
  *
  */
 
+const TMySQLDatabase = require( './TMySQLDatabase' )
+
+module.exports = {
+    TMySQLDatabase
+}

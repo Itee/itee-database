@@ -9,13 +9,13 @@
  */
 
 const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const Mongoose          = require( 'mongoose' )
+const MongoDBDriver     = require( 'mongoose' )
 
 class TMongoDBDatabase extends TAbstractDatabase {
 
     constructor ( app, router, plugins, parameters ) {
 
-        super( Mongoose, app, router, plugins, parameters )
+        super( MongoDBDriver, app, router, plugins, parameters )
 
         this.databaseUrl = parameters.databaseUrl
 

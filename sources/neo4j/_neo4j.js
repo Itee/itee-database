@@ -8,3 +8,8 @@
  *
  */
 
+const TNeo4JDatabase = require( './TNeo4JDatabase' )
+
+module.exports = {
+    TNeo4JDatabase
+}

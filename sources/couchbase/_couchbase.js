@@ -8,3 +8,8 @@
  *
  */
 
+const TCouchBaseDatabase = require( './TCouchBaseDatabase' )
+
+module.exports = {
+    TCouchBaseDatabase
+}

@@ -8,3 +8,8 @@
  *
  */
 
+const TLevelDBDatabase = require( './TLevelDBDatabase' )
+
+module.exports = {
+    TLevelDBDatabase
+}

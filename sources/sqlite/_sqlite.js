@@ -8,3 +8,8 @@
  *
  */
 
+const TSQLiteDatabase = require( './TSQLiteDatabase' )
+
+module.exports = {
+    TSQLiteDatabase
+}

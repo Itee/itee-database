@@ -8,3 +8,8 @@
  *
  */
 
+const TCassandraDatabase = require( './TCassandraDatabase' )
+
+module.exports = {
+    TCassandraDatabase
+}

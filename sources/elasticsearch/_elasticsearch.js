@@ -8,3 +8,8 @@
  *
  */
 
+const TElasticSearchDatabase = require( './TElasticSearchDatabase' )
+
+module.exports = {
+    TElasticSearchDatabase
+}
