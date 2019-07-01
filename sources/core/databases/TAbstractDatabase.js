@@ -33,49 +33,41 @@ class TAbstractDatabase {
 
         // Register modules plugins
         const pluginsNames = this._plugins
+        let plugin         = null
+        let pluginName     = null
+        let pluginPath     = null
         for ( let index = 0, numberOfPlugins = pluginsNames.length ; index < numberOfPlugins ; index++ ) {
 
-            const pluginName = pluginsNames[ index ]
-            let plugin       = undefined
+            pluginName = pluginsNames[ index ]
+            pluginPath = pluginName
+            plugin     = null
 
             try {
 
-                plugin           = require( pluginName )
-                plugin.__dirname = path.dirname( require.resolve( pluginName ) )
-                console.log( `Register package plugin: ${pluginName}` )
+                plugin           = require( pluginPath )
+                plugin.__dirname = path.dirname( require.resolve( pluginPath ) )
+                console.log( `Register package plugin: ${plugin.__dirname}` )
 
             } catch ( error ) {
 
-                if ( error.code && error.code === 'MODULE_NOT_FOUND' ) {
-
-                    try {
-
-                        // todo: improve local plugin path management
-                        let localPluginPath = undefined
-                        if ( pluginName.includes( '/' ) ) {
-
-                            const splits    = pluginName.split( '/' )
-                            localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, splits[ 1 ] + '.js' )
-
-                        } else {
-                            localPluginPath = path.join( __dirname, '../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
-                        }
-
-                        plugin           = require( localPluginPath )
-                        plugin.__dirname = path.dirname( require.resolve( localPluginPath ) )
-                        console.log( `Register local plugin: ${pluginName}` )
-
-                    } catch ( error ) {
-
-                        console.error( `Unable to register the plugin ${pluginName} the package or local folder doesn't seem to exist ! Skip it.` )
-                        continue
-
-                    }
-
-                } else {
+                if ( !error.code || error.code !== 'MODULE_NOT_FOUND' ) {
 
                     console.error( `The plugin "${pluginName}" seems to encounter internal error !` )
                     console.error( error )
+                    continue
+
+                }
+
+                try {
+
+                    pluginPath       = path.join( __dirname, '../../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
+                    plugin           = require( pluginPath )
+                    plugin.__dirname = path.dirname( require.resolve( pluginPath ) )
+                    console.log( `Register local plugin: ${plugin.__dirname}` )
+
+                } catch ( error ) {
+
+                    console.error( `Unable to register the plugin ${pluginPath} the package or local folder doesn't seem to exist ! Skip it.` )
                     continue
 
                 }
