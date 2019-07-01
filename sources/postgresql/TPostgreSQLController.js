@@ -1,7 +1,7 @@
 const { isNull, isUndefined, isNotString } = require( 'itee-validators' )
-const TAbstractDataController              = require( 'itee-database' ).TAbstractDataController
+const TAbstractDataController              = require( '../core/controllers/TAbstractDataController' )
 
-class TPostgresController extends TAbstractDataController {
+class TPostgreSQLController extends TAbstractDataController {
     constructor ( PG, options ) {
         super( PG, options )
 
@@ -393,4 +393,4 @@ class TPostgresController extends TAbstractDataController {
 
 }
 
-module.exports = TPostgresController
+module.exports = TPostgreSQLController
