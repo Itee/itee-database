@@ -8,10 +8,10 @@
  *
  */
 
-const TPostgresDatabase   = require( './TPostgresDatabase' )
-const TPostgresController = require( './TPostgresController' )
+const TPostgreSQLDatabase   = require( './TPostgreSQLDatabase' )
+const TPostgreSQLController = require( './TPostgreSQLController' )
 
 module.exports = {
-    TPostgresDatabase,
-    TPostgresController
+    TPostgreSQLDatabase,
+    TPostgreSQLController
 }
