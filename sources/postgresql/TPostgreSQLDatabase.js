@@ -8,13 +8,13 @@
  *
  */
 
-const TAbstractDatabase = require( './TAbstractDatabase' )
-const PgPromise         = require( 'pg-promise' )( {} )
+const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
+const PostgreSQLDriver  = require( 'pg-promise' )( {} )
 
-class TPostgresDatabase extends TAbstractDatabase {
+class TPostgreSQLDatabase extends TAbstractDatabase {
 
     constructor ( app, router, plugins, parameters ) {
-        super( PgPromise( parameters.databaseUrl ), app, router, plugins, parameters )
+        super( PostgreSQLDriver( parameters.databaseUrl ), app, router, plugins, parameters )
 
         this.databaseUrl = parameters.databaseUrl
     }
@@ -36,4 +36,4 @@ class TPostgresDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TPostgresDatabase
+module.exports = TPostgreSQLDatabase

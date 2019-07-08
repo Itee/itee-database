@@ -7,14 +7,14 @@
  */
 
 const { isNull, isUndefined, isEmptyArray } = require( 'itee-validators' )
-const TAbstractDataController               = require( './TAbstractDataController' )
+const TAbstractDataController               = require( '../core/controllers/TAbstractDataController' )
 
 class TMongooseController extends TAbstractDataController {
 
-    constructor ( Mongoose, options ) {
-        super( Mongoose, options )
+    constructor ( DatabaseDriver, options ) {
+        super( DatabaseDriver, options )
 
-        this.databaseSchema = Mongoose.model( options.schemaName )
+        this.databaseSchema = DatabaseDriver.model( options.schemaName )
 
     }
 
@@ -54,8 +54,7 @@ class TMongooseController extends TAbstractDataController {
         this._databaseSchema.create( data, this.return( response ) )
 
     }
-    
-    // Delete
+
     _deleteAll ( response ) {
         super._deleteAll( response )
 
@@ -70,6 +69,7 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
+    // Delete
     _deleteOne ( id, response ) {
         super._deleteOne( id, response )
 
@@ -87,7 +87,6 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
-    // Read
     _readAll ( projection, response ) {
         super._readAll( projection, response )
 
@@ -125,6 +124,7 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
+    // Read
     _readOne ( id, projection, response ) {
         super._readOne( id, projection, response )
 
@@ -157,7 +157,6 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
-    // Update
     _updateAll ( update, response ) {
         super._updateAll( update, response )
 
@@ -165,13 +164,14 @@ class TMongooseController extends TAbstractDataController {
 
     }
 
-    _updateMany ( ids, update, response ) {
-        super._updateMany( ids, update, response )
+    _updateMany ( ids, updates, response ) {
+        super._updateMany( ids, updates, response )
 
-        this._databaseSchema.update( { _id: { $in: ids } }, update, { multi: true }, this.return( response ) )
+        this._databaseSchema.update( { _id: { $in: ids } }, updates, { multi: true }, this.return( response ) )
 
     }
 
+    // Update
     _updateOne ( id, update, response ) {
         super._updateOne( id, update, response )
 

@@ -8,39 +8,70 @@
  *
  */
 
-// Controllers
-const TAbstractDataController = require( './controllers/TAbstractDataController' )
-const TMongooseController     = require( './controllers/TMongooseController' )
+    // Core
+const {
+          MemoryWriteStream,
+          TAbstractConverterManager,
+          TAbstractDatabase,
+          TAbstractDatabasePlugin,
+          TAbstractDataController,
+          TAbstractDataConverter,
+          TAbstractDataInserter,
+          TAbstractFileConverter
+      } = require( './core/_core' )
 
-// Converters
-const TAbstractConverterManager                     = require( './converters/TAbstractConverterManager' )
-const TAbstractDataConverter                        = require( './converters/TAbstractDataConverter' )
-const TAbstractDataInserter                         = require( './converters/TAbstractDataInserter' )
-const { MemoryWriteStream, TAbstractFileConverter } = require( './converters/TAbstractFileConverter' )
+// cassandra
+const {} = require( './cassandra/_cassandra' )
 
-// Databases
-const TAbstractDatabase = require( './databases/TAbstractDatabase' )
-const TMongoDBDatabase  = require( './databases/TMongoDBDatabase' )
-const TPostgresDatabase = require( './databases/TPostgresDatabase' )
+// couchbase
+const {} = require( './couchbase/_couchbase' )
 
-// Plugins interfaces
-const TAbstractDatabasePlugin = require( './plugins/TAbstractDatabasePlugin' )
-const TMongoDBPlugin          = require( './plugins/TMongoDBPlugin' )
+// couchdb
+const {} = require( './couchdb/_couchdb' )
+
+// elasticsearch
+const {} = require( './elasticsearch/_elasticsearch' )
+
+// leveldb
+const {} = require( './leveldb/_leveldb' )
+
+// mongodb
+const { TMongoDBDatabase, TMongoDBPlugin, TMongooseController } = require( './mongodb/_mongodb' )
+
+// mysql
+const {} = require( './mysql/_mysql' )
+
+// neo4j
+const {} = require( './neo4j/_neo4j' )
+
+// oracle
+const {} = require( './oracle/_oracle' )
+
+// postgresql
+const { TPostgresController, TPostgresDatabase } = require( './postgresql/_postgresql' )
+
+// redis
+const {} = require( './redis/_redis' )
+
+// sqlite
+const {} = require( './sqlite/_sqlite' )
+
+// sqlserver
+const { TSQLServerDatabase, TSQLServerController } = require( './sqlserver/_sqlserver' )
 
 module.exports = {
-    TAbstractDataController,
-    TMongooseController,
-
+    MemoryWriteStream,
     TAbstractConverterManager,
+    TAbstractDatabase,
+    TAbstractDatabasePlugin,
+    TAbstractDataController,
     TAbstractDataConverter,
     TAbstractDataInserter,
-    MemoryWriteStream,
     TAbstractFileConverter,
-
-    TAbstractDatabase,
     TMongoDBDatabase,
+    TMongoDBPlugin,
+    TMongooseController,
     TPostgresDatabase,
-
-    TAbstractDatabasePlugin,
-    TMongoDBPlugin
+    TSQLServerController,
+    TSQLServerDatabase
 }

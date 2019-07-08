@@ -1,0 +1,58 @@
+/**
+ * @author [Ahmed DCHAR]{@link https://github.com/dragoneel}
+ * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
+ *
+ * @file Todo
+ *
+ * @example Todo
+ *
+ */
+
+const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
+const RedisDriver       = require( 'redis' )
+
+class TRedisDatabase extends TAbstractDatabase {
+
+    constructor ( app, router, plugins, parameters ) {
+        super( RedisDriver, app, router, plugins, parameters )
+
+        const _parameters = { ...{}, ...parameters }
+
+    }
+
+    close ( onCloseCallback ) {}
+
+    connect () {
+
+        var client = this._driver.createClient()
+
+        client.on( 'error', function ( err ) {
+            console.log( 'Error ' + err )
+        } )
+
+        client.set( 'string key', 'string val', this._driver.print )
+        client.hset( 'hash key', 'hashtest 1', 'some value', this._driver.print )
+        client.hset( [ 'hash key', 'hashtest 2', 'some other value' ], this._driver.print )
+
+        client.hkeys( 'hash key', function ( err, replies ) {
+            console.log( replies.length + ' replies:' )
+
+            replies.forEach( function ( reply, i ) {
+                console.log( '    ' + i + ': ' + reply )
+            } )
+
+            client.quit()
+        } )
+
+    }
+
+    on ( eventName, callback ) {}
+
+    _initDatabase () {
+        super._initDatabase()
+
+    }
+
+}
+
+module.exports = TRedisDatabase

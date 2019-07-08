@@ -10,17 +10,6 @@
 
 class TAbstractDatabasePlugin {
 
-    constructor ( DefaultController ) {
-
-        this._controllers = {
-            undefined: DefaultController
-        }
-        this._descriptors = []
-
-        this.__dirname = undefined
-
-    }
-
     static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors ) {
 
         for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
@@ -29,6 +18,7 @@ class TAbstractDatabasePlugin {
             const controller = new ControllerCtors[ descriptor.controller.name ]( Driver, descriptor.controller.options )
             const router     = Router( { mergeParams: true } )
 
+            console.log( `\tAdd controller for base route: ${descriptor.route}` )
             Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) )
 
         }
@@ -41,11 +31,23 @@ class TAbstractDatabasePlugin {
 
             const action = can[ _do ]
 
+            console.log( `\t\tMap route ${action.over} on (${action.on}) to ${controller.constructor.name}.${_do} method.` )
             router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
 
         }
 
         return router
+
+    }
+
+    constructor ( DefaultController ) {
+
+        this._controllers = {
+            undefined: DefaultController
+        }
+        this._descriptors = []
+
+        this.__dirname = undefined
 
     }
 
