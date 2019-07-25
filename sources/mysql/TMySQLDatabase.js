@@ -13,10 +13,17 @@ const MySQLDriver       = require( 'mysql' )
 
 class TMySQLDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( MySQLDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: MySQLDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 

@@ -13,10 +13,17 @@ const CoucheBaseDriver  = require( 'couchbase' )
 
 class TCouchBaseDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( CoucheBaseDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: CoucheBaseDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -54,13 +61,12 @@ class TCouchBaseDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
 
+    on ( eventName, callback ) {}
 }
 
 module.exports = TCouchBaseDatabase

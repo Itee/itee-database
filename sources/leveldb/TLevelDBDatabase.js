@@ -13,10 +13,17 @@ const LevelUpDriver     = require( 'levelup' )
 
 class TLevelDBDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( LevelUpDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: LevelUpDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -42,12 +49,12 @@ class TLevelDBDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
+
+    on ( eventName, callback ) {}
 
 }
 

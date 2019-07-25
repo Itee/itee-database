@@ -103,9 +103,15 @@ class MemoryWriteStream extends Writable {
 
 class TAbstractFileConverter {
 
-    constructor ( dumpType = TAbstractFileConverter.DumpType.ArrayBuffer ) {
+    constructor ( parameters = {} ) {
 
-        this.dumpType = dumpType
+        const _parameters = {
+            ...{
+                dumpType: TAbstractFileConverter.DumpType.ArrayBuffer
+            }, ...parameters
+        }
+
+        this.dumpType = _parameters.dumpType
 
         this._isProcessing = false
         this._queue        = []

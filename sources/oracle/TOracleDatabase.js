@@ -15,10 +15,17 @@ const OracleDBDriver    = require( 'oracledb' )
 
 class TOracleDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( OracleDBDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: OracleDBDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 

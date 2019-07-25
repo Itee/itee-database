@@ -13,10 +13,17 @@ const Neo4JDriver       = require( 'apoc' )
 
 class TNeo4JDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( Neo4JDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: Neo4JDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 

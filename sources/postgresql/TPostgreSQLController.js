@@ -2,11 +2,21 @@ const { isNull, isUndefined, isNotString } = require( 'itee-validators' )
 const TAbstractDataController              = require( '../core/controllers/TAbstractDataController' )
 
 class TPostgreSQLController extends TAbstractDataController {
-    constructor ( DatabaseDriver, options ) {
-        super( DatabaseDriver, options )
 
-        this.tableName   = options.tableName
-        this.tableFields = options.tableFields
+    constructor ( parameters = {} ) {
+
+        const _parameters = {
+            ...{
+                driver:      null,
+                tableName:   '',
+                tableFields: []
+            }, ...parameters
+        }
+
+        super( _parameters )
+
+        this.tableName   = _parameters.tableName
+        this.tableFields = _parameters.tableFields
 
     }
 

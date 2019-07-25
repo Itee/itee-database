@@ -11,10 +11,18 @@ const TAbstractDataController               = require( '../core/controllers/TAbs
 
 class TMongooseController extends TAbstractDataController {
 
-    constructor ( DatabaseDriver, options ) {
-        super( DatabaseDriver, options )
+    constructor ( parameters = {} ) {
 
-        this.databaseSchema = DatabaseDriver.model( options.schemaName )
+        const _parameters = {
+            ...{
+                driver:  null,
+                schemaName: ''
+            }, ...parameters
+        }
+
+        super( _parameters )
+
+        this.databaseSchema = this._driver.model( _parameters.schemaName )
 
     }
 

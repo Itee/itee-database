@@ -101,7 +101,7 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     }
 
     constructor () {
-        super( TMongooseController )
+        super( { controllers: new Map( [ [ 'TMongooseController', TMongooseController ] ] ) } )
     }
 
     beforeRegisterRoutes ( Mongoose ) {

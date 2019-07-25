@@ -13,21 +13,117 @@ const TAbstractDatabasePlugin = require( '../plugins/TAbstractDatabasePlugin' )
 
 class TAbstractDatabase {
 
-    constructor ( driver, application, router, plugins = [], autoReconnectTimeout = 10000 ) {
+    constructor ( parameters = {} ) {
 
-        this._driver               = driver
-        this._application          = application
-        this._router               = router
-        this._plugins              = plugins
-        this._autoReconnectTimeout = autoReconnectTimeout
-        this._autoConnectionTimer  = null
+        const _parameters = {
+            ...{
+                driver:      null,
+                application: null,
+                router:      null,
+                plugins:     []
+            }, ...parameters
+        }
 
-        this._initDatabase()
+        this.driver      = _parameters.driver
+        this.application = _parameters.application
+        this.router      = _parameters.router
+        this.plugins     = _parameters.plugins
+
+        this.init()
+
         this._registerPlugins()
 
     }
 
-    _initDatabase () {}
+    get plugins () {
+
+        return this._plugins
+
+    }
+
+    set plugins ( value ) {
+
+        if ( isNull( value ) ) { throw new TypeError( 'Plugins cannot be null ! Expect an array of TDatabasePlugin.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
+
+        this._plugins = value
+
+    }
+
+    get router () {
+
+        return this._router
+
+    }
+
+    set router ( value ) {
+
+        if ( isNull( value ) ) { throw new TypeError( 'Router cannot be null ! Expect a Express Router.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Router cannot be undefined ! Expect a Express Router.' ) }
+
+        this._router = value
+
+    }
+
+    get application () {
+
+        return this._application
+
+    }
+
+    set application ( value ) {
+
+        if ( isNull( value ) ) { throw new TypeError( 'Application cannot be null ! Expect a Express Application.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Application cannot be undefined ! Expect a Express Application.' ) }
+
+        this._application = value
+
+    }
+
+    get driver () {
+
+        return this._driver
+
+    }
+
+    set driver ( value ) {
+
+        if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
+
+        this._driver = value
+
+    }
+
+    setPlugins ( value ) {
+
+        this.plugins = value
+        return this
+
+    }
+
+    setRouter ( value ) {
+
+        this.router = value
+        return this
+
+    }
+
+    setApplication ( value ) {
+
+        this.application = value
+        return this
+
+    }
+
+    setDriver ( value ) {
+
+        this.driver = value
+        return this
+
+    }
+
+    init () {}
 
     _registerPlugins () {
 
@@ -86,29 +182,6 @@ class TAbstractDatabase {
     }
 
     connect () {}
-
-    /**
-     * startAutoConnect
-     */
-    startAutoConnect () {
-        if ( this._autoConnectionTimer ) {
-            return
-        }
-
-        this._autoConnectionTimer = setInterval( this.connect.bind( this ), this._autoReconnectTimeout )
-    }
-
-    /**
-     * stopAutoConnect
-     */
-    stopAutoConnect () {
-        if ( !this._autoConnectionTimer ) {
-            return
-        }
-
-        clearInterval( this._autoConnectionTimer )
-        this._autoConnectionTimer = null
-    }
 
     close ( callback ) {}
 

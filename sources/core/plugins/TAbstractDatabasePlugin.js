@@ -40,20 +40,52 @@ class TAbstractDatabasePlugin {
 
     }
 
-    constructor ( DefaultController ) {
+    constructor ( parameters = {} ) {
 
-        this._controllers = {
-            undefined: DefaultController
+        const _parameters = {
+            ...{
+                controllers: new Map(),
+                descriptors: []
+            }, ...parameters
         }
-        this._descriptors = []
 
-        this.__dirname = undefined
+        this.controllers = _parameters.controllers
+        this.descriptors = _parameters.descriptors
+
+        this.__dirname   = undefined
+
+    }
+
+    get controllers () {
+        return this._controllers
+    }
+
+    set controllers ( value ) {
+
+        if ( isNull( value ) ) { throw new TypeError( 'Controllers cannot be null ! Expect a map of controller.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Controllers cannot be undefined ! Expect a map of controller.' ) }
+        if ( !( value instanceof Map ) ) { throw new TypeError( `Controllers cannot be an instance of ${value.constructor.name} ! Expect a map of controller.` ) }
+
+        this._controllers = value
+
+    }
+
+    get descriptors () {
+        return this._descriptors
+    }
+
+    set descriptors ( value ) {
+
+        if ( isNull( value ) ) { throw new TypeError( 'Descriptors cannot be null ! Expect an array of POJO.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Descriptors cannot be undefined ! Expect an array of POJO.' ) }
+
+        this._descriptors = value
 
     }
 
     addController ( value ) {
 
-        this._controllers[ value.name ] = value
+        this._controllers.set( value.name, value )
         return this
 
     }

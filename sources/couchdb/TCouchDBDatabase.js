@@ -13,10 +13,17 @@ const CouchDBDriver     = require( 'nano' )
 
 class TCouchDBDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( CouchDBDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: CouchDBDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -48,13 +55,12 @@ class TCouchDBDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
 
+    on ( eventName, callback ) {}
 }
 
 module.exports = TCouchDBDatabase

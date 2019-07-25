@@ -13,10 +13,26 @@ const PostgreSQLDriver  = require( 'pg-promise' )( {} )
 
 class TPostgreSQLDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( PostgreSQLDriver( parameters.databaseUrl ), app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        this.databaseUrl = parameters.databaseUrl
+        const _parameters = {
+            ...{
+                host:     'localhost',
+                port:     '5432',
+                database: 'postgres'
+            },
+            ...parameters,
+            ...{
+                driver: PostgreSQLDriver
+            }
+        }
+
+        super( _parameters )
+
+        this._host     = _parameters.host
+        this._port     = _parameters.port
+        this._database = _parameters.database
+
     }
 
     close ( onCloseCallback ) {}
@@ -25,11 +41,16 @@ class TPostgreSQLDatabase extends TAbstractDatabase {
 
         this._driver.one( ` SELECT 1 `, [] )
             .then( ( data ) => {
-                console.log( `PostgreSQL at ${this.databaseUrl.host}:${this.databaseUrl.port}/${this.databaseUrl.database} is connected` )
+                console.log( `PostgreSQL at ${this._host}:${this._port}/${this._database} is connected` )
             } )
             .catch( ( error ) => {
                 console.log( 'PostgreSQL - Connection error ', error )
             } )
+    }
+
+    init () {
+        super.init()
+
     }
 
     on ( eventName, callback ) {}

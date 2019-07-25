@@ -25,7 +25,7 @@ const DEFAULT_DATEFORMAT             = 'mdy'
 
 class TSQLServerDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
+    constructor ( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -87,16 +87,17 @@ class TSQLServerDatabase extends TAbstractDatabase {
                     useColumnNames:                   false,
                     useUTC:                           true
                 }
-            }, ...parameters
+            },
+            ...parameters
         }
 
-        super( {
+        _parameters.driver = {
             SqlServerDriver: SqlServerDriver,
             Connection:      new SqlServerDriver.Connection( _parameters ),
             Request:         SqlServerDriver.Request
-        }, app, router, plugins, parameters )
+        }
 
-        this._parameters = _parameters
+        super( _parameters )
 
     }
 
@@ -107,9 +108,6 @@ class TSQLServerDatabase extends TAbstractDatabase {
     }
 
     connect () {
-
-        //        const connection = new this._driver.Connection( this._parameters )
-//        const connection = this._driver
 
         this._driver.Connection.on( 'connect', connectionError => {
 
@@ -126,12 +124,12 @@ class TSQLServerDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
+
+    on ( eventName, callback ) {}
 
 }
 

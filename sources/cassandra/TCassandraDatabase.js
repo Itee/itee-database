@@ -13,10 +13,17 @@ const CassandraDriver   = require( 'cassandra-driver' )
 
 class TCassandraDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( CassandraDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: CassandraDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -35,12 +42,12 @@ class TCassandraDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
+
+    on ( eventName, callback ) {}
 
 }
 

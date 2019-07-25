@@ -8,12 +8,19 @@
  *
  */
 
-// Todo: Extend from TDataQueueProcessor
+    // Todo: Extend from TDataQueueProcessor
 class TAbstractDataInserter {
 
-    constructor ( driver ) {
+    constructor ( parameters = {} ) {
 
-        this._driver       = driver
+        const _parameters = {
+            ...{
+                driver: null
+            }, ...parameters
+        }
+
+        this._driver = _parameters.driver
+
         this._isProcessing = false
         this._queue        = []
 

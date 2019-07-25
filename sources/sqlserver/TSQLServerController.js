@@ -11,11 +11,20 @@ const TAbstractDataController                                            = requi
 
 class TSQLServerController extends TAbstractDataController {
 
-    constructor ( DatabaseDriver, options ) {
-        super( DatabaseDriver, options )
+    constructor ( parameters = {} ) {
 
-        this.tableName = options.tableName
-        this.columns   = options.columns
+        const _parameters = {
+            ...{
+                driver:    null,
+                tableName: '',
+                columns:   []
+            }, ...parameters
+        }
+
+        super( _parameters )
+
+        this.tableName = _parameters.tableName
+        this.columns   = _parameters.columns
 
     }
 

@@ -13,10 +13,17 @@ const SQLiteDriver      = require( 'sqlite3' )
 
 class TSQLiteDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( SQLiteDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: SQLiteDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -45,13 +52,12 @@ class TSQLiteDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
 
+    on ( eventName, callback ) {}
 }
 
 module.exports = TSQLiteDatabase

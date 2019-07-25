@@ -32,13 +32,25 @@ class TAbstractConverterManager {
 
     }
 
-    constructor ( Driver, options ) {
+    constructor ( parameters = {} ) {
 
-        this._useNext           = options.useNext || false
-        this._converters        = options.converters || {}
-        this._convertersOptions = undefined
-        this._rules             = options.rules || {}
-        this._inserter          = new options.inserter( Driver ) || {}
+        const _parameters = {
+            ...{
+                driver:            null,
+                useNext:           false,
+                converters:        new Map(),
+                convertersOptions: undefined,
+                rules:             {},
+                inserter:          {}
+            }, ...parameters
+        }
+
+        this._driver            = _parameters.driver
+        this._useNext           = _parameters.useNext
+        this._converters        = _parameters.converters
+        this._convertersOptions = _parameters.convertersOptions
+        this._rules             = _parameters.rules
+        this._inserter          = new _parameters.inserter( this._driver )
 
         this._errors         = []
         this._processedFiles = []

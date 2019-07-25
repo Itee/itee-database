@@ -13,11 +13,21 @@ const MongoDBDriver     = require( 'mongoose' )
 
 class TMongoDBDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
+    constructor ( parameters = {} ) {
 
-        super( MongoDBDriver, app, router, plugins, parameters )
+        const _parameters = {
+            ...{
+                databaseUrl: ''
+            },
+            ...parameters,
+            ...{
+                driver: MongoDBDriver
+            }
+        }
 
-        this.databaseUrl = parameters.databaseUrl
+        super( _parameters )
+
+        this.databaseUrl = _parameters.databaseUrl
 
     }
 
@@ -29,16 +39,18 @@ class TMongoDBDatabase extends TAbstractDatabase {
 
     connect () {
 
-        const self = this
         this._driver.connect( this.databaseUrl, { useNewUrlParser: true } )
             .then( ( info ) => {
                 console.log( `MongoDB at ${this.databaseUrl} is connected !` )
-                self.stopAutoConnect()
             } )
-            .catch( err => {
+            .catch( ( err ) => {
                 console.error( err )
-                self.startAutoConnect()
             } )
+
+    }
+
+    init () {
+        super.init()
 
     }
 
