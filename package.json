@@ -40,6 +40,12 @@
     "tedious": "^6.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.5",
+    "babel-eslint": "^10.0.2",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
     "chai": "^4.2.0",
     "del": "^4.1.1",
     "docdash": "^1.1.1",
@@ -55,9 +61,11 @@
     "karma-mocha-reporter": "^2.2.5",
     "mocha": "^6.1.4",
     "rollup": "^1.16.3",
+    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-uglify-es": "0.0.1"
   }
