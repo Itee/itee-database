@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const MySQLDriver       = require( 'mysql' )
+import * as MySQLDriver      from 'mysql'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TMySQLDatabase extends TAbstractDatabase {
 
@@ -61,4 +61,4 @@ class TMySQLDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TMySQLDatabase
+export { TMySQLDatabase }

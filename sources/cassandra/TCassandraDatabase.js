@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const CassandraDriver   = require( 'cassandra-driver' )
+import * as CassandraDriver  from 'cassandra-driver'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TCassandraDatabase extends TAbstractDatabase {
 
@@ -51,4 +51,4 @@ class TCassandraDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TCassandraDatabase
+export { TCassandraDatabase }

@@ -6,21 +6,21 @@
  * @classdesc The TDatabaseController is the base class to perform CRUD operations on the database
  */
 
-const {
-          isDefined,
-          isNotDefined,
-          isString,
-          isNotString,
-          isEmptyString,
-          isBlankString,
-          isArray,
-          isNotArray,
-          isEmptyArray,
-          isObject,
-          isNotObject,
-          isEmptyObject,
-          isFunction
-      } = require( 'itee-validators' )
+import {
+    isArray,
+    isBlankString,
+    isDefined,
+    isEmptyArray,
+    isEmptyObject,
+    isEmptyString,
+    isFunction,
+    isNotArray,
+    isNotDefined,
+    isNotObject,
+    isNotString,
+    isObject,
+    isString
+} from 'itee-validators'
 
 class TAbstractDataController {
 
@@ -678,4 +678,4 @@ class TAbstractDataController {
 
 }
 
-module.exports = TAbstractDataController
+export { TAbstractDataController }

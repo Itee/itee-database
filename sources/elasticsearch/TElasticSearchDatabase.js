@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase   = require( '../core/databases/TAbstractDatabase' )
-const ElasticSearchDriver = require( 'elasticsearch' )
+import * as ElasticSearchDriver from 'elasticsearch'
+import { TAbstractDatabase }    from '../core/databases/TAbstractDatabase'
 
 class TElasticSearchDatabase extends TAbstractDatabase {
 
@@ -62,4 +62,4 @@ class TElasticSearchDatabase extends TAbstractDatabase {
     on ( eventName, callback ) {}
 }
 
-module.exports = TElasticSearchDatabase
+export { TElasticSearchDatabase }

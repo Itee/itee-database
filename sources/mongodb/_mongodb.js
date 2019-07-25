@@ -8,12 +8,7 @@
  *
  */
 
-const TMongoDBDatabase    = require( './TMongoDBDatabase' )
-const TMongoDBPlugin      = require( './TMongoDBPlugin' )
-const TMongooseController = require( './TMongooseController' )
+export * from './TMongooseController'
+export * from './TMongoDBPlugin'
+export * from './TMongoDBDatabase'
 
-module.exports = {
-    TMongoDBDatabase,
-    TMongoDBPlugin,
-    TMongooseController
-}

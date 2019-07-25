@@ -8,8 +8,10 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const PostgreSQLDriver  = require( 'pg-promise' )( {} )
+import * as PostgreSQLDriver from 'pg-promise'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
+
+const PostgreSQLDriver = PostgreSQLDriver( {} )
 
 class TPostgreSQLDatabase extends TAbstractDatabase {
 
@@ -57,4 +59,4 @@ class TPostgreSQLDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TPostgreSQLDatabase
+export { TPostgreSQLDatabase }

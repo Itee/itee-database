@@ -8,8 +8,8 @@
  *
  */
 
-const path                    = require( 'path' )
-const TAbstractDatabasePlugin = require( '../plugins/TAbstractDatabasePlugin' )
+import path                        from 'path'
+import { TAbstractDatabasePlugin } from '../plugins/TAbstractDatabasePlugin'
 
 class TAbstractDatabase {
 
@@ -189,4 +189,4 @@ class TAbstractDatabase {
 
 }
 
-module.exports = TAbstractDatabase
+export { TAbstractDatabase }

@@ -8,8 +8,5 @@
  *
  */
 
-const TRedisDatabase = require( './TRedisDatabase' )
+export * from './TRedisDatabase'
 
-module.exports = {
-    TRedisDatabase
-}

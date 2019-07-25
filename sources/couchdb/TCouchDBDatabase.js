@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const CouchDBDriver     = require( 'nano' )
+import * as CouchDBDriver    from 'nano'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TCouchDBDatabase extends TAbstractDatabase {
 
@@ -63,4 +63,4 @@ class TCouchDBDatabase extends TAbstractDatabase {
     on ( eventName, callback ) {}
 }
 
-module.exports = TCouchDBDatabase
+export { TCouchDBDatabase }

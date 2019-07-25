@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const SQLiteDriver      = require( 'sqlite3' )
+import * as SQLiteDriver     from 'sqlite3'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TSQLiteDatabase extends TAbstractDatabase {
 
@@ -60,5 +60,5 @@ class TSQLiteDatabase extends TAbstractDatabase {
     on ( eventName, callback ) {}
 }
 
-module.exports = TSQLiteDatabase
+export { TSQLiteDatabase }
 

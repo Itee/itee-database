@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const RedisDriver       = require( 'redis' )
+import * as RedisDriver      from 'redis'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TRedisDatabase extends TAbstractDatabase {
 
@@ -62,4 +62,4 @@ class TRedisDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TRedisDatabase
+export { TRedisDatabase }

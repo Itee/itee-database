@@ -8,8 +8,8 @@
  *
  */
 
-const I    = require( 'i-return' )
-const path = require( 'path' )
+import * as I from 'i-return'
+import path   from 'path'
 
 // Todo: Extend sort of Factory
 class TAbstractConverterManager {
@@ -231,4 +231,4 @@ class TAbstractConverterManager {
 
 }
 
-module.exports = TAbstractConverterManager
+export { TAbstractConverterManager }

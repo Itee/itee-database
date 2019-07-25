@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const LevelUpDriver     = require( 'levelup' )
+import * as LevelUpDriver    from 'levelup'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TLevelDBDatabase extends TAbstractDatabase {
 
@@ -58,4 +58,4 @@ class TLevelDBDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TLevelDBDatabase
+export { TLevelDBDatabase }

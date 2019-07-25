@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const SqlServerDriver   = require( 'tedious' )
+import * as SqlServerDriver  from 'tedious'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 const DEFAULT_CONNECT_TIMEOUT        = 15 * 1000
 const DEFAULT_CLIENT_REQUEST_TIMEOUT = 15 * 1000
@@ -133,4 +133,4 @@ class TSQLServerDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TSQLServerDatabase
+export { TSQLServerDatabase }

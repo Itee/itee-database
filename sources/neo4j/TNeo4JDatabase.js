@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const Neo4JDriver       = require( 'apoc' )
+import * as Neo4JDriver      from 'apoc'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TNeo4JDatabase extends TAbstractDatabase {
 
@@ -51,4 +51,4 @@ class TNeo4JDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TNeo4JDatabase
+export { TNeo4JDatabase }

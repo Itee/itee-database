@@ -8,8 +8,8 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const CoucheBaseDriver  = require( 'couchbase' )
+import * as CoucheBaseDriver from 'couchbase'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TCouchBaseDatabase extends TAbstractDatabase {
 
@@ -69,4 +69,4 @@ class TCouchBaseDatabase extends TAbstractDatabase {
     on ( eventName, callback ) {}
 }
 
-module.exports = TCouchBaseDatabase
+export { TCouchBaseDatabase }

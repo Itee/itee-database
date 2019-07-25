@@ -8,10 +8,13 @@
  *
  */
 
-const fs                      = require( 'fs' )
-const { Writable }            = require( 'stream' )
-const globalBuffer            = require( 'buffer' )
-const { isNull, isUndefined } = require( 'itee-validators' )
+import * as globalBuffer from 'buffer'
+import fs                from 'fs'
+import {
+    isNull,
+    isUndefined
+}                        from 'itee-validators'
+import { Writable }      from 'stream'
 
 /* Writable memory stream */
 class MemoryWriteStream extends Writable {
@@ -293,7 +296,7 @@ TAbstractFileConverter.DumpType = Object.freeze( {
     JSON:        2
 } )
 
-module.exports = {
-    MemoryWriteStream,
-    TAbstractFileConverter
+export {
+    TAbstractFileConverter,
+    MemoryWriteStream
 }

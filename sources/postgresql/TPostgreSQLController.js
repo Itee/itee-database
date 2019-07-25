@@ -1,5 +1,9 @@
-const { isNull, isUndefined, isNotString } = require( 'itee-validators' )
-const TAbstractDataController              = require( '../core/controllers/TAbstractDataController' )
+import {
+    isNotString,
+    isNull,
+    isUndefined
+}                                  from 'itee-validators'
+import { TAbstractDataController } from '../core/controllers/TAbstractDataController'
 
 class TPostgreSQLController extends TAbstractDataController {
 
@@ -403,4 +407,4 @@ class TPostgreSQLController extends TAbstractDataController {
 
 }
 
-module.exports = TPostgreSQLController
+export { TPostgreSQLController }

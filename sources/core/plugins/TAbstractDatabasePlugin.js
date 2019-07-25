@@ -52,7 +52,7 @@ class TAbstractDatabasePlugin {
         this.controllers = _parameters.controllers
         this.descriptors = _parameters.descriptors
 
-        this.__dirname   = undefined
+        this.__dirname = undefined
 
     }
 
@@ -109,4 +109,4 @@ class TAbstractDatabasePlugin {
 
 }
 
-module.exports = TAbstractDatabasePlugin
+export { TAbstractDatabasePlugin }

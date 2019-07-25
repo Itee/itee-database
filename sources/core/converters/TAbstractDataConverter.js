@@ -86,4 +86,4 @@ class TAbstractDataConverter {
 
 }
 
-module.exports = TAbstractDataConverter
+export { TAbstractDataConverter }

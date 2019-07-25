@@ -102,4 +102,4 @@ class TAbstractDataInserter {
 
 }
 
-module.exports = TAbstractDataInserter
+export { TAbstractDataInserter }
