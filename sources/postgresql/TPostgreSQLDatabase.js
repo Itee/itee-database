@@ -8,10 +8,10 @@
  *
  */
 
-import * as PostgreSQLDriver from 'pg-promise'
+import * as PostgreSQL from 'pg-promise'
 import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
-const PostgreSQLDriver = PostgreSQLDriver( {} )
+const PostgreSQLDriver = PostgreSQL( {} )
 
 class TPostgreSQLDatabase extends TAbstractDatabase {
 
