@@ -8,12 +8,12 @@
  *
  */
 
+import { getFilesPathsUnder }      from 'itee-utils'
 import {
-    getFilesPathsUnder,
     isEmptyFile,
+    isFunction,
     isInvalidDirectoryPath
-}                                  from 'itee-utils'
-import { isFunction }              from 'itee-validators'
+}                                  from '../../node_modules/itee-validators/builds/itee-validators.cjs'
 import path                        from 'path'
 import { TAbstractDatabasePlugin } from '../core/plugins/TAbstractDatabasePlugin'
 import { TMongooseController }     from './TMongooseController'
