@@ -8,15 +8,22 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const Neo4JDriver       = require( 'apoc' )
+import * as Neo4JDriver      from 'apoc'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TNeo4JDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( Neo4JDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: Neo4JDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -44,4 +51,4 @@ class TNeo4JDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TNeo4JDatabase
+export { TNeo4JDatabase }

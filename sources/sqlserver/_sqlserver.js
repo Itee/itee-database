@@ -8,10 +8,5 @@
  *
  */
 
-const TSQLServerDatabase   = require( './TSQLServerDatabase' )
-const TSQLServerController = require( './TSQLServerController' )
-
-module.exports = {
-    TSQLServerDatabase,
-    TSQLServerController
-}
+export * from './TSQLServerDatabase'
+export * from './TSQLServerController'

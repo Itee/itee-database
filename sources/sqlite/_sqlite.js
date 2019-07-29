@@ -8,8 +8,5 @@
  *
  */
 
-const TSQLiteDatabase = require( './TSQLiteDatabase' )
+export * from './TSQLiteDatabase'
 
-module.exports = {
-    TSQLiteDatabase
-}

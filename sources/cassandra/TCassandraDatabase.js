@@ -8,15 +8,22 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const CassandraDriver   = require( 'cassandra-driver' )
+import * as CassandraDriver  from 'cassandra-driver'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TCassandraDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( CassandraDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: CassandraDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -35,13 +42,13 @@ class TCassandraDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
 
+    on ( eventName, callback ) {}
+
 }
 
-module.exports = TCassandraDatabase
+export { TCassandraDatabase }

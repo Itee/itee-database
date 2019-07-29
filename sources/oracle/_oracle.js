@@ -8,8 +8,5 @@
  *
  */
 
-const TOracleDatabase = require( './TOracleDatabase' )
+export * from './TOracleDatabase'
 
-module.exports = {
-    TOracleDatabase
-}

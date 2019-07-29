@@ -8,15 +8,22 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const MySQLDriver       = require( 'mysql' )
+import * as MySQLDriver      from 'mysql'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TMySQLDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( MySQLDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: MySQLDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -54,4 +61,4 @@ class TMySQLDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TMySQLDatabase
+export { TMySQLDatabase }

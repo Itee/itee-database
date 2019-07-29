@@ -8,17 +8,24 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const OracleDBDriver    = require( 'oracledb' )
+import * as OracleDBDriver   from 'oracledb'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 //https://github.com/oracle/node-oracledb#-installation
 
 class TOracleDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( OracleDBDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: OracleDBDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -66,4 +73,4 @@ class TOracleDatabase extends TAbstractDatabase {
 
 }
 
-module.exports = TOracleDatabase
+export { TOracleDatabase }

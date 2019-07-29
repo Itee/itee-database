@@ -8,10 +8,13 @@
  *
  */
 
-const fs                      = require( 'fs' )
-const { Writable }            = require( 'stream' )
-const globalBuffer            = require( 'buffer' )
-const { isNull, isUndefined } = require( 'itee-validators' )
+import * as globalBuffer from 'buffer'
+import fs                from 'fs'
+import {
+    isNull,
+    isUndefined
+}                        from 'itee-validators'
+import { Writable }      from 'stream'
 
 /* Writable memory stream */
 class MemoryWriteStream extends Writable {
@@ -103,9 +106,15 @@ class MemoryWriteStream extends Writable {
 
 class TAbstractFileConverter {
 
-    constructor ( dumpType = TAbstractFileConverter.DumpType.ArrayBuffer ) {
+    constructor ( parameters = {} ) {
 
-        this.dumpType = dumpType
+        const _parameters = {
+            ...{
+                dumpType: TAbstractFileConverter.DumpType.ArrayBuffer
+            }, ...parameters
+        }
+
+        this.dumpType = _parameters.dumpType
 
         this._isProcessing = false
         this._queue        = []
@@ -287,7 +296,7 @@ TAbstractFileConverter.DumpType = Object.freeze( {
     JSON:        2
 } )
 
-module.exports = {
-    MemoryWriteStream,
-    TAbstractFileConverter
+export {
+    TAbstractFileConverter,
+    MemoryWriteStream
 }

@@ -8,15 +8,22 @@
  *
  */
 
-const TAbstractDatabase = require( '../core/databases/TAbstractDatabase' )
-const RedisDriver       = require( 'redis' )
+import * as RedisDriver      from 'redis'
+import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 class TRedisDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( RedisDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: RedisDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -46,13 +53,13 @@ class TRedisDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
 
+    on ( eventName, callback ) {}
+
 }
 
-module.exports = TRedisDatabase
+export { TRedisDatabase }

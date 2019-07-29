@@ -8,15 +8,22 @@
  *
  */
 
-const TAbstractDatabase   = require( '../core/databases/TAbstractDatabase' )
-const ElasticSearchDriver = require( 'elasticsearch' )
+import * as ElasticSearchDriver from 'elasticsearch'
+import { TAbstractDatabase }    from '../core/databases/TAbstractDatabase'
 
 class TElasticSearchDatabase extends TAbstractDatabase {
 
-    constructor ( app, router, plugins, parameters ) {
-        super( ElasticSearchDriver, app, router, plugins, parameters )
+    constructor ( parameters = {} ) {
 
-        const _parameters = { ...{}, ...parameters }
+        const _parameters = {
+            ...{},
+            ...parameters,
+            ...{
+                driver: ElasticSearchDriver
+            }
+        }
+
+        super( _parameters )
 
     }
 
@@ -47,13 +54,12 @@ class TElasticSearchDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
-
-    _initDatabase () {
-        super._initDatabase()
+    init () {
+        super.init()
 
     }
 
+    on ( eventName, callback ) {}
 }
 
-module.exports = TElasticSearchDatabase
+export { TElasticSearchDatabase }

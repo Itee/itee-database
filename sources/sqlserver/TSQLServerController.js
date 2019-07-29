@@ -6,16 +6,31 @@
  * @classdesc The TSQLServerController is the base class to perform CRUD operations on the database
  */
 
-const { isNull, isUndefined, isString, isNotString, isNotArrayOfString } = require( 'itee-validators' )
-const TAbstractDataController                                            = require( '../core/controllers/TAbstractDataController' )
+import {
+    isNotArrayOfString,
+    isNotString,
+    isNull,
+    isString,
+    isUndefined
+}                                  from 'itee-validators'
+import { TAbstractDataController } from '../core/controllers/TAbstractDataController'
 
 class TSQLServerController extends TAbstractDataController {
 
-    constructor ( DatabaseDriver, options ) {
-        super( DatabaseDriver, options )
+    constructor ( parameters = {} ) {
 
-        this.tableName = options.tableName
-        this.columns   = options.columns
+        const _parameters = {
+            ...{
+                driver:    null,
+                tableName: '',
+                columns:   []
+            }, ...parameters
+        }
+
+        super( _parameters )
+
+        this.tableName = _parameters.tableName
+        this.columns   = _parameters.columns
 
     }
 
@@ -379,4 +394,4 @@ class TSQLServerController extends TAbstractDataController {
 
 }
 
-module.exports = TSQLServerController
+export { TSQLServerController }

@@ -6,15 +6,27 @@
  * @classdesc The TMongooseController is the base class to perform CRUD operations on the database
  */
 
-const { isNull, isUndefined, isEmptyArray } = require( 'itee-validators' )
-const TAbstractDataController               = require( '../core/controllers/TAbstractDataController' )
+import {
+    isEmptyArray,
+    isNull,
+    isUndefined
+}                                  from 'itee-validators'
+import { TAbstractDataController } from '../core/controllers/TAbstractDataController'
 
 class TMongooseController extends TAbstractDataController {
 
-    constructor ( DatabaseDriver, options ) {
-        super( DatabaseDriver, options )
+    constructor ( parameters = {} ) {
 
-        this.databaseSchema = DatabaseDriver.model( options.schemaName )
+        const _parameters = {
+            ...{
+                driver:     null,
+                schemaName: ''
+            }, ...parameters
+        }
+
+        super( _parameters )
+
+        this.databaseSchema = this._driver.model( _parameters.schemaName )
 
     }
 
@@ -192,4 +204,4 @@ class TMongooseController extends TAbstractDataController {
 
 }
 
-module.exports = TMongooseController
+export { TMongooseController }

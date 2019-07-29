@@ -8,11 +8,15 @@
  *
  */
 
-const path                                                        = require( 'path' )
-const { getFilesPathsUnder, isInvalidDirectoryPath, isEmptyFile } = require( 'itee-utils' )
-const { isFunction }                                              = require( 'itee-validators' )
-const TAbstractDatabasePlugin                                     = require( '../core/plugins/TAbstractDatabasePlugin' )
-const TMongooseController                                         = require( './TMongooseController' )
+import { getFilesPathsUnder }      from 'itee-utils'
+import {
+    isEmptyFile,
+    isFunction,
+    isInvalidDirectoryPath
+}                                  from '../../node_modules/itee-validators/builds/itee-validators.cjs'
+import path                        from 'path'
+import { TAbstractDatabasePlugin } from '../core/plugins/TAbstractDatabasePlugin'
+import { TMongooseController }     from './TMongooseController'
 
 class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
@@ -101,7 +105,7 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     }
 
     constructor () {
-        super( TMongooseController )
+        super( { controllers: new Map( [ [ 'TMongooseController', TMongooseController ] ] ) } )
     }
 
     beforeRegisterRoutes ( Mongoose ) {
@@ -114,4 +118,4 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
 }
 
-module.exports = TMongoDBPlugin
+export { TMongoDBPlugin }
