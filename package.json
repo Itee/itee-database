@@ -24,7 +24,6 @@
     "cassandra-driver": "^4.1.0",
     "couchbase": "^2.6.4",
     "elasticsearch": "^16.1.1",
-    "i-return": "^1.0.3",
     "itee-utils": "^3.0.0",
     "itee-validators": "^3.1.0",
     "level": "^5.0.1",
