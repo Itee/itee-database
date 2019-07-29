@@ -88,10 +88,10 @@ function CreateRollupConfiguration ( fileName, inputPath, outputPath, format, on
                     include: 'node_modules/**'
                 } ),
                 babel( require( './babel.conf' )( _onProduction ) ),
-                replace( {
-                    'global.process.env.NODE_ENV': JSON.stringify( ( _onProduction ) ? 'production' : 'development' ),
-                    'process.env.NODE_ENV': JSON.stringify( ( _onProduction ) ? 'production' : 'development' )
-                } ),
+//                replace( {
+//                    'global.process.env.NODE_ENV': JSON.stringify( ( _onProduction ) ? 'production' : 'development' ),
+//                    'process.env.NODE_ENV': JSON.stringify( ( _onProduction ) ? 'production' : 'development' )
+//                } ),
                 json({}),
                 nodeResolve( {
                     preferBuiltins: true
