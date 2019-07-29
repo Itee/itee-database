@@ -24,6 +24,7 @@ const nodeResolve = require( 'rollup-plugin-node-resolve' )
 const commonJs    = require( 'rollup-plugin-commonjs' )
 const replace     = require( 'rollup-plugin-replace' )
 const uglify      = require( 'rollup-plugin-uglify-es' )
+const json        = require( 'rollup-plugin-json' )
 
 /**
  * Will create an appropriate configuration object for rollup, related to the given arguments.
@@ -43,7 +44,7 @@ function CreateRollupConfiguration ( fileName, inputPath, outputPath, format, on
     const _onProduction  = onProduction || false
     const _wantSourceMap = wantSourceMap || false
 
-    const fileExtension  = (_onProduction) ? '.min.js' : '.js'
+    const fileExtension  = ( _onProduction ) ? '.min.js' : '.js'
     const inputFilePath  = path.join( inputPath, fileName + '.js' )
     const outputFilePath = path.join( outputPath, fileName + '.' + _format + fileExtension )
 
@@ -52,16 +53,49 @@ function CreateRollupConfiguration ( fileName, inputPath, outputPath, format, on
 
             // core options
             input:    inputFilePath,
-            external: [],
+            external: [
+                'path',
+                'fs',
+                'net',
+                'url',
+                'tty',
+                'util',
+                'events',
+                'zlib',
+                'os',
+                'dns',
+                'stream',
+                'crypto',
+                'assert',
+                'querystring',
+                'http',
+                'child_process',
+                'https',
+                'punycode',
+                'buffer',
+                'timers',
+                'vm',
+                'tls',
+                'constants',
+                'string_decoder',
+                'async_hooks',
+                'hiredis',
+                'dgram',
+                'pg-native'
+            ],
             plugins:  [
                 commonJs( {
                     include: 'node_modules/**'
                 } ),
                 babel( require( './babel.conf' )( _onProduction ) ),
                 replace( {
-                    'process.env.NODE_ENV': JSON.stringify( (_onProduction) ? 'production' : 'development' )
+                    'global.process.env.NODE_ENV': JSON.stringify( ( _onProduction ) ? 'production' : 'development' ),
+                    'process.env.NODE_ENV': JSON.stringify( ( _onProduction ) ? 'production' : 'development' )
                 } ),
-                nodeResolve(),
+                json({}),
+                nodeResolve( {
+                    preferBuiltins: true
+                } ),
                 onProduction && uglify()
             ],
 
