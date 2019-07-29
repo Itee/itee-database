@@ -8,7 +8,7 @@
  *
  */
 
-import * as PostgreSQL from 'pg-promise'
+import PostgreSQL from 'pg-promise'
 import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 const PostgreSQLDriver = PostgreSQL( {} )
