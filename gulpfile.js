@@ -29,16 +29,14 @@
 
 /* eslint-env node */
 
-const gulp   = require( 'gulp' )
-const util   = require( 'gulp-util' )
-const jsdoc  = require( 'gulp-jsdoc3' )
-const eslint = require( 'gulp-eslint' )
-const del    = require( 'del' )
-const rollup = require( 'rollup' )
-const path   = require( 'path' )
-
-const log     = util.log
-const colors  = util.colors
+const gulp    = require( 'gulp' )
+const jsdoc   = require( 'gulp-jsdoc3' )
+const eslint  = require( 'gulp-eslint' )
+const del     = require( 'del' )
+const rollup  = require( 'rollup' )
+const path    = require( 'path' )
+const log     = require( 'fancy-log' )
+const colors  = require( 'ansi-colors' )
 const red     = colors.red
 const green   = colors.green
 const blue    = colors.blue
@@ -258,7 +256,7 @@ gulp.task( 'build', ( done ) => {
 
             for ( let envIndex = 0, numberOfEnvs = options.environments.length ; envIndex < numberOfEnvs ; ++envIndex ) {
                 const environment  = options.environments[ envIndex ]
-                const onProduction = (environment === 'production')
+                const onProduction = ( environment === 'production' )
 
                 const config = require( './configs/rollup.conf' )( options.fileName, options.inputPath, options.outputPath, format, onProduction, options.sourceMap )
 
