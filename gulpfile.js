@@ -296,7 +296,7 @@ gulp.task( 'build', ( done ) => {
         string:  [ 'n', 'i', 'f', 'e' ],
         boolean: [ 's', 't' ],
         default: {
-            n: 'Itee.Utils',
+            n: 'Itee.Database',
             i: path.join( __dirname, 'sources', `${packageInfos.name}.js` ),
             o: path.join( __dirname, 'builds' ),
             f: 'esm,cjs',
