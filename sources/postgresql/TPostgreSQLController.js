@@ -318,7 +318,7 @@ class TPostgreSQLController extends TAbstractDataController {
             updateValues = Object.values( update )
             counter      = 1
             settings     = ''
-            for ( let key in dataKeys ) {
+            for ( let key in updateKeys ) {
                 counter++
                 settings += `${key}=$${counter}, `
             }
@@ -371,8 +371,8 @@ class TPostgreSQLController extends TAbstractDataController {
     _updateOne ( id, update, response ) {
         super._updateOne( id, update, response )
 
-        const dataKeys   = Object.keys( data )
-        const dataValues = Object.values( data )
+        const dataKeys   = Object.keys( update )
+        const dataValues = Object.values( update )
         let counter      = 1
         let settings     = ''
         for ( let key in dataKeys ) {
