@@ -31,7 +31,7 @@ class TMySQLDatabase extends TAbstractDatabase {
 
     connect () {
 
-        var connection = this._driver.createConnection( {
+        const connection = this._driver.createConnection( {
             host:     'localhost',
             user:     'dbuser',
             password: 's3kreee7',
