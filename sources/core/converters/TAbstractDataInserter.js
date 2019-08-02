@@ -98,7 +98,7 @@ class TAbstractDataInserter {
 
     }
 
-    _save ( data, parameters, onSuccess, onProgress, onError ) {}
+    _save ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 

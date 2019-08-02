@@ -14,8 +14,8 @@ import {
     isFunction,
     isObject,
     isString
-} from 'itee-validators'
-import path          from 'path'
+}           from 'itee-validators'
+import path from 'path'
 
 // Todo: Extend sort of Factory
 class TAbstractConverterManager {
@@ -50,7 +50,7 @@ class TAbstractConverterManager {
                 let subsError = error.errors
 
                 for ( let property in subsError ) {
-                    if ( !subsError.hasOwnProperty( property ) ) { continue }
+                    if ( !Object.prototype.hasOwnProperty.call( subsError, property ) ) { continue }
                     _message += subsError[ property ].message + '<br>'
                 }
 
@@ -98,7 +98,7 @@ class TAbstractConverterManager {
 
         for ( let field in files ) {
 
-            if ( files.hasOwnProperty( field ) ) {
+            if ( Object.prototype.hasOwnProperty.call( files, field ) ) {
 
                 fileArray.push( files[ field ] )
 
@@ -295,7 +295,6 @@ class TAbstractConverterManager {
         return dispatchResult
 
     }
-
 
     constructor ( parameters = {} ) {
 

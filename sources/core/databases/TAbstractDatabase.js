@@ -183,9 +183,9 @@ class TAbstractDatabase {
 
     connect () {}
 
-    close ( callback ) {}
+    close ( /*callback*/ ) {}
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 
 }
 

@@ -27,7 +27,7 @@ class TLevelDBDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
@@ -54,7 +54,7 @@ class TLevelDBDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 
 }
 

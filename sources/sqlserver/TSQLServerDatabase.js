@@ -38,20 +38,20 @@ class TSQLServerDatabase extends TAbstractDatabase {
                         //                        domain:   'IG'
                     }
                 },
-                options:        {
-                    abortTransactionOnError:          false,
-                    appName:                          undefined,
-                    camelCaseColumns:                 false,
-                    cancelTimeout:                    DEFAULT_CANCEL_TIMEOUT,
-                    columnNameReplacer:               undefined,
-                    connectionRetryInterval:          DEFAULT_CONNECT_RETRY_INTERVAL,
-                    connectTimeout:                   DEFAULT_CONNECT_TIMEOUT,
+                options: {
+                    abortTransactionOnError:  false,
+                    appName:                  undefined,
+                    camelCaseColumns:         false,
+                    cancelTimeout:            DEFAULT_CANCEL_TIMEOUT,
+                    columnNameReplacer:       undefined,
+                    connectionRetryInterval:  DEFAULT_CONNECT_RETRY_INTERVAL,
+                    connectTimeout:           DEFAULT_CONNECT_TIMEOUT,
                     //                    connectionIsolationLevel:         ISOLATION_LEVEL.READ_COMMITTED,
-                    cryptoCredentialsDetails:         {},
-                    database:                         undefined,
-                    datefirst:                        DEFAULT_DATEFIRST,
-                    dateFormat:                       DEFAULT_DATEFORMAT,
-                    debug:                            {
+                    cryptoCredentialsDetails: {},
+                    database:                 undefined,
+                    datefirst:                DEFAULT_DATEFIRST,
+                    dateFormat:               DEFAULT_DATEFORMAT,
+                    debug:                    {
                         data:    false,
                         packet:  false,
                         payload: false,
@@ -104,6 +104,7 @@ class TSQLServerDatabase extends TAbstractDatabase {
     close ( onCloseCallback ) {
 
         this._driver.Connection.close()
+        onCloseCallback()
 
     }
 
@@ -129,7 +130,7 @@ class TSQLServerDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 
 }
 

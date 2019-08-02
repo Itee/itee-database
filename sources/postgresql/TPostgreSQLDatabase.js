@@ -8,7 +8,7 @@
  *
  */
 
-import PostgreSQL from 'pg-promise'
+import PostgreSQL            from 'pg-promise'
 import { TAbstractDatabase } from '../core/databases/TAbstractDatabase'
 
 const PostgreSQLDriver = PostgreSQL( {} )
@@ -37,13 +37,13 @@ class TPostgreSQLDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
         this._driver.one( ` SELECT 1 `, [] )
             .then( ( data ) => {
-                console.log( `PostgreSQL at ${this._host}:${this._port}/${this._database} is connected` )
+                console.log( `PostgreSQL at ${this._host}:${this._port}/${this._database} is connected ! ${data}` )
             } )
             .catch( ( error ) => {
                 console.log( 'PostgreSQL - Connection error ', error )
@@ -55,7 +55,7 @@ class TPostgreSQLDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 
 }
 

@@ -97,7 +97,7 @@ class TAbstractDatabasePlugin {
 
     }
 
-    beforeRegisterRoutes ( driver ) {}
+    beforeRegisterRoutes ( /*driver*/ ) {}
 
     registerTo ( driver, application, router ) {
 

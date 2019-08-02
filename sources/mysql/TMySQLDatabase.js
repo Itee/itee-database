@@ -27,7 +27,7 @@ class TMySQLDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
@@ -46,13 +46,14 @@ class TMySQLDatabase extends TAbstractDatabase {
             }
 
             console.log( 'The solution is: ', rows[ 0 ].solution )
+            console.log( 'The fields is: ', fields )
         } )
 
         connection.end()
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 
     _initDatabase () {
         super._initDatabase()

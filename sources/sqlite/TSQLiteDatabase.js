@@ -27,7 +27,7 @@ class TSQLiteDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
@@ -57,7 +57,7 @@ class TSQLiteDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 }
 
 export { TSQLiteDatabase }

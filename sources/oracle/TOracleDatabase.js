@@ -29,7 +29,7 @@ class TOracleDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
@@ -64,7 +64,7 @@ class TOracleDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 
     _initDatabase () {
         super._initDatabase()

@@ -27,7 +27,7 @@ class TElasticSearchDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
@@ -48,6 +48,7 @@ class TElasticSearchDatabase extends TAbstractDatabase {
             }
         } ).then( function ( response ) {
             var hits = response.hits.hits
+            console.log( hits )
         }, function ( error ) {
             console.trace( error.message )
         } )
@@ -59,7 +60,7 @@ class TElasticSearchDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 }
 
 export { TElasticSearchDatabase }

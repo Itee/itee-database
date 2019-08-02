@@ -91,7 +91,7 @@ class TAbstractDataController {
                 let subsError = error.errors
 
                 for ( let property in subsError ) {
-                    if ( !subsError.hasOwnProperty( property ) ) { continue }
+                    if ( !Object.prototype.hasOwnProperty.call( subsError, property ) ) { continue }
                     _message += subsError[ property ].message + '<br>'
                 }
 
@@ -393,9 +393,9 @@ class TAbstractDataController {
 
     }
 
-    _createOne ( data, response, next ) {}
+    _createOne ( /*data, response, next*/ ) {}
 
-    _createMany ( datas, response, next ) {}
+    _createMany ( /*datas, response, next*/ ) {}
 
     read ( request, response, next ) {
 
@@ -480,13 +480,13 @@ class TAbstractDataController {
 
     }
 
-    _readOne ( id, projection, response, next ) {}
+    _readOne ( /*id, projection, response, next*/ ) {}
 
-    _readMany ( ids, projection, response, next ) {}
+    _readMany ( /*ids, projection, response, next*/ ) {}
 
-    _readWhere ( query, projection, response, next ) {}
+    _readWhere ( /*query, projection, response, next*/ ) {}
 
-    _readAll ( projection, response, next ) {}
+    _readAll ( /*projection, response, next*/ ) {}
 
     update ( request, response, next ) {
 
@@ -578,13 +578,13 @@ class TAbstractDataController {
 
     }
 
-    _updateOne ( id, update, response, next ) {}
+    _updateOne ( /*id, update, response, next*/ ) {}
 
-    _updateMany ( ids, updates, response, next ) {}
+    _updateMany ( /*ids, updates, response, next*/ ) {}
 
-    _updateWhere ( query, update, response, next ) {}
+    _updateWhere ( /*query, update, response, next*/ ) {}
 
-    _updateAll ( update, response, next ) {}
+    _updateAll ( /*update, response, next*/ ) {}
 
     delete ( request, response, next ) {
 
@@ -668,13 +668,13 @@ class TAbstractDataController {
 
     }
 
-    _deleteOne ( id, response, next ) {}
+    _deleteOne ( /*id, response, next*/ ) {}
 
-    _deleteMany ( ids, response, next ) {}
+    _deleteMany ( /*ids, response, next*/ ) {}
 
-    _deleteWhere ( query, response, next ) {}
+    _deleteWhere ( /*query, response, next*/ ) {}
 
-    _deleteAll ( response, next ) {}
+    _deleteAll ( /*response, next*/ ) {}
 
 }
 
