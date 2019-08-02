@@ -27,7 +27,7 @@ class TCouchDBDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
@@ -60,7 +60,7 @@ class TCouchDBDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 }
 
 export { TCouchDBDatabase }

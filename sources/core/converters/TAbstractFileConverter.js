@@ -224,7 +224,6 @@ class TAbstractFileConverter {
     }
 
     _dumpFileInMemoryAs ( dumpType, file, parameters, onSuccess, onProgress, onError ) {
-        'use strict'
 
         let isOnError = false
 
@@ -270,7 +269,6 @@ class TAbstractFileConverter {
 
                 default:
                     throw new RangeError( `Invalid switch parameter: ${dumpType}` )
-                    break
 
             }
 
@@ -284,7 +282,7 @@ class TAbstractFileConverter {
 
     }
 
-    _convert ( data, parameters, onSuccess, onProgress, onError ) {}
+    _convert ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 

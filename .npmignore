@@ -1,4 +1,5 @@
 .idea/
-documentation/
-tests/
 configs/
+tests/
+documentation/
+/gulpfile.js

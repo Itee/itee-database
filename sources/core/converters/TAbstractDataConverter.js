@@ -82,7 +82,7 @@ class TAbstractDataConverter {
 
     }
 
-    _convert ( data, parameters, onSuccess, onProgress, onError ) {}
+    _convert ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 

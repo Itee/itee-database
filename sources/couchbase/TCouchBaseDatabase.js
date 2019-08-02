@@ -27,7 +27,7 @@ class TCouchBaseDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
@@ -50,7 +50,7 @@ class TCouchBaseDatabase extends TAbstractDatabase {
 
         // get all documents with shoe size 13
         var n1ql  = 'SELECT d.* FROM `bucketName` d WHERE shoeSize = $1'
-        var query = N1qlQuery.fromString( n1ql )
+        var query = this.driver.N1qlQuery.fromString( n1ql )
         bucket.query( query, [ 13 ], function ( err, result ) {
             if ( err ) {
                 console.log( err )
@@ -66,7 +66,7 @@ class TCouchBaseDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 }
 
 export { TCouchBaseDatabase }

@@ -13,7 +13,7 @@ import {
     isEmptyFile,
     isFunction,
     isInvalidDirectoryPath
-}                                  from '../../node_modules/itee-validators/builds/itee-validators.cjs'
+}                                  from 'itee-validators'
 import path                        from 'path'
 import { TAbstractDatabasePlugin } from '../core/plugins/TAbstractDatabasePlugin'
 import { TMongooseController }     from './TMongooseController'

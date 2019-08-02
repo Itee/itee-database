@@ -2,30 +2,63 @@
   "name": "itee-database",
   "version": "5.2.6",
   "description": "The abstract database side of the Itee solution for 3d web content, this package is design to work with an Itee server.",
-  "main": "sources/itee-database.js",
-  "scripts": {
-    "help": "gulp help",
-    "clean": "gulp clean",
-    "lint": "gulp lint",
-    "doc": "gulp doc",
-    "test": "gulp test",
-    "build": "gulp build",
-    "release": "gulp release"
-  },
   "keywords": [
     "itee",
     "database",
     "library"
   ],
-  "author": "Itee (Tristan VALCKE)",
-  "license": "MIT",
+  "author": {
+    "name": "Itee (Tristan Valcke)",
+    "url": "https://github.com/Itee"
+  },
+  "contributors": [],
+  "license": "BSD-3-Clause",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Itee/itee-database.git"
+  },
+  "main": "builds/itee-database.cjs.js",
+  "module": "builds/itee-database.esm.js",
+  "browser": "",
+  "homepage": "https://github.com/Itee/itee-database#readme",
+  "man": "./documentation/API/index.html",
+  "bugs": {
+    "url": "https://github.com/Itee/itee-database/issues"
+  },
+  "engines": {
+    "node": ">=8.16.0"
+  },
+  "os": [
+    "win32",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "ia32"
+  ],
+  "scripts": {
+    "default": "gulp",
+    "help": "gulp help",
+    "patch": "gulp patch",
+    "clean": "gulp clean",
+    "lint": "gulp lint",
+    "doc": "gulp doc",
+    "build-test": "gulp build-test",
+    "bench": "gulp bench",
+    "unit": "gulp unit",
+    "test": "gulp test",
+    "build": "gulp build",
+    "release": "gulp release",
+    "semantic-release": "semantic-release --dry-run --no-ci"
+  },
   "dependencies": {
     "apoc": "^2.1.6",
     "cassandra-driver": "^4.1.0",
     "couchbase": "^2.6.5",
     "elasticsearch": "^16.3.0",
-    "itee-utils": "^3.0.1",
-    "itee-validators": "^3.1.0",
+    "itee-utils": "^4.1.0",
+    "itee-validators": "^4.0.0",
     "level": "^5.0.1",
     "leveldown": "^5.1.1",
     "levelup": "^4.1.0",
@@ -39,38 +72,46 @@
     "tedious": "^6.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-external-helpers": "^7.2.0",
-    "@babel/polyfill": "^7.4.4",
-    "@babel/preset-env": "^7.5.5",
-    "babel-eslint": "^10.0.2",
-    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "@semantic-release/changelog": "^3.0.4",
+    "@semantic-release/commit-analyzer": "^6.2.0",
+    "@semantic-release/git": "^7.0.16",
+    "@semantic-release/github": "^5.4.2",
+    "@semantic-release/npm": "^5.1.13",
+    "@semantic-release/release-notes-generator": "^7.2.1",
+    "ansi-colors": "^4.1.1",
+    "benchmark": "^2.1.4",
     "chai": "^4.2.0",
     "cz-conventional-changelog": "^3.0.2",
     "del": "^5.0.0",
-    "docdash": "^1.1.1",
-    "enumify": "^1.0.4",
     "eslint-plugin-mocha": "^6.0.0",
+    "fancy-log": "^1.3.3",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
     "gulp-jsdoc3": "^2.0.0",
-    "gulp-util": "^3.0.8",
+    "gulp-replace": "^1.0.0",
     "karma": "^4.2.0",
+    "karma-benchmark": "^1.0.4",
+    "karma-benchmarkjs-reporter": "^1.0.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.0.0",
+    "karma-edge-launcher": "^0.4.2",
+    "karma-firefox-launcher": "^1.1.0",
+    "karma-htmlfile-reporter": "^0.3.8",
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
+    "minimist": "^1.2.0",
     "mocha": "^6.2.0",
-    "rollup": "^1.17.0",
-    "rollup-plugin-babel": "^4.3.3",
+    "mochawesome": "^4.0.1",
+    "rollup": "^1.18.0",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-uglify-es": "0.0.1"
+    "rollup-plugin-re": "^1.0.7",
+    "rollup-plugin-terser": "^5.1.1",
+    "semantic-release": "^15.13.19"
   },
+  "optionalDependencies": {},
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

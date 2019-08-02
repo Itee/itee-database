@@ -8,6 +8,10 @@
  *
  */
 
+import {
+    isNull,
+    isUndefined
+}                                  from 'itee-validators'
 import path                        from 'path'
 import { TAbstractDatabasePlugin } from '../plugins/TAbstractDatabasePlugin'
 
@@ -183,9 +187,9 @@ class TAbstractDatabase {
 
     connect () {}
 
-    close ( callback ) {}
+    close ( /*callback*/ ) {}
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 
 }
 

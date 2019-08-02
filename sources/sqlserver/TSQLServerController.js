@@ -198,7 +198,9 @@ class TSQLServerController extends TAbstractDataController {
         let results = []
 
         const query   = `SELECT * FROM ${this.tableName}`
-        const request = new this._driver.Request( query, ( requestError, rowCount, result ) => {
+        const request = new this._driver.Request( query, ( requestError, rowCount, results ) => {
+
+            console.log( `Get ${rowCount} elements.` )
 
             if ( requestError ) {
 
@@ -239,7 +241,10 @@ class TSQLServerController extends TAbstractDataController {
 
         const idsFormated = ids.toString()
         const query       = `SELECT * FROM ${this.tableName} WHERE id IN (${idsFormated})`
-        const request     = new this._driver.Request( query, ( requestError, rowCount, result ) => {
+
+        const request = new this._driver.Request( query, ( requestError, rowCount, results ) => {
+
+            console.log( `Get ${rowCount} elements !` )
 
             if ( requestError ) {
 
@@ -279,7 +284,9 @@ class TSQLServerController extends TAbstractDataController {
         let results = []
 
         const query   = `SELECT * FROM ${this.tableName} WHERE id=${id}`
-        const request = new this._driver.Request( query, ( requestError, rowCount, result ) => {
+        const request = new this._driver.Request( query, ( requestError, rowCount, results ) => {
+
+            console.log( `Get ${rowCount} elements !` )
 
             if ( requestError ) {
 

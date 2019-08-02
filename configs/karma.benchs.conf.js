@@ -2,19 +2,19 @@
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  *
- * @module Config-Karma-Units
- * @description The file manage the karma configuration for run units tests that are under `tests/units` folder
+ * @module Config-Karma-Benchs
+ * @description The file manage the karma configuration for run benchmarks that are under `tests/benchmarks` folder
  */
 
 const packageInfos = require( '../package' )
 
 /**
- * Will assign an appropriate configuration object about unit tests for karma.
+ * Will assign an appropriate configuration object about benchmarks for karma.
  *
  * @generator
  * @param {object} config - The karma configuration object to extend
  */
-function CreateKarmaUnitsConfiguration ( config ) {
+function CreateKarmaBenchmarkConfiguration ( config ) {
 
     config.set( {
 
@@ -23,10 +23,10 @@ function CreateKarmaUnitsConfiguration ( config ) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: [ 'mocha', 'chai' ],
+        frameworks: [ 'benchmark' ],
 
         // list of files / patterns to load in the browser
-        files: [ `builds/${packageInfos.name}.units.js` ],
+        files: [ `builds/${packageInfos.name}.benchs.js` ],
 
         // list of files to exclude
         exclude: [],
@@ -38,18 +38,29 @@ function CreateKarmaUnitsConfiguration ( config ) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: [ 'mocha', 'html' ],
-
-        htmlReporter: {
-            outputFile: '../documentation/UnitTestsReport.html',
-
-            // Optional
-            pageTitle:       'Unit Tests',
-            subPageTitle:    'Result of unit testing for Itee-Utils library.',
-            groupSuites:     true,
-            useCompactStyle: false,
-            useLegacyStyle:  false,
-            showOnlyFailed:  false
+        reporters:         [ 'benchmark' ],
+        benchmarkReporter: {
+            colors:           true,
+            //            style: {
+            //                benchmark: chalk.stripColor,
+            //                summaryBenchmark: chalk.underline,
+            //                summaryEmphasis: chalk.bold.underline,
+            //                browser: chalk.blue,
+            //                decorator: chalk.cyan,
+            //                hz: chalk.green,
+            //                hzUnits: chalk.italic.dim,
+            //                suite: chalk.bold.magenta
+            //            },
+            decorator:        '*',
+            terminalWidth:    60,
+            hzWidth:          4,
+            hzUnits:          'ops/sec',
+            browserWidth:     40,
+            showBrowser:      false,
+            showSuiteSummary: true
+            //            formatBenchmark: formatBenchmark,
+            //            formatSuiteHeading: formatSuiteHeading,
+            //            formatSuiteSummary: formatSuiteSummary
         },
 
         // web server port
@@ -97,4 +108,4 @@ function CreateKarmaUnitsConfiguration ( config ) {
 
 }
 
-module.exports = CreateKarmaUnitsConfiguration
+module.exports = CreateKarmaBenchmarkConfiguration

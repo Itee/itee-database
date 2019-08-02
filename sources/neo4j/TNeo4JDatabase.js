@@ -27,7 +27,7 @@ class TNeo4JDatabase extends TAbstractDatabase {
 
     }
 
-    close ( onCloseCallback ) {}
+    close ( /*onCloseCallback*/ ) {}
 
     connect () {
 
@@ -42,7 +42,7 @@ class TNeo4JDatabase extends TAbstractDatabase {
 
     }
 
-    on ( eventName, callback ) {}
+    on ( /*eventName, callback*/ ) {}
 
     _initDatabase () {
         super._initDatabase()
