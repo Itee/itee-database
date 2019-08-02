@@ -39,7 +39,7 @@ class TAbstractConverterManager {
         if ( isArray( error ) ) {
 
             for ( let i = 0, l = error.length ; i < l ; ++i ) {
-                errorsList = errorsList.concat( TAbstractDataController._formatError( error[ i ] ) )
+                errorsList = errorsList.concat( TAbstractConverterManager._formatError( error[ i ] ) )
             }
 
         } else if ( isObject( error ) ) {
