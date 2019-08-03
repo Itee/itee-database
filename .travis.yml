@@ -8,7 +8,7 @@ branches:
     - master
 
 env:
-  - MOZ_HEADLESS=1
+  - MOZ_HEADLESS=1 NODE_OPTIONS=--max_old_space_size=8192
 
 addons:
   firefox: latest
@@ -20,4 +20,4 @@ jobs:
     - stage: deploy
       if: branch = master
       node_js: "lts/*"
-      script: npm run release && npx semantic-release
+      script: npm run patch && npm run release && npx semantic-release
