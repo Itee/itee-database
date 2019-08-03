@@ -20,4 +20,4 @@ jobs:
     - stage: deploy
       if: branch = master
       node_js: "lts/*"
-      script: npm run release && npx semantic-release
+      script: npm run patch && npm run release && npx semantic-release
