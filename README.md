@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Itee/itee-database.svg?branch=master)](https://travis-ci.org/Itee/itee-database)
+___
+
 # <center>[Itee Database]</center>
 
 The itee database contain all abstract class to manage database middleware and database plugins for itee server.
