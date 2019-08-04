@@ -1,3 +1,10 @@
+## [7.0.1](https://github.com/Itee/itee-database/compare/v7.0.0...v7.0.1) (2019-08-04)
+
+
+### Bug Fixes
+
+* **package:** add postversion script to build with latest package version ([7250a2f](https://github.com/Itee/itee-database/commit/7250a2f))
+
 # [7.0.0](https://github.com/Itee/itee-database/compare/v6.0.0...v7.0.0) (2019-08-04)
 
 
