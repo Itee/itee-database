@@ -1,5 +1,8 @@
 .idea/
-configs/
-tests/
-documentation/
+/.releaserc
+/.travis.yml
+/configs/
+/documentation/
 /gulpfile.js
+/tests/
+/tutorials/

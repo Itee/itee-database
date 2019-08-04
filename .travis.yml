@@ -1,7 +1,4 @@
 language: node_js
-node_js:
-  - "10"
-  - "12"
 
 branches:
   only:
@@ -13,11 +10,21 @@ env:
 addons:
   firefox: latest
 
-before_script: npm run clean && npm run build-test
+before_script: npm run clean && npm run patch
 
 jobs:
   include:
+    - stage: style
+      node_js:
+        - "10"
+        - "12"
+      script: npm run lint
+    - stage: test
+      node_js:
+        - "10"
+        - "12"
+      script: npm run build-test && npm run test
     - stage: deploy
       if: branch = master
       node_js: "lts/*"
-      script: npm run patch && npm run release && npx semantic-release
+      script: npm run release && npx semantic-release
