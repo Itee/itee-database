@@ -7,22 +7,53 @@
  * Use npm run help to display all available build options.
  *
  * @requires {@link module: [path]{@link https://nodejs.org/api/path.html}}
- * @requires {@link module: [rollup-plugin-babel]{@link https://github.com/rollup/rollup-plugin-babel}}
- * @requires {@link module: [rollup-plugin-node-resolve]{@link https://github.com/rollup/rollup-plugin-node-resolve}}
+ * @requires {@link module: [rollup-plugin-alias]{@link https://github.com/rollup/rollup-plugin-alias}}
  * @requires {@link module: [rollup-plugin-commonjs]{@link https://github.com/rollup/rollup-plugin-commonjs}}
- * @requires {@link module: [rollup-plugin-replace]{@link https://github.com/rollup/rollup-plugin-replace}}
+ * @requires {@link module: [rollup-plugin-node-resolve]{@link https://github.com/rollup/rollup-plugin-node-resolve}}
+ * @requires {@link module: [rollup-plugin-re]{@link https://github.com/jetiny/rollup-plugin-re}}
  * @requires {@link module: [rollup-plugin-terser]{@link https://github.com/TrySound/rollup-plugin-terser}}
  *
  */
 
 /* eslint-env node */
 
-const path     = require( 'path' )
-const resolve  = require( 'rollup-plugin-node-resolve' )
-const commonjs = require( 'rollup-plugin-commonjs' )
-const replace  = require( 'rollup-plugin-re' )
-const json     = require( 'rollup-plugin-json' )
-const terser   = require( 'rollup-plugin-terser' ).terser
+const packageInfos = require( '../package' )
+const commonjs     = require( 'rollup-plugin-commonjs' )
+const path         = require( 'path' )
+const resolve      = require( 'rollup-plugin-node-resolve' )
+const terser       = require( 'rollup-plugin-terser' ).terser
+
+function _computeBanner ( name, format ) {
+
+    const packageName = name || packageInfos.name
+    let prettyFormat  = ''
+
+    switch ( format ) {
+
+        case 'cjs':
+            prettyFormat = 'CommonJs'
+            break
+
+        case 'esm':
+            prettyFormat = 'EsModule'
+            break
+
+        case 'iife':
+            prettyFormat = 'Standalone'
+            break
+
+        case 'umd':
+            prettyFormat = 'Universal'
+            break
+
+        default:
+            throw new RangeError( `Invalid switch parameter: ${format}` )
+
+    }
+
+    return `console.log('${packageName} v${packageInfos.version} - ${prettyFormat}')`
+
+}
 
 /**
  * Will create an appropriate configuration object for rollup, related to the given arguments.
@@ -50,57 +81,43 @@ function CreateRollupConfigs ( options ) {
         for ( let envIndex = 0, numberOfEnvs = envs.length ; envIndex < numberOfEnvs ; envIndex++ ) {
 
             const env        = envs[ envIndex ]
-            const prod       = ( env.includes( 'prod' ) )
+            const isProd     = ( env.includes( 'prod' ) )
             const format     = formats[ formatIndex ]
-            const outputPath = ( prod ) ? path.join( output, `${fileName}.${format}.min.js` ) : path.join( output, `${fileName}.${format}.js` )
+            const outputPath = ( isProd ) ? path.join( output, `${fileName}.${format}.min.js` ) : path.join( output, `${fileName}.${format}.js` )
 
             configs.push( {
                 input:    input,
-                external: ( [ 'esm', 'cjs' ].includes( format ) ) ? [
-                    'assert',
-                    'async_hooks',
-                    'buffer',
-                    'child_process',
-                    'constants',
-                    'crypto',
-                    'dgram',
-                    'dns',
-                    'events',
-                    'fs',
-                    'hiredis',
-                    'http',
-                    'https',
-                    'module',
-                    'net',
-                    'os',
+                external: [
+                    'cassandra-driver',
+                    'couchbase',
+                    'nano',
+                    'elasticsearch',
+                    'levelup',
+                    'mongoose',
+                    'mysql',
+                    'apoc',
+                    'oracledb',
+                    'pg-promise',
+                    'redis',
+                    'sqlite3',
+                    'tedious',
+
                     'path',
-                    'pg-native',
-                    'punycode',
-                    'querystring',
+                    'buffer',
+                    'fs',
                     'stream',
-                    'string_decoder',
-                    'timers',
-                    'tls',
-                    'tty',
-                    'url',
-                    'util',
-                    'vm',
-                    'zlib'
-                ] : [],
+
+                    'itee-validators',
+                    'itee-utils'
+                ],
                 plugins: [
-                    replace( {
-                        defines: {
-                            IS_REMOVE: prod
-                        }
-                    } ),
                     commonjs( {
                         include: 'node_modules/**'
                     } ),
                     resolve( {
                         preferBuiltins: true
                     } ),
-                    json( {} ),
-                    prod && terser()
+                    isProd && terser()
                 ],
                 onwarn: ( { loc, frame, message } ) => {
 
@@ -113,6 +130,7 @@ function CreateRollupConfigs ( options ) {
                     } else {
                         process.stderr.write( `/!\\ ${message}\n` )
                     }
+
                 },
                 treeshake: treeshake,
                 output:    {
@@ -124,7 +142,7 @@ function CreateRollupConfigs ( options ) {
 
                     // advanced options
                     paths:     {},
-                    banner:    '',
+                    banner:    ( isProd ) ? '' : _computeBanner( name, format ),
                     footer:    '',
                     intro:     '',
                     outro:     '',
