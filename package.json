@@ -50,7 +50,8 @@
     "test": "gulp test",
     "build": "gulp build",
     "release": "gulp release",
-    "semantic-release": "semantic-release --dry-run --no-ci"
+    "semantic-release": "semantic-release --dry-run --no-ci",
+    "postversion": "gulp build"
   },
   "dependencies": {
     "apoc": "^2.1.6",
