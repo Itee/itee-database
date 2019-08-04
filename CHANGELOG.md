@@ -1,3 +1,15 @@
+# [7.0.0](https://github.com/Itee/itee-database/compare/v6.0.0...v7.0.0) (2019-08-04)
+
+
+### Code Refactoring
+
+* **rollupconfig:** update external package to avoid big bundle. Remove unecessary rollup plugin ([e320cb0](https://github.com/Itee/itee-database/commit/e320cb0))
+
+
+### BREAKING CHANGES
+
+* **rollupconfig:** Database are no longer packaged with bundle
+
 # [6.0.0](https://github.com/Itee/itee-database/compare/v5.2.6...v6.0.0) (2019-08-03)
 
 
