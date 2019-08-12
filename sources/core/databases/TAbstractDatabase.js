@@ -131,27 +131,19 @@ class TAbstractDatabase {
 
     _registerPlugins () {
 
-        for ( let [ name, config ] of Object.entries(this._plugins) ) {
+        for ( let [ name, config ] of Object.entries( this._plugins ) ) {
 
-        }
+            if ( this._registerPackagePlugin( name, config ) ) {
 
-        for ( let pluginName in this._plugins ) {
+                console.log( `Use ${name} plugin from node_modules` )
 
-            if ( !Object.prototype.hasOwnProperty.call( this._plugins, pluginName ) ) { continue }
+            } else if ( this._registerLocalPlugin( name, config ) ) {
 
-            const pluginConfig = this._plugins[ pluginName ]
-
-            if ( this._registerPackagePlugin( pluginName, pluginConfig ) ) {
-
-                console.log( `Use ${pluginName} plugin from node_modules` )
-
-            } else if ( this._registerLocalPlugin( pluginName, pluginConfig ) ) {
-
-                console.log( `Use ${pluginName} plugin from local folder` )
+                console.log( `Use ${name} plugin from local folder` )
 
             } else {
 
-                console.error( `Unable to register the plugin ${pluginPath} the package or local folder doesn't seem to exist ! Skip it.` )
+                console.error( `Unable to register the plugin ${name} the package or local folder doesn't seem to exist ! Skip it.` )
 
             }
 
