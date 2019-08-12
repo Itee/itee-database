@@ -131,57 +131,98 @@ class TAbstractDatabase {
 
     _registerPlugins () {
 
-        // Register modules plugins
-        const pluginsNames = this._plugins
-        let plugin         = null
-        let pluginName     = null
-        let pluginPath     = null
-        for ( let index = 0, numberOfPlugins = pluginsNames.length ; index < numberOfPlugins ; index++ ) {
-
-            pluginName = pluginsNames[ index ]
-            pluginPath = pluginName
-            plugin     = null
-
-            try {
-
-                plugin           = require( pluginPath )
-                plugin.__dirname = path.dirname( require.resolve( pluginPath ) )
-                console.log( `Register package plugin: ${plugin.__dirname}` )
-
-            } catch ( error ) {
-
-                if ( !error.code || error.code !== 'MODULE_NOT_FOUND' ) {
-
-                    console.error( `The plugin "${pluginName}" seems to encounter internal error !` )
-                    console.error( error )
-                    continue
-
-                }
-
-                try {
-
-                    pluginPath       = path.join( __dirname, '../../../../../', 'databases/plugins/', pluginName, pluginName + '.js' )
-                    plugin           = require( pluginPath )
-                    plugin.__dirname = path.dirname( require.resolve( pluginPath ) )
-                    console.log( `Register local plugin: ${plugin.__dirname}` )
-
-                } catch ( error ) {
-
-                    console.error( `Unable to register the plugin ${pluginPath} the package or local folder doesn't seem to exist ! Skip it.` )
-                    continue
-
-                }
-
-            }
-
-            if ( !( plugin instanceof TAbstractDatabasePlugin ) ) {
-                console.error( `The plugin ${pluginName} doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
-                continue
-            }
-
-            plugin.registerTo( this._driver, this._application, this._router )
+        for ( let [ name, config ] of Object.entries(this._plugins) ) {
 
         }
+
+        for ( let pluginName in this._plugins ) {
+
+            if ( !Object.prototype.hasOwnProperty.call( this._plugins, pluginName ) ) { continue }
+
+            const pluginConfig = this._plugins[ pluginName ]
+
+            if ( this._registerPackagePlugin( pluginName, pluginConfig ) ) {
+
+                console.log( `Use ${pluginName} plugin from node_modules` )
+
+            } else if ( this._registerLocalPlugin( pluginName, pluginConfig ) ) {
+
+                console.log( `Use ${pluginName} plugin from local folder` )
+
+            } else {
+
+                console.error( `Unable to register the plugin ${pluginPath} the package or local folder doesn't seem to exist ! Skip it.` )
+
+            }
+
+        }
+
+    }
+
+    _registerPackagePlugin ( name ) {
+
+        let success = false
+
+        try {
+
+            const plugin = require( name )
+            if ( plugin instanceof TAbstractDatabasePlugin ) {
+
+                plugin.__dirname = path.dirname( require.resolve( name ) )
+                plugin.registerTo( this._driver, this._application, this._router )
+
+                success = true
+
+            } else {
+
+                console.error( `The plugin ${name} doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
+
+            }
+
+        } catch ( error ) {
+
+            if ( !error.code || error.code !== 'MODULE_NOT_FOUND' ) {
+
+                console.error( error )
+
+            }
+
+        }
+
+        return success
+
+    }
+
+    _registerLocalPlugin ( name, path ) {
+
+        let success = false
+
+        try {
+
+            // todo use rootPath or need to resolve depth correctly !
+            const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, name + '.js' )
+            const plugin          = require( localPluginPath )
+
+            if ( plugin instanceof TAbstractDatabasePlugin ) {
+
+                plugin.__dirname = path.dirname( require.resolve( localPluginPath ) )
+                plugin.registerTo( this._driver, this._application, this._router )
+
+                success = true
+
+            } else {
+
+                console.error( `The plugin ${name} doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
+
+            }
+
+        } catch ( error ) {
+
+            console.error( error )
+
+        }
+
+        return success
 
     }
 
