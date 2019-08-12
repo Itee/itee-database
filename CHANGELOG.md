@@ -1,3 +1,17 @@
+# [7.1.0](https://github.com/Itee/itee-database/compare/v7.0.1...v7.1.0) (2019-08-12)
+
+
+### Bug Fixes
+
+* **tabstractdatabase:** fix registerPlugins methods forof loop ([2e210a3](https://github.com/Itee/itee-database/commit/2e210a3))
+* **tabstractdatabaseplugin:** update controller ctor call and parameters ([5b24e7b](https://github.com/Itee/itee-database/commit/5b24e7b))
+
+
+### Features
+
+* **docs:** add docs to github ([1882ac1](https://github.com/Itee/itee-database/commit/1882ac1))
+* **tmongodbplugin:** allow to register type from code ([479898c](https://github.com/Itee/itee-database/commit/479898c))
+
 ## [7.0.1](https://github.com/Itee/itee-database/compare/v7.0.0...v7.0.1) (2019-08-04)
 
 
