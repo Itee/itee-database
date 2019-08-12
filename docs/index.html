@@ -1,0 +1,3973 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Documentation Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.simplex.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Documentation</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-Building.html">Building</a></li><li><a href="module-Config-EsLint.html">Config-EsLint</a></li><li><a href="module-Config-JsDoc.html">Config-JsDoc</a></li><li><a href="module-Config-Karma-Benchs.html">Config-Karma-Benchs</a></li><li><a href="module-Config-Karma-Units.html">Config-Karma-Units</a></li><li><a href="module-Config-Rollup.html">Config-Rollup</a></li><li><a href="module-Config-Rollup-Test.html">Config-Rollup-Test</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="TDatabaseController.html">TDatabaseController</a></li><li><a href="TMongooseController.html">TMongooseController</a></li><li><a href="TSQLServerController.html">TSQLServerController</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#npmrunbench">npm run bench</a></li><li><a href="global.html#npmrunbuild">npm run build</a></li><li><a href="global.html#npmrunbuild-test">npm run build-test</a></li><li><a href="global.html#npmrunclean">npm run clean</a></li><li><a href="global.html#npmrundoc">npm run doc</a></li><li><a href="global.html#npmrunhelpdefault">npm run help ( default )</a></li><li><a href="global.html#npmrunlint">npm run lint</a></li><li><a href="global.html#npmrunpatch">npm run patch</a></li><li><a href="global.html#npmrunrelease">npm run release</a></li><li><a href="global.html#npmruntest">npm run test</a></li><li><a href="global.html#npmrununit">npm run unit</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1 align="center">[Itee Database]</h1>
+<br>
+<p align="center">The itee database contain all abstract class to manage database middleware and database plugins for itee server.</p>
+<br>
+<p align="center">
+    <a href="https://www.npmjs.com/package/itee-database">
+        <img src="https://img.shields.io/npm/v/itee-database" alt="Current package version">
+    </a>
+    <a href="https://travis-ci.org/Itee/itee-database">
+        <img src="https://travis-ci.org/Itee/itee-database.svg?branch=master" alt="Build status">
+    </a>
+    <a href="https://github.com/semantic-release/semantic-release">
+        <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="Build status">
+    </a>
+</p>
+<br>
+<h2>How to install</h2>
+<p>From npm:</p>
+<pre><code>npm install itee-database
+</code></pre>
+<p>If you want to build the repository from source follow these instructions:</p>
+<pre><code>git clone https://github.com/Itee/itee-database.git
+npm install
+npm run build
+</code></pre>
+<br>   
+<h2>How to use</h2>
+<p align="center">At begin was <a href="https://itee.github.io/itee-database/">RTFM</a> !</p>
+<br>
+In case you have clone the repository you could also auto-generate the library documentation using: 
+<pre><code>npm run doc
+</code></pre>
+<p>then you will be able to use like this:</p>
+<pre><code>import { TAbstractDatabase } from 'itee-database'
+
+class MyAwesomeDatabase extend TAbstractDatabase {
+    //...
+}
+
+export { MyAwesomeDatabase }
+</code></pre>
+<br>
+<h2>License (BSD-3-Clause)</h2>
+<p><strong>Copyright (c) 2015-Present, Itee, Valcke Tristan <a href="https://github.com/Itee">https://github.com/Itee</a>. All rights reserved.</strong></p>
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+<li>Neither the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+</ul>
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+<p>You should have received a copy of the <a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> along
+with this program.  If not, see <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.</p></article>
+    </section>
+
+
+
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/cassandra/_cassandra.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/cassandra/TCassandraDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/core/_core.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/core/converters/TAbstractConverterManager.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/core/converters/TAbstractDataConverter.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/core/converters/TAbstractDataInserter.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/core/converters/TAbstractFileConverter.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/core/databases/TAbstractDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/core/plugins/TAbstractDatabasePlugin.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/couchbase/_couchbase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/couchbase/TCouchBaseDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/couchdb/_couchdb.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/couchdb/TCouchDBDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/elasticsearch/_elasticsearch.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/elasticsearch/TElasticSearchDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/itee-database.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/leveldb/_leveldb.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/leveldb/TLevelDBDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/mongodb/_mongodb.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/mongodb/TMongoDBDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/mongodb/TMongoDBPlugin.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/mysql/TMySQLDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/neo4j/_neo4j.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/neo4j/TNeo4JDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/oracle/_oracle.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/oracle/TOracleDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/postgresql/_postgresql.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/postgresql/TPostgreSQLDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/redis/_redis.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/redis/TRedisDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/sqlite/_sqlite.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/sqlite/TSQLiteDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/sqlserver/_sqlserver.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        sources/sqlserver/TSQLServerDatabase.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Todo</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="https://github.com/dragoneel">Ahmed DCHAR</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
+	<dd class="tag-license">
+		<ul class="dummy">
+			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
+		</ul>
+	</dd>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">Todo</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
+	
+		on 2019-08-12T16:29:18+00:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

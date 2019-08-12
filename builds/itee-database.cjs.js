@@ -1,4 +1,4 @@
-console.log('Itee.Database v7.0.1 - CommonJs')
+console.log('Itee.Database v7.1.0 - CommonJs')
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -160,10 +160,6 @@ class TAbstractDataController {
         response.status( 204 ).end();
 
     }
-
-    ////////////
-    // Return //
-    ////////////
 
     /**
      * In case database call return an error.
@@ -1673,9 +1669,10 @@ class TAbstractDatabasePlugin {
 
         for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
 
-            const descriptor = descriptors[ index ];
-            const controller = new ControllerCtors[ descriptor.controller.name ]( Driver, descriptor.controller.options );
-            const router     = Router( { mergeParams: true } );
+            const descriptor      = descriptors[ index ];
+            const ControllerClass = ControllerCtors.get( descriptor.controller.name );
+            const controller      = new ControllerClass( { driver: Driver, ...descriptor.controller.options } );
+            const router          = Router( { mergeParams: true } );
 
             console.log( `\tAdd controller for base route: ${descriptor.route}` );
             Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) );
@@ -1894,57 +1891,90 @@ class TAbstractDatabase {
 
     _registerPlugins () {
 
-        // Register modules plugins
-        const pluginsNames = this._plugins;
-        let plugin         = null;
-        let pluginName     = null;
-        let pluginPath     = null;
-        for ( let index = 0, numberOfPlugins = pluginsNames.length ; index < numberOfPlugins ; index++ ) {
+        for ( let [ name, config ] of Object.entries( this._plugins ) ) {
 
-            pluginName = pluginsNames[ index ];
-            pluginPath = pluginName;
-            plugin     = null;
+            if ( this._registerPackagePlugin( name, config ) ) {
 
-            try {
+                console.log( `Use ${name} plugin from node_modules` );
 
-                plugin           = require( pluginPath );
-                plugin.__dirname = path.dirname( require.resolve( pluginPath ) );
-                console.log( `Register package plugin: ${plugin.__dirname}` );
+            } else if ( this._registerLocalPlugin( name, config ) ) {
 
-            } catch ( error ) {
+                console.log( `Use ${name} plugin from local folder` );
 
-                if ( !error.code || error.code !== 'MODULE_NOT_FOUND' ) {
+            } else {
 
-                    console.error( `The plugin "${pluginName}" seems to encounter internal error !` );
-                    console.error( error );
-                    continue
-
-                }
-
-                try {
-
-                    pluginPath       = path.join( __dirname, '../../../../../', 'databases/plugins/', pluginName, pluginName + '.js' );
-                    plugin           = require( pluginPath );
-                    plugin.__dirname = path.dirname( require.resolve( pluginPath ) );
-                    console.log( `Register local plugin: ${plugin.__dirname}` );
-
-                } catch ( error ) {
-
-                    console.error( `Unable to register the plugin ${pluginPath} the package or local folder doesn't seem to exist ! Skip it.` );
-                    continue
-
-                }
+                console.error( `Unable to register the plugin ${name} the package or local folder doesn't seem to exist ! Skip it.` );
 
             }
-
-            if ( !( plugin instanceof TAbstractDatabasePlugin ) ) {
-                console.error( `The plugin ${pluginName} doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` );
-                continue
-            }
-
-            plugin.registerTo( this._driver, this._application, this._router );
 
         }
+
+    }
+
+    _registerPackagePlugin ( name ) {
+
+        let success = false;
+
+        try {
+
+            const plugin = require( name );
+            if ( plugin instanceof TAbstractDatabasePlugin ) {
+
+                plugin.__dirname = path.dirname( require.resolve( name ) );
+                plugin.registerTo( this._driver, this._application, this._router );
+
+                success = true;
+
+            } else {
+
+                console.error( `The plugin ${name} doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` );
+
+            }
+
+        } catch ( error ) {
+
+            if ( !error.code || error.code !== 'MODULE_NOT_FOUND' ) {
+
+                console.error( error );
+
+            }
+
+        }
+
+        return success
+
+    }
+
+    _registerLocalPlugin ( name, path ) {
+
+        let success = false;
+
+        try {
+
+            // todo use rootPath or need to resolve depth correctly !
+            const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, name + '.js' );
+            const plugin          = require( localPluginPath );
+
+            if ( plugin instanceof TAbstractDatabasePlugin ) {
+
+                plugin.__dirname = path.dirname( require.resolve( localPluginPath ) );
+                plugin.registerTo( this._driver, this._application, this._router );
+
+                success = true;
+
+            } else {
+
+                console.error( `The plugin ${name} doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` );
+
+            }
+
+        } catch ( error ) {
+
+            console.error( error );
+
+        }
+
+        return success
 
     }
 
@@ -2466,6 +2496,29 @@ class TMongooseController extends TAbstractDataController {
 
 class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
+    get schemas () {
+        return this._schemas
+    }
+
+    set schemas ( value ) {
+        this._schemas = value;
+    }
+
+    get types () {
+        return this._types
+    }
+
+    set types ( value ) {
+        this._types = value;
+    }
+
+    addType ( value ) {
+
+        this._types.push( value );
+        return this
+
+    }
+
     static _registerTypesTo ( Mongoose, dirname ) {
 
         const typesBasePath = path.join( dirname, 'types' );
@@ -2550,15 +2603,40 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
     }
 
-    constructor () {
-        super( { controllers: new Map( [ [ 'TMongooseController', TMongooseController ] ] ) } );
+    constructor ( parameters = {} ) {
+
+        const _parameters = {
+            ...{
+                types:   [],
+                schemas: []
+            },
+            ...parameters
+        };
+
+        super( _parameters );
+
+        this.types   = _parameters.types;
+        this.schemas = _parameters.schemas;
+
     }
 
     beforeRegisterRoutes ( Mongoose ) {
         super.beforeRegisterRoutes( Mongoose );
 
+        this._registerTypes( Mongoose );
         TMongoDBPlugin._registerTypesTo( Mongoose, this.__dirname );
         TMongoDBPlugin._registerSchemasTo( Mongoose, this.__dirname );
+
+    }
+
+    _registerTypes ( Mongoose ) {
+
+        for ( let typeWrapper of this._types ) {
+
+            console.log( `Register type: ${typeWrapper.name}` );
+            typeWrapper( Mongoose );
+
+        }
 
     }
 
