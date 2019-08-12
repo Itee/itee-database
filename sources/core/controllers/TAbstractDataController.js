@@ -150,10 +150,6 @@ class TAbstractDataController {
 
     }
 
-    ////////////
-    // Return //
-    ////////////
-
     /**
      * In case database call return an error.
      * If response parameter is a function consider this is a returnError callback function to call,
