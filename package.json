@@ -22,7 +22,7 @@
   "module": "builds/itee-database.esm.js",
   "browser": "",
   "homepage": "https://github.com/Itee/itee-database#readme",
-  "man": "./documentation/API/index.html",
+  "man": "./docs/index.html",
   "bugs": {
     "url": "https://github.com/Itee/itee-database/issues"
   },
