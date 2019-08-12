@@ -41,11 +41,11 @@ function CreateKarmaUnitsConfiguration ( config ) {
         reporters: [ 'mocha', 'html' ],
 
         htmlReporter: {
-            outputFile: '../documentation/UnitTestsReport.html',
+            outputFile: '../docs/unit-tests-report.html',
 
             // Optional
             pageTitle:       'Unit Tests',
-            subPageTitle:    'Result of unit testing for Itee-Utils library.',
+            subPageTitle:    'Result of unit testing for Itee-Database.',
             groupSuites:     true,
             useCompactStyle: false,
             useLegacyStyle:  false,

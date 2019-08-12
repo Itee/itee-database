@@ -16,9 +16,31 @@ import {
 }                                  from 'itee-validators'
 import path                        from 'path'
 import { TAbstractDatabasePlugin } from '../core/plugins/TAbstractDatabasePlugin'
-import { TMongooseController }     from './TMongooseController'
 
 class TMongoDBPlugin extends TAbstractDatabasePlugin {
+
+    get schemas () {
+        return this._schemas
+    }
+
+    set schemas ( value ) {
+        this._schemas = value
+    }
+
+    get types () {
+        return this._types
+    }
+
+    set types ( value ) {
+        this._types = value
+    }
+
+    addType ( value ) {
+
+        this._types.push( value )
+        return this
+
+    }
 
     static _registerTypesTo ( Mongoose, dirname ) {
 
@@ -104,15 +126,40 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
     }
 
-    constructor () {
-        super( { controllers: new Map( [ [ 'TMongooseController', TMongooseController ] ] ) } )
+    constructor ( parameters = {} ) {
+
+        const _parameters = {
+            ...{
+                types:   [],
+                schemas: []
+            },
+            ...parameters
+        }
+
+        super( _parameters )
+
+        this.types   = _parameters.types
+        this.schemas = _parameters.schemas
+
     }
 
     beforeRegisterRoutes ( Mongoose ) {
         super.beforeRegisterRoutes( Mongoose )
 
+        this._registerTypes( Mongoose )
         TMongoDBPlugin._registerTypesTo( Mongoose, this.__dirname )
         TMongoDBPlugin._registerSchemasTo( Mongoose, this.__dirname )
+
+    }
+
+    _registerTypes ( Mongoose ) {
+
+        for ( let typeWrapper of this._types ) {
+
+            console.log( `Register type: ${typeWrapper.name}` )
+            typeWrapper( Mongoose )
+
+        }
 
     }
 

@@ -2,7 +2,7 @@
 /.releaserc
 /.travis.yml
 /configs/
-/documentation/
+/docs/
 /gulpfile.js
 /tests/
 /tutorials/

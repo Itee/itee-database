@@ -11,6 +11,7 @@
             {
                 "assets": [
                     "builds/**/*.js",
+                    "docs/**",
                     "package.json",
                     "CHANGELOG.md"
                 ],

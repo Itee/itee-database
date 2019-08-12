@@ -1,13 +1,24 @@
-[![Build Status](https://travis-ci.org/Itee/itee-database.svg?branch=master)](https://travis-ci.org/Itee/itee-database)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-___
 
-# <center>[Itee Database]</center>
+<h1 align="center">[Itee Database]</h1>
+<br>
 
-The itee database contain all abstract class to manage database middleware and database plugins for itee server.
+<p align="center">The itee database contain all abstract class to manage database middleware and database plugins for itee server.</p>
+<br>
 
+<p align="center">
+    <a href="https://www.npmjs.com/package/itee-database">
+        <img src="https://img.shields.io/npm/v/itee-database" alt="Current package version">
+    </a>
+    <a href="https://travis-ci.org/Itee/itee-database">
+        <img src="https://travis-ci.org/Itee/itee-database.svg?branch=master" alt="Build status">
+    </a>
+    <a href="https://github.com/semantic-release/semantic-release">
+        <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="Build status">
+    </a>
+</p>
 
-## How to install
+<br>
+<h2>How to install</h2>
 
 From npm:
 
@@ -18,10 +29,13 @@ If you want to build the repository from source follow these instructions:
     git clone https://github.com/Itee/itee-database.git
     npm install
     npm run build
-        
-## How to use
+     
+<br>   
+<h2>How to use</h2>
 
-First of all, you should take a look to the documentation ! In case you have clone the repository you could auto-generate the library documentation using: 
+<p align="center">At begin was <a href="https://itee.github.io/itee-database/">RTFM</a> !</p>
+<br>
+In case you have clone the repository you could also auto-generate the library documentation using: 
 
     npm run doc
 
@@ -32,8 +46,11 @@ then you will be able to use like this:
     class MyAwesomeDatabase extend TAbstractDatabase {
         //...
     }
+    
+    export { MyAwesomeDatabase }
 
-## License (BSD-3-Clause)
+<br>
+<h2>License (BSD-3-Clause)</h2>
 
 **Copyright (c) 2015-Present, Itee, Valcke Tristan [https://github.com/Itee](https://github.com/Itee). All rights reserved.**
 
