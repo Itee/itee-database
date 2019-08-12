@@ -19,9 +19,10 @@ class TAbstractDatabasePlugin {
 
         for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
 
-            const descriptor = descriptors[ index ]
-            const controller = new ControllerCtors[ descriptor.controller.name ]( Driver, descriptor.controller.options )
-            const router     = Router( { mergeParams: true } )
+            const descriptor      = descriptors[ index ]
+            const ControllerClass = ControllerCtors.get( descriptor.controller.name )
+            const controller      = new ControllerClass( { driver: Driver, ...descriptor.controller.options } )
+            const router          = Router( { mergeParams: true } )
 
             console.log( `\tAdd controller for base route: ${descriptor.route}` )
             Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) )
