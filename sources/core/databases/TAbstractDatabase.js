@@ -185,14 +185,14 @@ class TAbstractDatabase {
 
     }
 
-    _registerLocalPlugin ( name, path ) {
+    _registerLocalPlugin ( name ) {
 
         let success = false
 
         try {
 
             // todo use rootPath or need to resolve depth correctly !
-            const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, name + '.js' )
+            const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, `${name}.js` )
             const plugin          = require( localPluginPath )
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
