@@ -1,3 +1,24 @@
+## [7.2.1](https://github.com/Itee/itee-database/compare/v7.2.0...v7.2.1) (2019-08-13)
+
+
+### Bug Fixes
+
+* **tmongodbplugin:** fix schema registration using different registration possibilities ([57151b6](https://github.com/Itee/itee-database/commit/57151b6))
+
+# [7.2.0](https://github.com/Itee/itee-database/compare/v7.1.1...v7.2.0) (2019-08-13)
+
+
+### Features
+
+* **tmongodbplugin:** add schema registration ([cc1b772](https://github.com/Itee/itee-database/commit/cc1b772))
+
+## [7.1.1](https://github.com/Itee/itee-database/compare/v7.1.0...v7.1.1) (2019-08-13)
+
+
+### Bug Fixes
+
+* **tabstractdatabase:** remove extra argument in registerLocalPlugin that collide with path module ([0511264](https://github.com/Itee/itee-database/commit/0511264))
+
 # [7.1.0](https://github.com/Itee/itee-database/compare/v7.0.1...v7.1.0) (2019-08-12)
 
 

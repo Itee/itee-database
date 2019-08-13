@@ -1,4 +1,4 @@
-console.log('Itee.Database v7.1.0 - EsModule')
+console.log('Itee.Database v7.2.1 - EsModule')
 import { isDefined, isArray, isObject, isString, isFunction, isNotDefined, isEmptyArray, isEmptyObject, isNotString, isEmptyString, isBlankString, isNotArray, isNotObject, isNull, isUndefined, isInvalidDirectoryPath, isEmptyFile, isNotArrayOfString } from 'itee-validators';
 import path from 'path';
 import { kStringMaxLength } from 'buffer';
@@ -1940,14 +1940,14 @@ class TAbstractDatabase {
 
     }
 
-    _registerLocalPlugin ( name, path ) {
+    _registerLocalPlugin ( name ) {
 
         let success = false;
 
         try {
 
             // todo use rootPath or need to resolve depth correctly !
-            const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, name + '.js' );
+            const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, `${name}.js` );
             const plugin          = require( localPluginPath );
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
@@ -2499,6 +2499,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
         this._schemas = value;
     }
 
+    addSchema( value ) {
+        this._schemas.push(value);
+    }
+
     get types () {
         return this._types
     }
@@ -2616,20 +2620,49 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     }
 
     beforeRegisterRoutes ( Mongoose ) {
+
         super.beforeRegisterRoutes( Mongoose );
 
         this._registerTypes( Mongoose );
         TMongoDBPlugin._registerTypesTo( Mongoose, this.__dirname );
+
+        this._registerSchemas( Mongoose );
         TMongoDBPlugin._registerSchemasTo( Mongoose, this.__dirname );
 
     }
 
     _registerTypes ( Mongoose ) {
 
-        for ( let typeWrapper of this._types ) {
+        for ( let type of this._types ) {
 
-            console.log( `Register type: ${typeWrapper.name}` );
-            typeWrapper( Mongoose );
+            console.log( `Register type: ${type.name}` );
+            type( Mongoose );
+
+        }
+
+    }
+
+    _registerSchemas ( Mongoose ) {
+
+        for ( let schema of this._schemas ) {
+
+            console.log( `Register schema: ${schema.name}` );
+
+            if ( isFunction( schema ) ) {
+
+                console.log( `Direct register local database schema: ${schema}` );
+                schema( Mongoose );
+
+            } else if ( isFunction( schema.registerModelTo ) ) {
+
+                console.log( `Register local database schema: ${schema}` );
+                schema.registerModelTo( Mongoose );
+
+            } else {
+
+                console.error( `Unable to register local database schema: ${schema}` );
+
+            }
 
         }
 
