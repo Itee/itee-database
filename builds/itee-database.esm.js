@@ -1,4 +1,4 @@
-console.log('Itee.Database v7.1.1 - EsModule')
+console.log('Itee.Database v7.2.0 - EsModule')
 import { isDefined, isArray, isObject, isString, isFunction, isNotDefined, isEmptyArray, isEmptyObject, isNotString, isEmptyString, isBlankString, isNotArray, isNotObject, isNull, isUndefined, isInvalidDirectoryPath, isEmptyFile, isNotArrayOfString } from 'itee-validators';
 import path from 'path';
 import { kStringMaxLength } from 'buffer';
@@ -2499,6 +2499,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
         this._schemas = value;
     }
 
+    addSchema( value ) {
+        this._schemas.push(value);
+    }
+
     get types () {
         return this._types
     }
@@ -2616,10 +2620,13 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     }
 
     beforeRegisterRoutes ( Mongoose ) {
+
         super.beforeRegisterRoutes( Mongoose );
 
         this._registerTypes( Mongoose );
         TMongoDBPlugin._registerTypesTo( Mongoose, this.__dirname );
+
+        this._registerSchemas( Mongoose );
         TMongoDBPlugin._registerSchemasTo( Mongoose, this.__dirname );
 
     }
@@ -2630,6 +2637,17 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
             console.log( `Register type: ${typeWrapper.name}` );
             typeWrapper( Mongoose );
+
+        }
+
+    }
+
+    _registerSchemas ( Mongoose ) {
+
+        for ( let schema of this._schemas ) {
+
+            console.log( `Register schema: ${schema.name}` );
+            schema( Mongoose );
 
         }
 

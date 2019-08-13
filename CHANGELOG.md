@@ -1,3 +1,10 @@
+# [7.2.0](https://github.com/Itee/itee-database/compare/v7.1.1...v7.2.0) (2019-08-13)
+
+
+### Features
+
+* **tmongodbplugin:** add schema registration ([cc1b772](https://github.com/Itee/itee-database/commit/cc1b772))
+
 ## [7.1.1](https://github.com/Itee/itee-database/compare/v7.1.0...v7.1.1) (2019-08-13)
 
 
