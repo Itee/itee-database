@@ -28,7 +28,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     }
 
     addSchema( value ) {
+
         this._schemas.push(value)
+        return this
+        
     }
 
     get types () {
