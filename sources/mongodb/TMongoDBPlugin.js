@@ -161,10 +161,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
     _registerTypes ( Mongoose ) {
 
-        for ( let typeWrapper of this._types ) {
+        for ( let type of this._types ) {
 
-            console.log( `Register type: ${typeWrapper.name}` )
-            typeWrapper( Mongoose )
+            console.log( `Register type: ${type.name}` )
+            type( Mongoose )
 
         }
 
@@ -175,7 +175,22 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
         for ( let schema of this._schemas ) {
 
             console.log( `Register schema: ${schema.name}` )
-            schema( Mongoose )
+
+            if ( isFunction( schema ) ) {
+
+                console.log( `Direct register local database schema: ${schema}` )
+                schema( Mongoose )
+
+            } else if ( isFunction( schema.registerModelTo ) ) {
+
+                console.log( `Register local database schema: ${schema}` )
+                schema.registerModelTo( Mongoose )
+
+            } else {
+
+                console.error( `Unable to register local database schema: ${schema}` )
+
+            }
 
         }
 
