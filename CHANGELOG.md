@@ -1,3 +1,10 @@
+## [7.2.1](https://github.com/Itee/itee-database/compare/v7.2.0...v7.2.1) (2019-08-13)
+
+
+### Bug Fixes
+
+* **tmongodbplugin:** fix schema registration using different registration possibilities ([57151b6](https://github.com/Itee/itee-database/commit/57151b6))
+
 # [7.2.0](https://github.com/Itee/itee-database/compare/v7.1.1...v7.2.0) (2019-08-13)
 
 
