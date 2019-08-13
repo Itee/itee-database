@@ -1,3 +1,10 @@
+## [7.1.1](https://github.com/Itee/itee-database/compare/v7.1.0...v7.1.1) (2019-08-13)
+
+
+### Bug Fixes
+
+* **tabstractdatabase:** remove extra argument in registerLocalPlugin that collide with path module ([0511264](https://github.com/Itee/itee-database/commit/0511264))
+
 # [7.1.0](https://github.com/Itee/itee-database/compare/v7.0.1...v7.1.0) (2019-08-12)
 
 

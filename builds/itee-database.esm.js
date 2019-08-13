@@ -1,4 +1,4 @@
-console.log('Itee.Database v7.1.0 - EsModule')
+console.log('Itee.Database v7.1.1 - EsModule')
 import { isDefined, isArray, isObject, isString, isFunction, isNotDefined, isEmptyArray, isEmptyObject, isNotString, isEmptyString, isBlankString, isNotArray, isNotObject, isNull, isUndefined, isInvalidDirectoryPath, isEmptyFile, isNotArrayOfString } from 'itee-validators';
 import path from 'path';
 import { kStringMaxLength } from 'buffer';
@@ -1940,14 +1940,14 @@ class TAbstractDatabase {
 
     }
 
-    _registerLocalPlugin ( name, path ) {
+    _registerLocalPlugin ( name ) {
 
         let success = false;
 
         try {
 
             // todo use rootPath or need to resolve depth correctly !
-            const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, name + '.js' );
+            const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, `${name}.js` );
             const plugin          = require( localPluginPath );
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
