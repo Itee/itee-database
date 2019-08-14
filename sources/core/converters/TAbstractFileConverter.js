@@ -28,15 +28,6 @@ class MemoryWriteStream extends Writable {
         this.offset       = 0
     }
 
-    toString () {
-
-        const string = this.memoryBuffer.toString()
-        this._releaseMemory()
-
-        return string
-
-    }
-
     _final ( callback ) {
 
         callback()
@@ -70,8 +61,6 @@ class MemoryWriteStream extends Writable {
 
     }
 
-    ////
-
     _releaseMemory () {
 
         this.memoryBuffer = null
@@ -97,6 +86,15 @@ class MemoryWriteStream extends Writable {
     toJSON () {
 
         return JSON.parse( this.toString() )
+
+    }
+
+    toString () {
+
+        const string = this.memoryBuffer.toString()
+        this._releaseMemory()
+
+        return string
 
     }
 
