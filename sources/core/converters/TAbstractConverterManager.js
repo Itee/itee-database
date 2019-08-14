@@ -386,23 +386,41 @@ class TAbstractConverterManager {
         const numberOfFiles     = files.length
         this._convertersOptions = request.body
 
+        // protect again multi-request from client on large file that take time to return response
+        const availableFiles = []
         for ( let fileIndex = 0 ; fileIndex < numberOfFiles ; fileIndex++ ) {
+
             let file = files[ fileIndex ]
-            if ( this._processedFiles.includes( file.filename ) ) { return }
-            this._processedFiles.push( file.filename )
+
+            if ( this._processedFiles.includes( file.name ) ) {
+
+                if ( this._useNext ) {
+                    next( `Le fichier ${file.name} à déjà été inséré.` )
+                } else {
+                    TAbstractConverterManager.returnError( `Le fichier ${file.name} à déjà été inséré.`, response )
+                }
+
+            }
+
+            this._processedFiles.push( file.name )
+            availableFiles.push( file )
+
         }
 
-        if ( numberOfFiles === 0 ) {
+        const availableFilesNumber = availableFiles.length
+        if ( availableFilesNumber === 0 ) {
 
             if ( this._useNext ) {
-                next( `Impossible d'analyser ${numberOfFiles} fichiers associatifs simultanément !` )
+                next( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !` )
             } else {
-                TAbstractConverterManager.returnError( `Impossible d'analyser ${numberOfFiles} fichiers associatifs simultanément !`, response )
+                TAbstractConverterManager.returnError( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !`, response )
             }
 
         }
 
-        this._processFiles( files, this._convertersOptions, response, next )
+        this._filesToProcess += availableFilesNumber
+
+        this._processFiles( availableFiles, this._convertersOptions, response, next )
 
     }
 
