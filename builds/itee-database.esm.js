@@ -1,4 +1,4 @@
-console.log('Itee.Database v7.2.2 - EsModule')
+console.log('Itee.Database v7.3.0 - EsModule')
 import { isDefined, isArray, isObject, isString, isFunction, isNotDefined, isEmptyArray, isEmptyObject, isNotString, isEmptyString, isBlankString, isNotArray, isNotObject, isNull, isUndefined, isInvalidDirectoryPath, isEmptyFile, isNotArrayOfString } from 'itee-validators';
 import path from 'path';
 import { kStringMaxLength } from 'buffer';
@@ -1075,11 +1075,13 @@ class TAbstractConverterManager {
         this._converters        = _parameters.converters;
         this._convertersOptions = _parameters.convertersOptions;
         this._rules             = _parameters.rules;
-        this._inserter          = new _parameters.inserter( this._driver );
+        this._inserter          = new _parameters.inserter( {
+            driver: this._driver
+        } );
 
         this._errors         = [];
         this._processedFiles = [];
-
+        this._filesToProcess = 0;
     }
 
     _fileConversionSuccessCallback ( response, next, extraSuccessCallback, data ) {
@@ -1101,6 +1103,7 @@ class TAbstractConverterManager {
 
     _fileInsertionSuccessCallback ( response, next, data ) {
 
+        this._filesToProcess--;
         this._checkEndOfReturns( response, next, data );
 
     }
@@ -1114,6 +1117,7 @@ class TAbstractConverterManager {
     _fileConversionErrorCallback ( response, next, error ) {
 
         this._errors.push( error );
+        this._filesToProcess--;
         this._checkEndOfReturns( response, next, null );
 
     }
@@ -1145,36 +1149,54 @@ class TAbstractConverterManager {
         const numberOfFiles     = files.length;
         this._convertersOptions = request.body;
 
+        // protect again multi-request from client on large file that take time to return response
+        const availableFiles = [];
         for ( let fileIndex = 0 ; fileIndex < numberOfFiles ; fileIndex++ ) {
+
             let file = files[ fileIndex ];
-            if ( this._processedFiles.includes( file.filename ) ) { return }
-            this._processedFiles.push( file.filename );
+
+            if ( this._processedFiles.includes( file.name ) ) {
+
+                if ( this._useNext ) {
+                    next( `Le fichier ${file.name} à déjà été inséré.` );
+                } else {
+                    TAbstractConverterManager.returnError( `Le fichier ${file.name} à déjà été inséré.`, response );
+                }
+
+            }
+
+            this._processedFiles.push( file.name );
+            availableFiles.push( file );
+
         }
 
-        if ( numberOfFiles === 0 ) {
+        const availableFilesNumber = availableFiles.length;
+        if ( availableFilesNumber === 0 ) {
 
             if ( this._useNext ) {
-                next( `Impossible d'analyser ${numberOfFiles} fichiers associatifs simultanément !` );
+                next( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !` );
             } else {
-                TAbstractConverterManager.returnError( `Impossible d'analyser ${numberOfFiles} fichiers associatifs simultanément !`, response );
+                TAbstractConverterManager.returnError( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !`, response );
             }
 
         }
 
-        this._processFiles( files, this._convertersOptions, response, next );
+        this._filesToProcess += availableFilesNumber;
+
+        this._processFiles( availableFiles, this._convertersOptions, response, next );
 
     }
 
     _processFiles ( files, parameters, response, next ) {
 
-        const fileExtensions = files.map( ( file ) => path.extname( file.filename ) );
+        const fileExtensions = files.map( ( file ) => path.extname( file.name ) );
         const matchingRules  = this._rules.filter( elem => {
 
             const availables = elem.on;
 
-            if ( Array.isArray( availables ) ) {
+            if ( isArray( availables ) ) {
 
-                for ( var i = 0 ; i < availables.length ; i++ ) {
+                for ( let i = 0 ; i < availables.length ; i++ ) {
                     if ( !fileExtensions.includes( availables[ i ] ) ) {
                         return false
                     }
@@ -1190,7 +1212,7 @@ class TAbstractConverterManager {
         for ( let ruleIndex = 0, numberOfRules = matchingRules.length ; ruleIndex < numberOfRules ; ruleIndex++ ) {
             let converterNames = matchingRules[ ruleIndex ].use;
 
-            if ( Array.isArray( converterNames ) ) {
+            if ( isArray( converterNames ) ) {
 
                 let previousOnSucess = undefined;
                 for ( let converterIndex = converterNames.length - 1 ; converterIndex >= 0 ; converterIndex-- ) {
@@ -1241,7 +1263,7 @@ class TAbstractConverterManager {
             } else {
 
                 this._converters[ converterNames ].convert(
-                    files[ 0 ].file,
+                    files[ 0 ],
                     parameters,
                     this._fileConversionSuccessCallback.bind( this, response, next, null ),
                     this._fileConversionProgressCallback.bind( this, response ),
@@ -1382,15 +1404,6 @@ class MemoryWriteStream extends Writable {
         this.offset       = 0;
     }
 
-    toString () {
-
-        const string = this.memoryBuffer.toString();
-        this._releaseMemory();
-
-        return string
-
-    }
-
     _final ( callback ) {
 
         callback();
@@ -1424,8 +1437,6 @@ class MemoryWriteStream extends Writable {
 
     }
 
-    ////
-
     _releaseMemory () {
 
         this.memoryBuffer = null;
@@ -1451,6 +1462,15 @@ class MemoryWriteStream extends Writable {
     toJSON () {
 
         return JSON.parse( this.toString() )
+
+    }
+
+    toString () {
+
+        const string = this.memoryBuffer.toString();
+        this._releaseMemory();
+
+        return string
 
     }
 
@@ -1524,20 +1544,58 @@ class TAbstractFileConverter {
 
         const self       = this;
         const dataBloc   = this._queue.shift();
-        const data       = dataBloc.file;
+        const file       = dataBloc.file;
         const parameters = dataBloc.parameters;
         const onSuccess  = dataBloc.onSuccess;
         const onProgress = dataBloc.onProgress;
         const onError    = dataBloc.onError;
 
-        self._dumpFileInMemoryAs(
-            self._dumpType,
-            data,
-            parameters,
-            _onDumpSuccess,
-            _onProcessProgress,
-            _onProcessError
-        );
+        if ( isString( file ) ) {
+
+            self._dumpFileInMemoryAs(
+                self._dumpType,
+                file,
+                parameters,
+                _onDumpSuccess,
+                _onProcessProgress,
+                _onProcessError
+            );
+
+        } else {
+
+            const data = file.data;
+
+            switch ( self._dumpType ) {
+
+                case TAbstractFileConverter.DumpType.ArrayBuffer: {
+
+                    const bufferSize  = data.length;
+                    const arrayBuffer = new ArrayBuffer( bufferSize );
+                    const view        = new Uint8Array( arrayBuffer );
+
+                    for ( let i = 0 ; i < bufferSize ; ++i ) {
+                        view[ i ] = data[ i ];
+                    }
+
+                    _onDumpSuccess( arrayBuffer );
+
+                }
+                    break
+
+                case TAbstractFileConverter.DumpType.JSON:
+                    _onDumpSuccess( JSON.parse( data.toString() ) );
+                    break
+
+                case TAbstractFileConverter.DumpType.String:
+                    _onDumpSuccess( data.toString() );
+                    break
+
+                default:
+                    throw new RangeError( `Invalid switch parameter: ${self._dumpType}` )
+
+            }
+
+        }
 
         function _onDumpSuccess ( data ) {
 
@@ -2499,11 +2557,11 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
         this._schemas = value;
     }
 
-    addSchema( value ) {
+    addSchema ( value ) {
 
-        this._schemas.push(value);
+        this._schemas.push( value );
         return this
-        
+
     }
 
     get types () {
@@ -2651,15 +2709,13 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
             console.log( `Register schema: ${schema.name}` );
 
-            if ( isFunction( schema ) ) {
+            if ( isFunction( schema.registerModelTo ) ) {
 
-                console.log( `Direct register local database schema: ${schema}` );
-                schema( Mongoose );
-
-            } else if ( isFunction( schema.registerModelTo ) ) {
-
-                console.log( `Register local database schema: ${schema}` );
                 schema.registerModelTo( Mongoose );
+
+            } else if ( isFunction( schema ) ) {
+
+                schema( Mongoose );
 
             } else {
 
