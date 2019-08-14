@@ -1,3 +1,18 @@
+# [7.3.0](https://github.com/Itee/itee-database/compare/v7.2.2...v7.3.0) (2019-08-14)
+
+
+### Bug Fixes
+
+* **tabstractconvertermanager:** fix hard return on already processed files, and better file check ([923c7ef](https://github.com/Itee/itee-database/commit/923c7ef))
+* **tabstractconvertmanager:** fix inserter ctor parameters ([9c6ecea](https://github.com/Itee/itee-database/commit/9c6ecea))
+* **tabstractfileconverter:** fix wrong variable name in queue processing as dump type ([1a1248f](https://github.com/Itee/itee-database/commit/1a1248f))
+* **tmongodbplugin:** change shema registration order. check before registerModelTo and then function ([2161b43](https://github.com/Itee/itee-database/commit/2161b43))
+
+
+### Features
+
+* **tabstractfileconvertor:** allow to load files from string, url OR directly from memory ([2675add](https://github.com/Itee/itee-database/commit/2675add))
+
 ## [7.2.2](https://github.com/Itee/itee-database/compare/v7.2.1...v7.2.2) (2019-08-13)
 
 
