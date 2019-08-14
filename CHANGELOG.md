@@ -1,3 +1,10 @@
+## [7.2.2](https://github.com/Itee/itee-database/compare/v7.2.1...v7.2.2) (2019-08-13)
+
+
+### Bug Fixes
+
+* **tmongodbplugin:** add missing return this in addSchema method ([bf3e9be](https://github.com/Itee/itee-database/commit/bf3e9be))
+
 ## [7.2.1](https://github.com/Itee/itee-database/compare/v7.2.0...v7.2.1) (2019-08-13)
 
 

@@ -1,4 +1,4 @@
-console.log('Itee.Database v7.2.1 - EsModule')
+console.log('Itee.Database v7.2.2 - EsModule')
 import { isDefined, isArray, isObject, isString, isFunction, isNotDefined, isEmptyArray, isEmptyObject, isNotString, isEmptyString, isBlankString, isNotArray, isNotObject, isNull, isUndefined, isInvalidDirectoryPath, isEmptyFile, isNotArrayOfString } from 'itee-validators';
 import path from 'path';
 import { kStringMaxLength } from 'buffer';
@@ -2500,7 +2500,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     }
 
     addSchema( value ) {
+
         this._schemas.push(value);
+        return this
+        
     }
 
     get types () {

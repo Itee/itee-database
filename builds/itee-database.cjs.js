@@ -1,4 +1,4 @@
-console.log('Itee.Database v7.2.1 - CommonJs')
+console.log('Itee.Database v7.2.2 - CommonJs')
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -2505,7 +2505,10 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
     }
 
     addSchema( value ) {
+
         this._schemas.push(value);
+        return this
+        
     }
 
     get types () {
