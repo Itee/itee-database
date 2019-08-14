@@ -27,11 +27,11 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
         this._schemas = value
     }
 
-    addSchema( value ) {
+    addSchema ( value ) {
 
-        this._schemas.push(value)
+        this._schemas.push( value )
         return this
-        
+
     }
 
     get types () {
@@ -179,15 +179,13 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
             console.log( `Register schema: ${schema.name}` )
 
-            if ( isFunction( schema ) ) {
+            if ( isFunction( schema.registerModelTo ) ) {
 
-                console.log( `Direct register local database schema: ${schema}` )
-                schema( Mongoose )
-
-            } else if ( isFunction( schema.registerModelTo ) ) {
-
-                console.log( `Register local database schema: ${schema}` )
                 schema.registerModelTo( Mongoose )
+
+            } else if ( isFunction( schema ) ) {
+
+                schema( Mongoose )
 
             } else {
 

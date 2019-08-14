@@ -12,6 +12,7 @@ import * as globalBuffer from 'buffer'
 import fs                from 'fs'
 import {
     isNull,
+    isString,
     isUndefined
 }                        from 'itee-validators'
 import { Writable }      from 'stream'
@@ -26,15 +27,6 @@ class MemoryWriteStream extends Writable {
         const bufferSize  = options.bufferSize || globalBuffer.kStringMaxLength
         this.memoryBuffer = Buffer.alloc( bufferSize )
         this.offset       = 0
-    }
-
-    toString () {
-
-        const string = this.memoryBuffer.toString()
-        this._releaseMemory()
-
-        return string
-
     }
 
     _final ( callback ) {
@@ -70,8 +62,6 @@ class MemoryWriteStream extends Writable {
 
     }
 
-    ////
-
     _releaseMemory () {
 
         this.memoryBuffer = null
@@ -97,6 +87,15 @@ class MemoryWriteStream extends Writable {
     toJSON () {
 
         return JSON.parse( this.toString() )
+
+    }
+
+    toString () {
+
+        const string = this.memoryBuffer.toString()
+        this._releaseMemory()
+
+        return string
 
     }
 
@@ -170,20 +169,58 @@ class TAbstractFileConverter {
 
         const self       = this
         const dataBloc   = this._queue.shift()
-        const data       = dataBloc.file
+        const file       = dataBloc.file
         const parameters = dataBloc.parameters
         const onSuccess  = dataBloc.onSuccess
         const onProgress = dataBloc.onProgress
         const onError    = dataBloc.onError
 
-        self._dumpFileInMemoryAs(
-            self._dumpType,
-            data,
-            parameters,
-            _onDumpSuccess,
-            _onProcessProgress,
-            _onProcessError
-        )
+        if ( isString( file ) ) {
+
+            self._dumpFileInMemoryAs(
+                self._dumpType,
+                file,
+                parameters,
+                _onDumpSuccess,
+                _onProcessProgress,
+                _onProcessError
+            )
+
+        } else {
+
+            const data = file.data
+
+            switch ( self._dumpType ) {
+
+                case TAbstractFileConverter.DumpType.ArrayBuffer: {
+
+                    const bufferSize  = data.length
+                    const arrayBuffer = new ArrayBuffer( bufferSize )
+                    const view        = new Uint8Array( arrayBuffer )
+
+                    for ( let i = 0 ; i < bufferSize ; ++i ) {
+                        view[ i ] = data[ i ]
+                    }
+
+                    _onDumpSuccess( arrayBuffer )
+
+                }
+                    break
+
+                case TAbstractFileConverter.DumpType.JSON:
+                    _onDumpSuccess( JSON.parse( data.toString() ) )
+                    break
+
+                case TAbstractFileConverter.DumpType.String:
+                    _onDumpSuccess( data.toString() )
+                    break
+
+                default:
+                    throw new RangeError( `Invalid switch parameter: ${self._dumpType}` )
+
+            }
+
+        }
 
         function _onDumpSuccess ( data ) {
 

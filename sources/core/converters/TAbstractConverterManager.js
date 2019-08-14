@@ -314,11 +314,13 @@ class TAbstractConverterManager {
         this._converters        = _parameters.converters
         this._convertersOptions = _parameters.convertersOptions
         this._rules             = _parameters.rules
-        this._inserter          = new _parameters.inserter( this._driver )
+        this._inserter          = new _parameters.inserter( {
+            driver: this._driver
+        } )
 
         this._errors         = []
         this._processedFiles = []
-
+        this._filesToProcess = 0
     }
 
     _fileConversionSuccessCallback ( response, next, extraSuccessCallback, data ) {
@@ -340,6 +342,7 @@ class TAbstractConverterManager {
 
     _fileInsertionSuccessCallback ( response, next, data ) {
 
+        this._filesToProcess--
         this._checkEndOfReturns( response, next, data )
 
     }
@@ -353,6 +356,7 @@ class TAbstractConverterManager {
     _fileConversionErrorCallback ( response, next, error ) {
 
         this._errors.push( error )
+        this._filesToProcess--
         this._checkEndOfReturns( response, next, null )
 
     }
@@ -384,36 +388,54 @@ class TAbstractConverterManager {
         const numberOfFiles     = files.length
         this._convertersOptions = request.body
 
+        // protect again multi-request from client on large file that take time to return response
+        const availableFiles = []
         for ( let fileIndex = 0 ; fileIndex < numberOfFiles ; fileIndex++ ) {
+
             let file = files[ fileIndex ]
-            if ( this._processedFiles.includes( file.filename ) ) { return }
-            this._processedFiles.push( file.filename )
+
+            if ( this._processedFiles.includes( file.name ) ) {
+
+                if ( this._useNext ) {
+                    next( `Le fichier ${file.name} à déjà été inséré.` )
+                } else {
+                    TAbstractConverterManager.returnError( `Le fichier ${file.name} à déjà été inséré.`, response )
+                }
+
+            }
+
+            this._processedFiles.push( file.name )
+            availableFiles.push( file )
+
         }
 
-        if ( numberOfFiles === 0 ) {
+        const availableFilesNumber = availableFiles.length
+        if ( availableFilesNumber === 0 ) {
 
             if ( this._useNext ) {
-                next( `Impossible d'analyser ${numberOfFiles} fichiers associatifs simultanément !` )
+                next( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !` )
             } else {
-                TAbstractConverterManager.returnError( `Impossible d'analyser ${numberOfFiles} fichiers associatifs simultanément !`, response )
+                TAbstractConverterManager.returnError( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !`, response )
             }
 
         }
 
-        this._processFiles( files, this._convertersOptions, response, next )
+        this._filesToProcess += availableFilesNumber
+
+        this._processFiles( availableFiles, this._convertersOptions, response, next )
 
     }
 
     _processFiles ( files, parameters, response, next ) {
 
-        const fileExtensions = files.map( ( file ) => path.extname( file.filename ) )
+        const fileExtensions = files.map( ( file ) => path.extname( file.name ) )
         const matchingRules  = this._rules.filter( elem => {
 
             const availables = elem.on
 
-            if ( Array.isArray( availables ) ) {
+            if ( isArray( availables ) ) {
 
-                for ( var i = 0 ; i < availables.length ; i++ ) {
+                for ( let i = 0 ; i < availables.length ; i++ ) {
                     if ( !fileExtensions.includes( availables[ i ] ) ) {
                         return false
                     }
@@ -429,7 +451,7 @@ class TAbstractConverterManager {
         for ( let ruleIndex = 0, numberOfRules = matchingRules.length ; ruleIndex < numberOfRules ; ruleIndex++ ) {
             let converterNames = matchingRules[ ruleIndex ].use
 
-            if ( Array.isArray( converterNames ) ) {
+            if ( isArray( converterNames ) ) {
 
                 let previousOnSucess = undefined
                 for ( let converterIndex = converterNames.length - 1 ; converterIndex >= 0 ; converterIndex-- ) {
@@ -480,7 +502,7 @@ class TAbstractConverterManager {
             } else {
 
                 this._converters[ converterNames ].convert(
-                    files[ 0 ].file,
+                    files[ 0 ],
                     parameters,
                     this._fileConversionSuccessCallback.bind( this, response, next, null ),
                     this._fileConversionProgressCallback.bind( this, response ),
