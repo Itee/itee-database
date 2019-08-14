@@ -314,7 +314,9 @@ class TAbstractConverterManager {
         this._converters        = _parameters.converters
         this._convertersOptions = _parameters.convertersOptions
         this._rules             = _parameters.rules
-        this._inserter          = new _parameters.inserter( this._driver )
+        this._inserter          = new _parameters.inserter( {
+            driver: this._driver
+        } )
 
         this._errors         = []
         this._processedFiles = []
