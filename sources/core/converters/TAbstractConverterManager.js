@@ -320,7 +320,7 @@ class TAbstractConverterManager {
 
         this._errors         = []
         this._processedFiles = []
-
+        this._filesToProcess = 0
     }
 
     _fileConversionSuccessCallback ( response, next, extraSuccessCallback, data ) {
@@ -342,6 +342,7 @@ class TAbstractConverterManager {
 
     _fileInsertionSuccessCallback ( response, next, data ) {
 
+        this._filesToProcess--
         this._checkEndOfReturns( response, next, data )
 
     }
@@ -355,6 +356,7 @@ class TAbstractConverterManager {
     _fileConversionErrorCallback ( response, next, error ) {
 
         this._errors.push( error )
+        this._filesToProcess--
         this._checkEndOfReturns( response, next, null )
 
     }
@@ -426,7 +428,7 @@ class TAbstractConverterManager {
 
     _processFiles ( files, parameters, response, next ) {
 
-        const fileExtensions = files.map( ( file ) => path.extname( file.filename ) )
+        const fileExtensions = files.map( ( file ) => path.extname( file.name ) )
         const matchingRules  = this._rules.filter( elem => {
 
             const availables = elem.on
@@ -500,7 +502,7 @@ class TAbstractConverterManager {
             } else {
 
                 this._converters[ converterNames ].convert(
-                    files[ 0 ].file,
+                    files[ 0 ],
                     parameters,
                     this._fileConversionSuccessCallback.bind( this, response, next, null ),
                     this._fileConversionProgressCallback.bind( this, response ),
