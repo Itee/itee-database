@@ -413,9 +413,9 @@ class TAbstractConverterManager {
 
             const availables = elem.on
 
-            if ( Array.isArray( availables ) ) {
+            if ( isArray( availables ) ) {
 
-                for ( var i = 0 ; i < availables.length ; i++ ) {
+                for ( let i = 0 ; i < availables.length ; i++ ) {
                     if ( !fileExtensions.includes( availables[ i ] ) ) {
                         return false
                     }
@@ -431,7 +431,7 @@ class TAbstractConverterManager {
         for ( let ruleIndex = 0, numberOfRules = matchingRules.length ; ruleIndex < numberOfRules ; ruleIndex++ ) {
             let converterNames = matchingRules[ ruleIndex ].use
 
-            if ( Array.isArray( converterNames ) ) {
+            if ( isArray( converterNames ) ) {
 
                 let previousOnSucess = undefined
                 for ( let converterIndex = converterNames.length - 1 ; converterIndex >= 0 ; converterIndex-- ) {
