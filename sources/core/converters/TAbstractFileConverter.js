@@ -199,7 +199,7 @@ class TAbstractFileConverter {
                     const view        = new Uint8Array( arrayBuffer )
 
                     for ( let i = 0 ; i < bufferSize ; ++i ) {
-                        view[ i ] = buffer[ i ]
+                        view[ i ] = data[ i ]
                     }
 
                     _onDumpSuccess( arrayBuffer )
