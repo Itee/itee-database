@@ -386,6 +386,16 @@ class TAbstractConverterManager {
 
         const files             = TAbstractConverterManager._convertFilesObjectToArray( request.files )
         const numberOfFiles     = files.length
+        if ( numberOfFiles === 0 ) {
+
+            if ( this._useNext ) {
+                next( `Aucun fichier à traiter !` );
+            } else {
+                TAbstractConverterManager.returnError( `Aucun fichier à traiter !`, response );
+            }
+
+        }
+
         this._convertersOptions = request.body
 
         // protect again multi-request from client on large file that take time to return response
