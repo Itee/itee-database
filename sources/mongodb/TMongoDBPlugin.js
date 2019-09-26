@@ -49,90 +49,6 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
     }
 
-    static _registerTypesTo ( Mongoose, dirname ) {
-
-        const typesBasePath = path.join( dirname, 'types' )
-        if ( isInvalidDirectoryPath( typesBasePath ) ) {
-            console.warn( `Unable to find "types" folder for path "${typesBasePath}"` )
-            return
-        }
-
-        const typesFilesPaths = getFilesPathsUnder( typesBasePath )
-        let typeFilePath      = ''
-        let typeFile          = undefined
-
-        for ( let typeIndex = 0, numberOfTypes = typesFilesPaths.length ; typeIndex < numberOfTypes ; typeIndex++ ) {
-
-            typeFilePath = typesFilesPaths[ typeIndex ]
-
-            if ( isEmptyFile( typeFilePath, 200 ) ) {
-
-                console.warn( `Skip empty core database schema: ${typeFilePath}` )
-                continue
-
-            }
-
-            typeFile = require( typeFilePath )
-
-            if ( isFunction( typeFile ) ) {
-
-                console.log( `Register type: ${typeFilePath}` )
-                typeFile( Mongoose )
-
-            } else {
-
-                console.error( `Unable to register type: ${typeFilePath}` )
-
-            }
-
-        }
-
-    }
-
-    static _registerSchemasTo ( Mongoose, dirname ) {
-
-        const localSchemasBasePath = path.join( dirname, 'schemas' )
-        if ( isInvalidDirectoryPath( localSchemasBasePath ) ) {
-            console.warn( `Unable to find "schemas" folder for path "${localSchemasBasePath}"` )
-            return
-        }
-
-        const localSchemasFilesPaths = getFilesPathsUnder( localSchemasBasePath )
-        let localSchemaFilePath      = ''
-        let localSchemaFile          = undefined
-        for ( let schemaIndex = 0, numberOfSchemas = localSchemasFilesPaths.length ; schemaIndex < numberOfSchemas ; schemaIndex++ ) {
-
-            localSchemaFilePath = localSchemasFilesPaths[ schemaIndex ]
-
-            if ( isEmptyFile( localSchemaFilePath ) ) {
-
-                console.warn( `Skip empty local database schema: ${localSchemaFilePath}` )
-                continue
-
-            }
-
-            localSchemaFile = require( localSchemaFilePath )
-
-            if ( isFunction( localSchemaFile ) ) {
-
-                console.log( `Direct register local database schema: ${localSchemaFilePath}` )
-                localSchemaFile( Mongoose )
-
-            } else if ( isFunction( localSchemaFile.registerModelTo ) ) {
-
-                console.log( `Register local database schema: ${localSchemaFilePath}` )
-                localSchemaFile.registerModelTo( Mongoose )
-
-            } else {
-
-                console.error( `Unable to register local database schema: ${localSchemaFilePath}` )
-
-            }
-
-        }
-
-    }
-
     constructor ( parameters = {} ) {
 
         const _parameters = {
@@ -154,11 +70,35 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
         super.beforeRegisterRoutes( Mongoose )
 
+        this._searchLocalTypes()
         this._registerTypes( Mongoose )
-        TMongoDBPlugin._registerTypesTo( Mongoose, this.__dirname )
 
+        this._searchLocalSchemas()
         this._registerSchemas( Mongoose )
-        TMongoDBPlugin._registerSchemasTo( Mongoose, this.__dirname )
+
+    }
+
+    _searchLocalTypes () {
+
+        const typesBasePath = path.join( this.__dirname, 'types' )
+        if ( isInvalidDirectoryPath( typesBasePath ) ) {
+            console.warn( `Unable to find "types" folder for path "${typesBasePath}"` )
+            return
+        } else {
+            console.log( `Add types from: ${typesBasePath}` )
+        }
+
+        const typesFilesPaths = getFilesPathsUnder( typesBasePath )
+        let typeFilePath      = ''
+        let typeFile          = undefined
+
+        for ( let typeIndex = 0, numberOfTypes = typesFilesPaths.length ; typeIndex < numberOfTypes ; typeIndex++ ) {
+
+            typeFilePath = typesFilesPaths[ typeIndex ]
+            typeFile     = require( typeFilePath )
+            this._types.push( typeFile )
+
+        }
 
     }
 
@@ -168,6 +108,37 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
             console.log( `Register type: ${type.name}` )
             type( Mongoose )
+
+        }
+
+    }
+
+    _searchLocalSchemas () {
+
+        const localSchemasBasePath = path.join( this.__dirname, 'schemas' )
+        if ( isInvalidDirectoryPath( localSchemasBasePath ) ) {
+            console.warn( `Unable to find "schemas" folder for path "${localSchemasBasePath}"` )
+            return
+        } else {
+            console.log( `Add schemas from: ${localSchemasBasePath}` )
+        }
+
+        const localSchemasFilesPaths = getFilesPathsUnder( localSchemasBasePath )
+        let localSchemaFilePath      = ''
+        let localSchemaFile          = undefined
+        for ( let schemaIndex = 0, numberOfSchemas = localSchemasFilesPaths.length ; schemaIndex < numberOfSchemas ; schemaIndex++ ) {
+
+            localSchemaFilePath = localSchemasFilesPaths[ schemaIndex ]
+
+            if ( isEmptyFile( localSchemaFilePath ) ) {
+
+                console.warn( `Skip empty local database schema: ${localSchemaFilePath}` )
+                continue
+
+            }
+
+            localSchemaFile = require( localSchemaFilePath )
+            this._schemas.push( localSchemaFile )
 
         }
 
