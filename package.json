@@ -94,7 +94,7 @@
     "karma-benchmark": "^1.0.4",
     "karma-benchmarkjs-reporter": "^1.0.0",
     "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^3.0.0",
+    "karma-chrome-launcher": "^3.1.0",
     "karma-edge-launcher": "^0.4.2",
     "karma-firefox-launcher": "^1.2.0",
     "karma-htmlfile-reporter": "^0.3.8",
@@ -107,7 +107,7 @@
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.1.1",
-    "semantic-release": "^15.13.19"
+    "semantic-release": "^15.13.21"
   },
   "optionalDependencies": {},
   "config": {
