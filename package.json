@@ -1,6 +1,6 @@
 {
   "name": "itee-database",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "The abstract database side of the Itee solution for 3d web content, this package is design to work with an Itee server.",
   "keywords": [
     "itee",
