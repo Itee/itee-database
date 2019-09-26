@@ -1,3 +1,10 @@
+## [7.3.1](https://github.com/Itee/itee-database/compare/v7.3.0...v7.3.1) (2019-09-26)
+
+
+### Bug Fixes
+
+* **package:** update packages and fix version ([92640a5](https://github.com/Itee/itee-database/commit/92640a5))
+
 # [7.3.0](https://github.com/Itee/itee-database/compare/v7.2.2...v7.3.0) (2019-08-14)
 
 

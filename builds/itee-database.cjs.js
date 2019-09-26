@@ -1,4 +1,4 @@
-console.log('Itee.Database v7.3.0 - CommonJs')
+console.log('Itee.Database v7.3.1 - CommonJs')
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -1152,6 +1152,16 @@ class TAbstractConverterManager {
 
         const files             = TAbstractConverterManager._convertFilesObjectToArray( request.files );
         const numberOfFiles     = files.length;
+        if ( numberOfFiles === 0 ) {
+
+            if ( this._useNext ) {
+                next( `Aucun fichier à traiter !` );
+            } else {
+                TAbstractConverterManager.returnError( `Aucun fichier à traiter !`, response );
+            }
+
+        }
+
         this._convertersOptions = request.body;
 
         // protect again multi-request from client on large file that take time to return response
@@ -2584,90 +2594,6 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
     }
 
-    static _registerTypesTo ( Mongoose, dirname ) {
-
-        const typesBasePath = path.join( dirname, 'types' );
-        if ( iteeValidators.isInvalidDirectoryPath( typesBasePath ) ) {
-            console.warn( `Unable to find "types" folder for path "${typesBasePath}"` );
-            return
-        }
-
-        const typesFilesPaths = iteeUtils.getFilesPathsUnder( typesBasePath );
-        let typeFilePath      = '';
-        let typeFile          = undefined;
-
-        for ( let typeIndex = 0, numberOfTypes = typesFilesPaths.length ; typeIndex < numberOfTypes ; typeIndex++ ) {
-
-            typeFilePath = typesFilesPaths[ typeIndex ];
-
-            if ( iteeValidators.isEmptyFile( typeFilePath, 200 ) ) {
-
-                console.warn( `Skip empty core database schema: ${typeFilePath}` );
-                continue
-
-            }
-
-            typeFile = require( typeFilePath );
-
-            if ( iteeValidators.isFunction( typeFile ) ) {
-
-                console.log( `Register type: ${typeFilePath}` );
-                typeFile( Mongoose );
-
-            } else {
-
-                console.error( `Unable to register type: ${typeFilePath}` );
-
-            }
-
-        }
-
-    }
-
-    static _registerSchemasTo ( Mongoose, dirname ) {
-
-        const localSchemasBasePath = path.join( dirname, 'schemas' );
-        if ( iteeValidators.isInvalidDirectoryPath( localSchemasBasePath ) ) {
-            console.warn( `Unable to find "schemas" folder for path "${localSchemasBasePath}"` );
-            return
-        }
-
-        const localSchemasFilesPaths = iteeUtils.getFilesPathsUnder( localSchemasBasePath );
-        let localSchemaFilePath      = '';
-        let localSchemaFile          = undefined;
-        for ( let schemaIndex = 0, numberOfSchemas = localSchemasFilesPaths.length ; schemaIndex < numberOfSchemas ; schemaIndex++ ) {
-
-            localSchemaFilePath = localSchemasFilesPaths[ schemaIndex ];
-
-            if ( iteeValidators.isEmptyFile( localSchemaFilePath ) ) {
-
-                console.warn( `Skip empty local database schema: ${localSchemaFilePath}` );
-                continue
-
-            }
-
-            localSchemaFile = require( localSchemaFilePath );
-
-            if ( iteeValidators.isFunction( localSchemaFile ) ) {
-
-                console.log( `Direct register local database schema: ${localSchemaFilePath}` );
-                localSchemaFile( Mongoose );
-
-            } else if ( iteeValidators.isFunction( localSchemaFile.registerModelTo ) ) {
-
-                console.log( `Register local database schema: ${localSchemaFilePath}` );
-                localSchemaFile.registerModelTo( Mongoose );
-
-            } else {
-
-                console.error( `Unable to register local database schema: ${localSchemaFilePath}` );
-
-            }
-
-        }
-
-    }
-
     constructor ( parameters = {} ) {
 
         const _parameters = {
@@ -2689,11 +2615,35 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
         super.beforeRegisterRoutes( Mongoose );
 
+        this._searchLocalTypes();
         this._registerTypes( Mongoose );
-        TMongoDBPlugin._registerTypesTo( Mongoose, this.__dirname );
 
+        this._searchLocalSchemas();
         this._registerSchemas( Mongoose );
-        TMongoDBPlugin._registerSchemasTo( Mongoose, this.__dirname );
+
+    }
+
+    _searchLocalTypes () {
+
+        const typesBasePath = path.join( this.__dirname, 'types' );
+        if ( iteeValidators.isInvalidDirectoryPath( typesBasePath ) ) {
+            console.warn( `Unable to find "types" folder for path "${typesBasePath}"` );
+            return
+        } else {
+            console.log( `Add types from: ${typesBasePath}` );
+        }
+
+        const typesFilesPaths = iteeUtils.getFilesPathsUnder( typesBasePath );
+        let typeFilePath      = '';
+        let typeFile          = undefined;
+
+        for ( let typeIndex = 0, numberOfTypes = typesFilesPaths.length ; typeIndex < numberOfTypes ; typeIndex++ ) {
+
+            typeFilePath = typesFilesPaths[ typeIndex ];
+            typeFile     = require( typeFilePath );
+            this._types.push( typeFile );
+
+        }
 
     }
 
@@ -2703,6 +2653,37 @@ class TMongoDBPlugin extends TAbstractDatabasePlugin {
 
             console.log( `Register type: ${type.name}` );
             type( Mongoose );
+
+        }
+
+    }
+
+    _searchLocalSchemas () {
+
+        const localSchemasBasePath = path.join( this.__dirname, 'schemas' );
+        if ( iteeValidators.isInvalidDirectoryPath( localSchemasBasePath ) ) {
+            console.warn( `Unable to find "schemas" folder for path "${localSchemasBasePath}"` );
+            return
+        } else {
+            console.log( `Add schemas from: ${localSchemasBasePath}` );
+        }
+
+        const localSchemasFilesPaths = iteeUtils.getFilesPathsUnder( localSchemasBasePath );
+        let localSchemaFilePath      = '';
+        let localSchemaFile          = undefined;
+        for ( let schemaIndex = 0, numberOfSchemas = localSchemasFilesPaths.length ; schemaIndex < numberOfSchemas ; schemaIndex++ ) {
+
+            localSchemaFilePath = localSchemasFilesPaths[ schemaIndex ];
+
+            if ( iteeValidators.isEmptyFile( localSchemaFilePath ) ) {
+
+                console.warn( `Skip empty local database schema: ${localSchemaFilePath}` );
+                continue
+
+            }
+
+            localSchemaFile = require( localSchemaFilePath );
+            this._schemas.push( localSchemaFile );
 
         }
 
