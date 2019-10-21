@@ -1,3 +1,10 @@
+## [7.3.2](https://github.com/Itee/itee-database/compare/v7.3.1...v7.3.2) (2019-10-21)
+
+
+### Bug Fixes
+
+* **tabstractconvertermanager:** fix missing return statement on next usage ([79844c0](https://github.com/Itee/itee-database/commit/79844c0))
+
 ## [7.3.1](https://github.com/Itee/itee-database/compare/v7.3.0...v7.3.1) (2019-09-26)
 
 
