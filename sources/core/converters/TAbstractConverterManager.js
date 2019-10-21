@@ -384,14 +384,15 @@ class TAbstractConverterManager {
 
     processFiles ( request, response, next ) {
 
-        const files             = TAbstractConverterManager._convertFilesObjectToArray( request.files )
-        const numberOfFiles     = files.length
+        const files         = TAbstractConverterManager._convertFilesObjectToArray( request.files )
+        const numberOfFiles = files.length
         if ( numberOfFiles === 0 ) {
 
             if ( this._useNext ) {
-                next( `Aucun fichier à traiter !` );
+                next( `Aucun fichier à traiter !` )
+                return
             } else {
-                TAbstractConverterManager.returnError( `Aucun fichier à traiter !`, response );
+                TAbstractConverterManager.returnError( `Aucun fichier à traiter !`, response )
             }
 
         }
@@ -408,6 +409,7 @@ class TAbstractConverterManager {
 
                 if ( this._useNext ) {
                     next( `Le fichier ${file.name} à déjà été inséré.` )
+                    return
                 } else {
                     TAbstractConverterManager.returnError( `Le fichier ${file.name} à déjà été inséré.`, response )
                 }
@@ -424,6 +426,7 @@ class TAbstractConverterManager {
 
             if ( this._useNext ) {
                 next( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !` )
+                return
             } else {
                 TAbstractConverterManager.returnError( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !`, response )
             }
