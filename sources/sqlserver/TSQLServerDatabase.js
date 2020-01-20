@@ -33,25 +33,25 @@ class TSQLServerDatabase extends TAbstractDatabase {
                 authentication: {
                     type:    [ 'default', 'ntlm', 'azure-active-directory-password', 'azure-active-directory-access-token' ][ 0 ],
                     options: {
-                        userName: 'dbo',
-                        password: 'intelCOREi7'
-                        //                        domain:   'IG'
+                        userName: 'user',
+                        password: 'password',
+                        domain:   ''
                     }
                 },
-                options: {
-                    abortTransactionOnError:  false,
-                    appName:                  undefined,
-                    camelCaseColumns:         false,
-                    cancelTimeout:            DEFAULT_CANCEL_TIMEOUT,
-                    columnNameReplacer:       undefined,
-                    connectionRetryInterval:  DEFAULT_CONNECT_RETRY_INTERVAL,
-                    connectTimeout:           DEFAULT_CONNECT_TIMEOUT,
+                options:        {
+                    abortTransactionOnError:          false,
+                    appName:                          undefined,
+                    camelCaseColumns:                 false,
+                    cancelTimeout:                    DEFAULT_CANCEL_TIMEOUT,
+                    columnNameReplacer:               undefined,
+                    connectionRetryInterval:          DEFAULT_CONNECT_RETRY_INTERVAL,
+                    connectTimeout:                   DEFAULT_CONNECT_TIMEOUT,
                     //                    connectionIsolationLevel:         ISOLATION_LEVEL.READ_COMMITTED,
-                    cryptoCredentialsDetails: {},
-                    database:                 undefined,
-                    datefirst:                DEFAULT_DATEFIRST,
-                    dateFormat:               DEFAULT_DATEFORMAT,
-                    debug:                    {
+                    cryptoCredentialsDetails:         {},
+                    database:                         undefined,
+                    datefirst:                        DEFAULT_DATEFIRST,
+                    dateFormat:                       DEFAULT_DATEFORMAT,
+                    debug:                            {
                         data:    false,
                         packet:  false,
                         payload: false,
@@ -103,23 +103,26 @@ class TSQLServerDatabase extends TAbstractDatabase {
 
     close ( onCloseCallback ) {
 
-        this._driver.Connection.close()
+        this.driver.Connection.close()
         onCloseCallback()
 
     }
 
     connect () {
 
-        this._driver.Connection.on( 'connect', connectionError => {
+
+        this.driver.Connection.on( 'connect', connectionError => {
 
             if ( connectionError ) {
                 console.error( connectionError )
                 return
             }
 
-            console.log( `SQLServer at XXX is connected !` )
-
-            //            connection.close()
+            const config   = this.driver.Connection.config
+            const host     = config.server
+            const port     = config.options.port
+            const database = config.options.database
+            console.log( `SQLServer at ms-sql-s://${host}:${port}/${database} is connected !` )
 
         } )
 
