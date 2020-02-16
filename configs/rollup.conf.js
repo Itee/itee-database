@@ -104,10 +104,6 @@ function CreateRollupConfigs ( options ) {
                 ],
                 onwarn: ( { loc, frame, message } ) => {
 
-                    // Ignore some errors
-                    if ( message.includes( 'Circular dependency' ) ) { return }
-                    if ( message.includes( 'plugin uglify is deprecated' ) ) { return }
-
                     if ( loc ) {
                         process.stderr.write( `/!\\ ${loc.file} (${loc.line}:${loc.column}) ${frame} ${message}\n` )
                     } else {
