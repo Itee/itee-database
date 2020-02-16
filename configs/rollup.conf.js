@@ -68,7 +68,6 @@ function CreateRollupConfigs ( options ) {
     const output    = options.output
     const formats   = options.format.split( ',' )
     const envs      = options.env.split( ',' )
-    const sourcemap = options.sourcemap
     const treeshake = options.treeshake
     const fileName  = path.basename( input, '.js' )
 
@@ -130,7 +129,7 @@ function CreateRollupConfigs ( options ) {
                     footer:    '',
                     intro:     '',
                     outro:     '',
-                    sourcemap: sourcemap,
+                    sourcemap: !isProd,
                     interop:   true,
 
                     // danger zone
