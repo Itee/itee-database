@@ -68,7 +68,6 @@ function CreateRollupConfigs ( options ) {
     const output    = options.output
     const formats   = options.format.split( ',' )
     const envs      = options.env.split( ',' )
-    const sourcemap = options.sourcemap
     const treeshake = options.treeshake
     const fileName  = path.basename( input, '.js' )
 
@@ -86,20 +85,6 @@ function CreateRollupConfigs ( options ) {
             configs.push( {
                 input:    input,
                 external: [
-                    'cassandra-driver',
-                    'couchbase',
-                    'nano',
-                    'elasticsearch',
-                    'levelup',
-                    'mongoose',
-                    'mysql',
-                    'apoc',
-                    'oracledb',
-                    'pg-promise',
-                    'redis',
-                    'sqlite3',
-                    'tedious',
-
                     'path',
                     'buffer',
                     'fs',
@@ -118,10 +103,6 @@ function CreateRollupConfigs ( options ) {
                     isProd && terser()
                 ],
                 onwarn: ( { loc, frame, message } ) => {
-
-                    // Ignore some errors
-                    if ( message.includes( 'Circular dependency' ) ) { return }
-                    if ( message.includes( 'plugin uglify is deprecated' ) ) { return }
 
                     if ( loc ) {
                         process.stderr.write( `/!\\ ${loc.file} (${loc.line}:${loc.column}) ${frame} ${message}\n` )
@@ -144,7 +125,7 @@ function CreateRollupConfigs ( options ) {
                     footer:    '',
                     intro:     '',
                     outro:     '',
-                    sourcemap: sourcemap,
+                    sourcemap: !isProd,
                     interop:   true,
 
                     // danger zone

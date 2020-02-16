@@ -6,10 +6,19 @@
 
 /* global suite, benchmark */
 
-const IteeDatabaseSuite = suite( 'Itee#Database', () => {
+export default suite( 'Itee#FooBar', () => {
 
     benchmark(
-        'isArray()',
+        'isFastFoo()',
+        function () {
+
+            return true
+
+        },
+        {} )
+
+    benchmark(
+        'isFastBar()',
         function () {
 
             return true
@@ -18,5 +27,3 @@ const IteeDatabaseSuite = suite( 'Itee#Database', () => {
         {} )
 
 } )
-
-export { IteeDatabaseSuite }

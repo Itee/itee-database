@@ -40,7 +40,7 @@ const packageInfos = require( './package.json' )
 const gulp         = require( 'gulp' )
 const jsdoc        = require( 'gulp-jsdoc3' )
 const eslint       = require( 'gulp-eslint' )
-const replace      = require( 'gulp-replace' )
+//const replace      = require( 'gulp-replace' )
 const del          = require( 'del' )
 const parseArgs    = require( 'minimist' )
 const rollup       = require( 'rollup' )
@@ -102,11 +102,10 @@ gulp.task( 'help', ( done ) => {
  * @global
  * @description Will apply some patch/replacements in dependencies
  */
-gulp.task( 'patch', () => {
+gulp.task( 'patch', ( done ) => {
 
-    return gulp.src( [ 'node_modules/apoc/index.js' ] )
-               .pipe( replace( '#! /usr/bin/env node\n', '' ) )
-               .pipe( gulp.dest( 'node_modules/apoc/' ) )
+    // No patch for this package
+    done()
 
 } )
 

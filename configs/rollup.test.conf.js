@@ -19,7 +19,7 @@ function CreateTestsRollupConfigs ( /*options*/ ) {
 
     return [
         {
-            input:     `tests/units/${packageInfos.name}.units.js`,
+            input:     `tests/units/units.js`,
             plugins:   [],
             treeshake: true,
             output:    {
@@ -30,7 +30,7 @@ function CreateTestsRollupConfigs ( /*options*/ ) {
             }
         },
         {
-            input:     `tests/benchmarks/${packageInfos.name}.benchs.js`,
+            input:     `tests/benchmarks/benchs.js`,
             plugins:   [],
             treeshake: true,
             output:    {
