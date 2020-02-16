@@ -1,3 +1,15 @@
+# [8.0.0](https://github.com/Itee/itee-database/compare/v7.3.2...v8.0.0) (2020-02-16)
+
+
+### Code Refactoring
+
+* **global:** break this package into sub-package to avoid to install all databases ([568eff3](https://github.com/Itee/itee-database/commit/568eff3c70326aec4b7d9b83bf2ce83239da20ec))
+
+
+### BREAKING CHANGES
+
+* **global:** All databases are in their own package, and no longer available in this one.
+
 ## [7.3.2](https://github.com/Itee/itee-database/compare/v7.3.1...v7.3.2) (2019-10-21)
 
 
