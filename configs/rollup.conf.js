@@ -86,20 +86,6 @@ function CreateRollupConfigs ( options ) {
             configs.push( {
                 input:    input,
                 external: [
-                    'cassandra-driver',
-                    'couchbase',
-                    'nano',
-                    'elasticsearch',
-                    'levelup',
-                    'mongoose',
-                    'mysql',
-                    'apoc',
-                    'oracledb',
-                    'pg-promise',
-                    'redis',
-                    'sqlite3',
-                    'tedious',
-
                     'path',
                     'buffer',
                     'fs',

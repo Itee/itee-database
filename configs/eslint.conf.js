@@ -20,10 +20,6 @@ function CreateEslintConfiguration () {
             'node':    true,
             'es6':     true
         },
-        globals: {
-            'BigInt64Array':  'readonly',
-            'BigUint64Array': 'readonly'
-        },
         parserOptions: {
             ecmaVersion: 2018,
             sourceType:  'module'
