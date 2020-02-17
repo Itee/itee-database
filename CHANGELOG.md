@@ -1,3 +1,10 @@
+## [8.0.1](https://github.com/Itee/itee-database/compare/v8.0.0...v8.0.1) (2020-02-17)
+
+
+### Bug Fixes
+
+* **tabstractfileconverter:** remove useless console warn to avoid eslint warning ([21c1bfa](https://github.com/Itee/itee-database/commit/21c1bfaba9b52d98bf8f1a88ae9e0acad780c445))
+
 # [8.0.0](https://github.com/Itee/itee-database/compare/v7.3.2...v8.0.0) (2020-02-16)
 
 

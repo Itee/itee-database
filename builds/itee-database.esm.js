@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.0.0 - EsModule')
+console.log('Itee.Database v8.0.1 - EsModule')
 import { isDefined, isArray, isObject, isString, isFunction, isNotDefined, isEmptyArray, isEmptyObject, isNotString, isEmptyString, isBlankString, isNotArray, isNotObject, isNull, isUndefined } from 'itee-validators';
 import path from 'path';
 import { kStringMaxLength } from 'buffer';
@@ -1640,7 +1640,6 @@ class TAbstractFileConverter {
         const fileReadStream = fs.createReadStream( file );
 
         fileReadStream.on( 'error', ( error ) => {
-            console.error( `Read stream on error: ${error}` );
 
             isOnError = true;
             onError( error );
