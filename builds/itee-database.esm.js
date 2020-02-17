@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.0.1 - EsModule')
+console.log('Itee.Database v8.0.2 - EsModule')
 import { isDefined, isArray, isObject, isString, isFunction, isNotDefined, isEmptyArray, isEmptyObject, isNotString, isEmptyString, isBlankString, isNotArray, isNotObject, isNull, isUndefined } from 'itee-validators';
 import path from 'path';
 import { kStringMaxLength } from 'buffer';

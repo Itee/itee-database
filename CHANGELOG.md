@@ -1,3 +1,10 @@
+## [8.0.2](https://github.com/Itee/itee-database/compare/v8.0.1...v8.0.2) (2020-02-17)
+
+
+### Bug Fixes
+
+* **package:** update package lock ([996460e](https://github.com/Itee/itee-database/commit/996460e7e863d2c5971efbc5be914874999a1c99)), closes [#7](https://github.com/Itee/itee-database/issues/7)
+
 ## [8.0.1](https://github.com/Itee/itee-database/compare/v8.0.0...v8.0.1) (2020-02-17)
 
 
