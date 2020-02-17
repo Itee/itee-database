@@ -267,7 +267,6 @@ class TAbstractFileConverter {
         const fileReadStream = fs.createReadStream( file )
 
         fileReadStream.on( 'error', ( error ) => {
-            console.error( `Read stream on error: ${error}` )
 
             isOnError = true
             onError( error )
