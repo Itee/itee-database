@@ -14,16 +14,18 @@ before_script: npm run clean && npm run patch
 
 jobs:
   include:
-    - stage: style
+    - stage: test 10
       node_js:
         - "10"
-        - "12"
-      script: npm run lint
-    - stage: test
+      script: npm run lint && npm run build-test && npm run test
+    - stage: test 12
       node_js:
-        - "10"
         - "12"
-      script: npm run build-test && npm run test
+      script: npm run lint && npm run build-test && npm run test
+    - stage: test lts
+      node_js:
+        - "lts/*"
+      script: npm run lint && npm run build-test && npm run test
     - stage: deploy
       if: branch = master
       node_js: "lts/*"
