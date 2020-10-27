@@ -13,323 +13,73 @@ import {
     isEmptyArray,
     isEmptyObject,
     isEmptyString,
-    isFunction,
     isNotArray,
+    isNotBoolean,
     isNotDefined,
     isNotObject,
     isNotString,
+    isNull,
     isObject,
-    isString
-} from 'itee-validators'
+    isUndefined
+}                                   from 'itee-validators'
+import { TAbstractResponder }       from '../databases/TAbstractResponder'
+import { UnprocessableEntityError } from '../messages/http/client_errors/UnprocessableEntityError'
 
-class TAbstractDataController {
+/**
+ * @class
+ * @classdesc The TDatabaseController is the base class to perform CRUD operations on the database
+ * @augments module:Databases/TAbstractResponder~TAbstractResponder
+ */
+class TAbstractDataController extends TAbstractResponder {
 
-    /**
-     * Check if requested params named 'dataName' exist in request.body, request.params or request.query
-     *
-     * @param dataName - The property name to looking for
-     * @param request - The _server request
-     * @param response - The _server response
-     * @returns {*} - Return the property or return error to the end user if the property doesn't exist
-     * @private
-     */
-    static __checkData ( dataName, request, response ) {
+    get useNext () {
+        return this._useNext
+    }
 
-        const body   = request.body
-        const params = request.params
-        const query  = request.query
+    set useNext ( value ) {
+        if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
+        if ( isNotBoolean( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
 
-        if ( isDefined( body ) && body[ dataName ] ) {
+        this._useNext = value
+    }
 
-            return body[ dataName ]
+    get driver () {
+        return this._driver
+    }
 
-        } else if ( isDefined( params ) && params[ dataName ] ) {
+    set driver ( value ) {
+        if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
 
-            return params[ dataName ]
-
-        } else if ( isDefined( query ) && query[ dataName ] ) {
-
-            return query[ dataName ]
-
-        } else {
-
-            TAbstractDataController.returnError( {
-                title:   'Erreur de paramètre',
-                message: `${dataName} n'existe pas dans les paramètres !`
-            }, response )
-
-        }
+        this._driver = value
     }
 
     /**
-     * Normalize error that can be in different format like single string, object, array of string, or array of object.
-     *
-     * @example <caption>Normalized error are simple literal object like:</caption>
-     * {
-     *     title: 'error',
-     *     message: 'the error message'
-     * }
-     *
-     * @param {String|Object|Array.<String>|Array.<Object>} error - The error object to normalize
-     * @returns {Array.<Object>}
-     * @private
+     * @constructor
+     * @param {Object} [parameters={}] - An object containing all parameters to pass through the inheritance chain to initialize this instance
+     * @param {external:Others~DatabaseDriver} parameters.driver Any official database driver that will be used internally by inherited class
+     * @param {boolean} [parameters.useNext=false] A boolean flag to indicate that this instance should use "next()" function instead of return response to client.
      */
-    static _formatError ( error ) {
-        let errorsList = []
-
-        if ( isArray( error ) ) {
-
-            for ( let i = 0, l = error.length ; i < l ; ++i ) {
-                errorsList = errorsList.concat( TAbstractDataController._formatError( error[ i ] ) )
-            }
-
-        } else if ( isObject( error ) ) {
-
-            if ( error.name === 'ValidationError' ) {
-
-                let _message  = ''
-                let subsError = error.errors
-
-                for ( let property in subsError ) {
-                    if ( !Object.prototype.hasOwnProperty.call( subsError, property ) ) { continue }
-                    _message += subsError[ property ].message + '<br>'
-                }
-
-                errorsList.push( {
-                    title:   'Erreur de validation',
-                    message: _message || 'Aucun message d\'erreur... Gloups !'
-                } )
-
-            } else if ( error.name === 'VersionError' ) {
-
-                errorsList.push( {
-                    title:   'Erreur de base de donnée',
-                    message: 'Aucun document correspondant n\'as put être trouvé pour la requete !'
-                } )
-
-            } else {
-
-                errorsList.push( {
-                    title:   error.title || 'Erreur',
-                    message: error.message || 'Aucun message d\'erreur... Gloups !'
-                } )
-
-            }
-
-        } else if ( isString( error ) ) {
-
-            errorsList.push( {
-                title:   'Erreur',
-                message: error
-            } )
-
-        } else {
-
-            throw new Error( `Unknown error type: ${error} !` )
-
-        }
-
-        return errorsList
-
-    }
-
-    /**
-     * In case database call return nothing consider that is a not found.
-     * If response parameter is a function consider this is a returnNotFound callback function to call,
-     * else check if server response headers aren't send yet, and return response with status 204
-     *
-     * @param response - The server response or returnNotFound callback
-     * @returns {*} callback call or response with status 204
-     */
-    static returnNotFound ( response ) {
-
-        if ( isFunction( response ) ) { return response() }
-        if ( response.headersSent ) { return }
-
-        response.status( 204 ).end()
-
-    }
-
-    /**
-     * In case database call return an error.
-     * If response parameter is a function consider this is a returnError callback function to call,
-     * else check if server response headers aren't send yet, log and flush stack trace (if allowed) and return response with status 500 and
-     * stringified error as content
-     *
-     * @param error - A server/database error
-     * @param response - The server response or returnError callback
-     * @returns {*} callback call or response with status 500 and associated error
-     */
-    static returnError ( error, response ) {
-
-        if ( isFunction( response ) ) { return response( error, null ) }
-        if ( response.headersSent ) { return }
-
-        const formatedError = TAbstractDataController._formatError( error )
-
-        response.format( {
-
-            'application/json': () => {
-                response.status( 500 ).json( formatedError )
-            },
-
-            'default': () => {
-                response.status( 406 ).send( 'Not Acceptable' )
-            }
-
-        } )
-
-    }
-
-    /**
-     * In case database call return some data.
-     * If response parameter is a function consider this is a returnData callback function to call,
-     * else check if server response headers aren't send yet, and return response with status 200 and
-     * stringified data as content
-     *
-     * @param data - The server/database data
-     * @param response - The server response or returnData callback
-     * @returns {*} callback call or response with status 200 and associated data
-     */
-    static returnData ( data, response ) {
-
-        if ( isFunction( response ) ) { return response( null, data ) }
-        if ( response.headersSent ) { return }
-
-        const _data = isArray( data ) ? data : [ data ]
-
-        response.format( {
-
-            'application/json': () => {
-                response.status( 200 ).json( _data )
-            },
-
-            'default': () => {
-                response.status( 406 ).send( 'Not Acceptable' )
-            }
-
-        } )
-
-    }
-
-    /**
-     * In case database call return some data AND error.
-     * If response parameter is a function consider this is a returnErrorAndData callback function to call,
-     * else check if server response headers aren't send yet, log and flush stack trace (if allowed) and
-     * return response with status 406 with stringified data and error in a literal object as content
-     *
-     * @param error - A server/database error
-     * @param data - The server/database data
-     * @param response - The server response or returnErrorAndData callback
-     * @returns {*} callback call or response with status 406, associated error and data
-     */
-    static returnErrorAndData ( error, data, response ) {
-
-        if ( isFunction( response ) ) { return response( error, data ) }
-        if ( response.headersSent ) { return }
-
-        const result = {
-            errors: error,
-            datas:  data
-        }
-
-        response.format( {
-
-            'application/json': () => {
-                response.status( 416 ).json( result )
-            },
-
-            'default': () => {
-                response.status( 416 ).send( 'Range Not Satisfiable' )
-            }
-
-        } )
-
-    }
-
     constructor ( parameters = {} ) {
 
         const _parameters = {
             ...{
                 driver:  null,
                 useNext: false
-            }, ...parameters
+            },
+            ...parameters
         }
 
-        this._driver  = _parameters.driver
-        this._useNext = _parameters.useNext
-
-    }
-
-    return ( response, callbacks = {} ) {
-
-        const _callbacks = Object.assign( {
-
-                immediate:                null,
-                beforeAll:                null,
-                beforeReturnErrorAndData: null,
-                afterReturnErrorAndData:  null,
-                beforeReturnError:        null,
-                afterReturnError:         null,
-                beforeReturnData:         null,
-                afterReturnData:          null,
-                beforeReturnNotFound:     null,
-                afterReturnNotFound:      null,
-                afterAll:                 null
-
-            },
-            callbacks,
-            {
-                returnErrorAndData: TAbstractDataController.returnErrorAndData.bind( this ),
-                returnError:        TAbstractDataController.returnError.bind( this ),
-                returnData:         TAbstractDataController.returnData.bind( this ),
-                returnNotFound:     TAbstractDataController.returnNotFound.bind( this )
-            } )
+        super()
 
         /**
-         * The callback that will be used for parse database response
+         * The database drive to use internally
+         * @throws {TypeError} Will throw an error if the argument is null.
+         * @throws {TypeError} Will throw an error if the argument is undefined.
          */
-        function dispatchResult ( error = null, data = null ) {
-
-            const haveData  = isDefined( data )
-            const haveError = isDefined( error )
-
-            if ( _callbacks.beforeAll ) { _callbacks.beforeAll() }
-
-            if ( haveData && haveError ) {
-
-                if ( _callbacks.beforeReturnErrorAndData ) { _callbacks.beforeReturnErrorAndData( error, data ) }
-                _callbacks.returnErrorAndData( error, data, response )
-                if ( _callbacks.afterReturnErrorAndData ) { _callbacks.afterReturnErrorAndData( error, data ) }
-
-            } else if ( haveData && !haveError ) {
-
-                if ( _callbacks.beforeReturnData ) { _callbacks.beforeReturnData( data ) }
-                _callbacks.returnData( data, response )
-                if ( _callbacks.afterReturnData ) { _callbacks.afterReturnData( data ) }
-
-            } else if ( !haveData && haveError ) {
-
-                if ( _callbacks.beforeReturnError ) { _callbacks.beforeReturnError( error ) }
-                _callbacks.returnError( error, response )
-                if ( _callbacks.afterReturnError ) { _callbacks.afterReturnError( error ) }
-
-            } else if ( !haveData && !haveError ) {
-
-                if ( _callbacks.beforeReturnNotFound ) { _callbacks.beforeReturnNotFound() }
-                _callbacks.returnNotFound( response )
-                if ( _callbacks.afterReturnNotFound ) { _callbacks.afterReturnNotFound() }
-
-            }
-
-            if ( _callbacks.afterAll ) { _callbacks.afterAll() }
-
-        }
-
-        // An immediate callback hook ( for timing for example )
-        if ( _callbacks.immediate ) { _callbacks.immediate() }
-
-        return dispatchResult
+        this.driver  = _parameters.driver
+        this.useNext = _parameters.useNext
 
     }
 

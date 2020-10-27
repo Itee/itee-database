@@ -20,6 +20,9 @@ export * from './converters/TAbstractFileConverter'
 
 // Databases
 export * from './databases/TAbstractDatabase'
+export * from './databases/TAbstractResponder'
+
+
 
 // Plugins interfaces
 export * from './plugins/TAbstractDatabasePlugin'
