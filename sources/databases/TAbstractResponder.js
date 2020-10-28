@@ -14,7 +14,7 @@ import {
     isObject,
     isString
 }                       from 'itee-validators'
-import { UnknownError } from '../messages/http/server_errors/UnknownError'
+import { UnknownError } from '../messages/http/UnknownError'
 
 /**
  * @class
@@ -60,7 +60,7 @@ class TAbstractResponder {
      * }
      *
      * @param {String|Object|Error} error - The error object to normalize
-     * @returns {Array.<Object>}
+     * @returns {AbstractHTTPError}
      * @private
      */
     static _formatError ( error ) {
@@ -132,7 +132,7 @@ class TAbstractResponder {
         response.format( {
 
             'application/json': () => {
-                response.status( 500 ).json( formatedError )
+                response.status( formatedError.statusCode ).json( formatedError )
             },
 
             'default': () => {
@@ -191,7 +191,7 @@ class TAbstractResponder {
         if ( response.headersSent ) { return }
 
         const result = {
-            errors: error,
+            errors: TAbstractResponder._formatErrors( error ),
             datas:  data
         }
 

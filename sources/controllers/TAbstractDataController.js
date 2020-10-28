@@ -23,7 +23,7 @@ import {
     isUndefined
 }                                   from 'itee-validators'
 import { TAbstractResponder }       from '../databases/TAbstractResponder'
-import { UnprocessableEntityError } from '../messages/http/client_errors/UnprocessableEntityError'
+import { UnprocessableEntityError } from '../messages/http/UnprocessableEntityError'
 
 /**
  * @class
@@ -93,19 +93,19 @@ class TAbstractDataController extends TAbstractResponder {
 
         if ( isNotDefined( data ) ) {
 
-            TAbstractDataController.returnError( {
-                title:   'Erreur de paramètre',
-                message: 'Le corps de la requete ne peut pas être null ou indefini.'
-            }, ( this._useNext ) ? next : response )
+            TAbstractDataController.returnError(
+                new UnprocessableEntityError( 'Le corps de la requete ne peut pas être null ou indefini.' ),
+                ( this.useNext ) ? next : response
+            )
 
         } else if ( isArray( data ) ) {
 
             if ( isEmptyArray( data ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'Le tableau d\'objet de la requete ne peut pas être vide.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `Le tableau d'objet de la requete ne peut pas être vide.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else {
 
@@ -117,10 +117,10 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isEmptyObject( data ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'L\'objet de la requete ne peut pas être vide.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `L'objet de la requete ne peut pas être vide.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else {
 
@@ -130,10 +130,10 @@ class TAbstractDataController extends TAbstractResponder {
 
         } else {
 
-            TAbstractDataController.returnError( {
-                title:   'Erreur de paramètre',
-                message: 'Le type de donnée de la requete est invalide. Les paramètres valides sont objet ou un tableau d\'objet.'
-            }, ( this._useNext ) ? next : response )
+            TAbstractDataController.returnError(
+                new UnprocessableEntityError( `Le type de donnée de la requete est invalide. Les paramètres valides sont objet ou un tableau d'objet.` ),
+                ( this.useNext ) ? next : response
+            )
 
         }
 
@@ -156,17 +156,17 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isNotString( id ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'L\'identifiant devrait être une chaine de caractères.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `L'identifiant devrait être une chaine de caractères.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyString( id ) || isBlankString( id ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `L'identifiant ne peut pas être une chaine de caractères vide.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else {
 
@@ -178,17 +178,17 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isNotArray( ids ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `Le tableau d'identifiants devrait être un tableau de chaine de caractères.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyArray( ids ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'Le tableau d\'identifiants ne peut pas être vide.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `Le tableau d'identifiants ne peut pas être vide.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else {
 
@@ -200,10 +200,10 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isNotObject( query ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'La requete devrait être un objet javascript.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `La requete devrait être un objet javascript.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyObject( query ) ) {
 
@@ -217,10 +217,10 @@ class TAbstractDataController extends TAbstractResponder {
 
         } else {
 
-            TAbstractDataController.returnError( {
-                title:   'Erreur de paramètre',
-                message: 'La requete ne peut pas être null.'
-            }, ( this._useNext ) ? next : response )
+            TAbstractDataController.returnError(
+                new UnprocessableEntityError( `La requete ne peut pas être null.` ),
+                ( this.useNext ) ? next : response
+            )
 
         }
 
@@ -245,26 +245,26 @@ class TAbstractDataController extends TAbstractResponder {
 
         if ( isNotDefined( update ) ) {
 
-            TAbstractDataController.returnError( {
-                title:   'Erreur de paramètre',
-                message: 'La mise à jour a appliquer ne peut pas être null ou indefini.'
-            }, ( this._useNext ) ? next : response )
+            TAbstractDataController.returnError(
+                new UnprocessableEntityError( `La mise à jour a appliquer ne peut pas être null ou indefini.` ),
+                ( this.useNext ) ? next : response
+            )
 
         } else if ( isDefined( id ) ) {
 
             if ( isNotString( id ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'L\'identifiant devrait être une chaine de caractères.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `L'identifiant devrait être une chaine de caractères.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyString( id ) || isBlankString( id ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `L'identifiant ne peut pas être une chaine de caractères vide.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else {
 
@@ -276,17 +276,17 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isNotArray( ids ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `Le tableau d'identifiants devrait être un tableau de chaine de caractères.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyArray( ids ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'Le tableau d\'identifiants ne peut pas être vide.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `Le tableau d'identifiants ne peut pas être vide.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else {
 
@@ -298,10 +298,10 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isNotObject( query ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'La requete devrait être un objet javascript.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `La requete devrait être un objet javascript.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyObject( query ) ) {
 
@@ -315,10 +315,10 @@ class TAbstractDataController extends TAbstractResponder {
 
         } else {
 
-            TAbstractDataController.returnError( {
-                title:   'Erreur de paramètre',
-                message: 'La requete ne peut pas être vide.'
-            }, ( this._useNext ) ? next : response )
+            TAbstractDataController.returnError(
+                new UnprocessableEntityError( `La requete ne peut pas être vide.` ),
+                ( this.useNext ) ? next : response
+            )
 
         }
 
@@ -344,17 +344,17 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isNotString( id ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'L\'identifiant devrait être une chaine de caractères.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `L'identifiant devrait être une chaine de caractères.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyString( id ) || isBlankString( id ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'L\'identifiant ne peut pas être une chaine de caractères vide.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `L'identifiant ne peut pas être une chaine de caractères vide.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else {
 
@@ -366,17 +366,17 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isNotArray( ids ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'Le tableau d\'identifiants devrait être un tableau de chaine de caractères.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `Le tableau d'identifiants devrait être un tableau de chaine de caractères.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyArray( ids ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'Le tableau d\'identifiants ne peut pas être vide.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `Le tableau d'identifiants ne peut pas être vide.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else {
 
@@ -388,10 +388,10 @@ class TAbstractDataController extends TAbstractResponder {
 
             if ( isNotObject( query ) ) {
 
-                TAbstractDataController.returnError( {
-                    title:   'Erreur de paramètre',
-                    message: 'La requete devrait être un objet javascript.'
-                }, ( this._useNext ) ? next : response )
+                TAbstractDataController.returnError(
+                    new UnprocessableEntityError( `La requete devrait être un objet javascript.` ),
+                    ( this.useNext ) ? next : response
+                )
 
             } else if ( isEmptyObject( query ) ) {
 
@@ -405,10 +405,10 @@ class TAbstractDataController extends TAbstractResponder {
 
         } else {
 
-            TAbstractDataController.returnError( {
-                title:   'Erreur de paramètre',
-                message: 'La requete ne peut pas être vide.'
-            }, ( this._useNext ) ? next : response )
+            TAbstractDataController.returnError(
+                new UnprocessableEntityError( `La requete ne peut pas être vide.` ),
+                ( this.useNext ) ? next : response
+            )
 
         }
 
