@@ -22,7 +22,8 @@ export * from './converters/TAbstractFileConverter'
 export * from './databases/TAbstractDatabase'
 export * from './databases/TAbstractResponder'
 
-
+// Messages
+export * from './messages/_messages'
 
 // Plugins interfaces
 export * from './plugins/TAbstractDatabasePlugin'
