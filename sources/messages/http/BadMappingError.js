@@ -9,7 +9,7 @@
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
-import { AbstractHTTPError } from 'AbstractHTTPError'
+import { AbstractHTTPError } from './AbstractHTTPError'
 
 /**
  * @class
