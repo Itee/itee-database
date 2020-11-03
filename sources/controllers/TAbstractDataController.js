@@ -61,7 +61,7 @@ class TAbstractDataController extends TAbstractResponder {
      * @param {external:Others~DatabaseDriver} parameters.driver Any official database driver that will be used internally by inherited class
      * @param {boolean} [parameters.useNext=false] A boolean flag to indicate that this instance should use "next()" function instead of return response to client.
      */
-    constructor ( parameters = {} ) {
+    constructor ( parameters ) {
 
         const _parameters = {
             ...{
