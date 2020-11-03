@@ -20,19 +20,59 @@ function CreateJsdocConfiguration () {
             'dictionaries':     [ 'jsdoc', 'closure' ]
         },
         'source': {
-            'include':        [],
+            'include':        [ 'README.md' ],
             'includePattern': '.+\\.js(doc|x)?$',
             'excludePattern': '(node_modules|docs|builds|tests)'
         },
-        'sourceType':   'module',
-        'plugins':      [],
+        'sourceType': 'module',
+        'plugins':    [
+            //            "./jsdoc-plugins/shout"
+        ],
         'recurseDepth': 2,
         'opts':         {
             'encoding':    'utf8',
             'destination': './docs/',
             'recurse':     true,
             'verbose':     true,
-            'private':     true
+            'private':     true,
+            'tutorials':   './tutorials/'
+        },
+        'templates': {
+            'default': {
+                'staticFiles': {
+                    'include': [ './tutorials/resources/' ]
+                },
+                'useLongnameInNav': false
+            },
+            'cleverLinks':    true,
+            'monospaceLinks': false,
+
+            'includeDate': false,
+            'navType':     'inline',
+            'theme':       [
+                                     'cerulean',
+                                     'cosmo',
+                                     'darkly',
+                                     'cyborg',
+                                     'flatly',
+                                     'journal',
+                                     'lumen',
+                                     'paper',
+                                     'readable',
+                                     'sandstone',
+                                     'simplex',
+                                     'slate',
+                                     'spacelab',
+                                     'superhero',
+                                     'united',
+                                     'yeti'
+                                 ][ 3 ],
+            'syntaxTheme':       'dark',
+            'linenums':          true,
+            'collapseSymbols':   true,
+            'outputSourceFiles': true,
+            'sort':              'longname, version, since',
+            'search':            true
         }
     }
 
