@@ -9,6 +9,7 @@
  */
 
 import {
+    isNotArray,
     isNull,
     isUndefined
 }                                  from 'itee-validators'
@@ -25,17 +26,14 @@ class TAbstractDatabase {
                 application: null,
                 router:      null,
                 plugins:     []
-            }, ...parameters
+            },
+            ...parameters
         }
 
         this.driver      = _parameters.driver
         this.application = _parameters.application
         this.router      = _parameters.router
         this.plugins     = _parameters.plugins
-
-        this.init()
-
-        this._registerPlugins()
 
     }
 
@@ -49,8 +47,10 @@ class TAbstractDatabase {
 
         if ( isNull( value ) ) { throw new TypeError( 'Plugins cannot be null ! Expect an array of TDatabasePlugin.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
+        if ( isNotArray( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
 
         this._plugins = value
+        this._registerPlugins()
 
     }
 
@@ -102,6 +102,17 @@ class TAbstractDatabase {
     setPlugins ( value ) {
 
         this.plugins = value
+        return this
+
+    }
+
+    addPlugin ( value ) {
+
+        this._plugins.push( value )
+
+        const [ key, data ] = Object.entries( value )[ 0 ]
+        this._registerPlugin( key, data )
+
         return this
 
     }
