@@ -2,10 +2,6 @@
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  *
- * @file Todo
- *
- * @example Todo
- *
  */
 
 import * as globalBuffer from 'buffer'
@@ -216,7 +212,7 @@ class TAbstractFileConverter {
                     break
 
                 default:
-                    throw new RangeError( `Invalid switch parameter: ${self._dumpType}` )
+                    throw new RangeError( `Invalid switch parameter: ${ self._dumpType }` )
 
             }
 
@@ -304,7 +300,7 @@ class TAbstractFileConverter {
                     break
 
                 default:
-                    throw new RangeError( `Invalid switch parameter: ${dumpType}` )
+                    throw new RangeError( `Invalid switch parameter: ${ dumpType }` )
 
             }
 

@@ -143,10 +143,10 @@ class TAbstractConverterManager extends TAbstractResponder {
             if ( this._processedFiles.includes( file.name ) ) {
 
                 if ( this._useNext ) {
-                    next( `Le fichier ${file.name} à déjà été inséré.` )
+                    next( `Le fichier ${ file.name } à déjà été inséré.` )
                     return
                 } else {
-                    TAbstractConverterManager.returnError( `Le fichier ${file.name} à déjà été inséré.`, response )
+                    TAbstractConverterManager.returnError( `Le fichier ${ file.name } à déjà été inséré.`, response )
                 }
 
             }
@@ -160,10 +160,10 @@ class TAbstractConverterManager extends TAbstractResponder {
         if ( availableFilesNumber === 0 ) {
 
             if ( this._useNext ) {
-                next( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !` )
+                next( `Impossible d'analyser ${ availableFilesNumber } fichiers associatifs simultanément !` )
                 return
             } else {
-                TAbstractConverterManager.returnError( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !`, response )
+                TAbstractConverterManager.returnError( `Impossible d'analyser ${ availableFilesNumber } fichiers associatifs simultanément !`, response )
             }
 
         }

@@ -1,11 +1,14 @@
 /**
+ * @module Controllers/TAbstractDataController
+ * @desc Export the TAbstractDataController abstract class.
+ *
+ * @requires {@link https://github.com/Itee/itee-validators itee-validators}
+ * @requires {@link module:Databases/TAbstractResponder Databases/TAbstractResponder}
+ * @requires {@link module:Messages/Http/ClientErrors/UnprocessableEntityError Messages/Http/ClientErrors/UnprocessableEntityError}
+ *
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
- *
- * @class TDatabaseController
- * @classdesc The TDatabaseController is the base class to perform CRUD operations on the database
  */
-
 import {
     isArray,
     isBlankString,

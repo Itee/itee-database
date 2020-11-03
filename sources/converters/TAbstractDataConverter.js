@@ -1,13 +1,3 @@
-/**
- * @author [Ahmed DCHAR]{@link https://github.com/dragoneel}
- * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
- *
- * @file Todo
- *
- * @example Todo
- *
- */
-
 class TAbstractDataConverter {
 
     constructor () {
