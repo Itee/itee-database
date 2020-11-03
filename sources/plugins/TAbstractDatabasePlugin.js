@@ -2,10 +2,6 @@
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  *
- * @file Todo
- *
- * @example Todo
- *
  */
 
 import {
@@ -15,44 +11,14 @@ import {
 
 class TAbstractDatabasePlugin {
 
-    static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors ) {
-
-        for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
-
-            const descriptor      = descriptors[ index ]
-            const ControllerClass = ControllerCtors.get( descriptor.controller.name )
-            const controller      = new ControllerClass( { driver: Driver, ...descriptor.controller.options } )
-            const router          = Router( { mergeParams: true } )
-
-            console.log( `\tAdd controller for base route: ${descriptor.route}` )
-            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) )
-
-        }
-
-    }
-
-    static _populateRouter ( router, controller, can = {} ) {
-
-        for ( let _do in can ) {
-
-            const action = can[ _do ]
-
-            console.log( `\t\tMap route ${action.over} on (${action.on}) to ${controller.constructor.name}.${_do} method.` )
-            router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
-
-        }
-
-        return router
-
-    }
-
     constructor ( parameters = {} ) {
 
         const _parameters = {
             ...{
                 controllers: new Map(),
                 descriptors: []
-            }, ...parameters
+            },
+            ...parameters
         }
 
         this.controllers = _parameters.controllers
@@ -70,7 +36,7 @@ class TAbstractDatabasePlugin {
 
         if ( isNull( value ) ) { throw new TypeError( 'Controllers cannot be null ! Expect a map of controller.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Controllers cannot be undefined ! Expect a map of controller.' ) }
-        if ( !( value instanceof Map ) ) { throw new TypeError( `Controllers cannot be an instance of ${value.constructor.name} ! Expect a map of controller.` ) }
+        if ( !( value instanceof Map ) ) { throw new TypeError( `Controllers cannot be an instance of ${ value.constructor.name } ! Expect a map of controller.` ) }
 
         this._controllers = value
 
@@ -86,6 +52,37 @@ class TAbstractDatabasePlugin {
         if ( isUndefined( value ) ) { throw new TypeError( 'Descriptors cannot be undefined ! Expect an array of POJO.' ) }
 
         this._descriptors = value
+
+    }
+
+    static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors ) {
+
+        for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
+
+            const descriptor      = descriptors[ index ]
+            const ControllerClass = ControllerCtors.get( descriptor.controller.name )
+            const controller      = new ControllerClass( { driver: Driver, ...descriptor.controller.options } )
+            const router          = Router( { mergeParams: true } )
+
+            console.log( `\tAdd controller for base route: ${ descriptor.route }` )
+            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) )
+
+        }
+
+    }
+
+    static _populateRouter ( router, controller, can = {} ) {
+
+        for ( let _do in can ) {
+
+            const action = can[ _do ]
+
+            console.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` )
+            router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
+
+        }
+
+        return router
 
     }
 
