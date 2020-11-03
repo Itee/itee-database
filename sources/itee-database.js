@@ -27,3 +27,5 @@ export * from './messages/_messages'
 
 // Plugins interfaces
 export * from './plugins/TAbstractDatabasePlugin'
+
+export const Databases = new Map()
