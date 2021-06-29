@@ -54,9 +54,11 @@
     "postversion": "gulp build"
   },
   "dependencies": {
-    "itee-utils": "^5.2.0",
-    "itee-validators": "^5.2.0",
     "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "itee-utils": "^5.2.0",
+    "itee-validators": "^5.2.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^5.0.1",
