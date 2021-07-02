@@ -92,7 +92,8 @@ function CreateRollupConfigs ( options ) {
                     'crypto',
 
                     'itee-validators',
-                    'itee-utils'
+                    'itee-utils',
+                    'itee-core'
                 ],
                 plugins: [
                     commonjs( {
