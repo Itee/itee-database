@@ -92,7 +92,7 @@
     "minimist": "^1.2.5",
     "mocha": "^9.0.1",
     "mochawesome": "^6.2.2",
-    "rollup": "^2.52.3",
+    "rollup": "^2.52.7",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^7.0.2",
