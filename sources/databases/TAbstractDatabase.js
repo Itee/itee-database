@@ -13,10 +13,11 @@ import {
     isNull,
     isUndefined
 }                                  from 'itee-validators'
+import { TAbstractObject }         from 'itee-core'
 import path                        from 'path'
 import { TAbstractDatabasePlugin } from '../plugins/TAbstractDatabasePlugin'
 
-class TAbstractDatabase {
+class TAbstractDatabase extends TAbstractObject {
 
     constructor ( parameters = {} ) {
 
@@ -30,11 +31,12 @@ class TAbstractDatabase {
             ...parameters
         }
 
+        super( _parameters )
+
         this.driver      = _parameters.driver
         this.application = _parameters.application
         this.router      = _parameters.router
         this.plugins     = _parameters.plugins
-
     }
 
     get plugins () {

@@ -58,7 +58,8 @@
   },
   "peerDependencies": {
     "itee-utils": "^5.2.0",
-    "itee-validators": "^5.2.0"
+    "itee-validators": "^5.2.0",
+    "itee-core": "^1.0.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^5.0.1",
