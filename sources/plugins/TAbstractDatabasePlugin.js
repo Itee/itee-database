@@ -8,8 +8,9 @@ import {
     isNull,
     isUndefined
 } from 'itee-validators'
+import { TAbstractObject } from 'itee-core'
 
-class TAbstractDatabasePlugin {
+class TAbstractDatabasePlugin extends TAbstractObject {
 
     constructor ( parameters = {} ) {
 
@@ -20,6 +21,8 @@ class TAbstractDatabasePlugin {
             },
             ...parameters
         }
+
+        super(_parameters)
 
         this.controllers = _parameters.controllers
         this.descriptors = _parameters.descriptors
@@ -64,7 +67,7 @@ class TAbstractDatabasePlugin {
             const controller      = new ControllerClass( { driver: Driver, ...descriptor.controller.options } )
             const router          = Router( { mergeParams: true } )
 
-            console.log( `\tAdd controller for base route: ${ descriptor.route }` )
+            this.logger.log( `\tAdd controller for base route: ${ descriptor.route }` )
             Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) )
 
         }
@@ -77,7 +80,7 @@ class TAbstractDatabasePlugin {
 
             const action = can[ _do ]
 
-            console.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` )
+            this.logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` )
             router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
 
         }

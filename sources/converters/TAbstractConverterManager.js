@@ -84,7 +84,7 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     _fileConversionProgressCallback ( response, progress ) {
 
-        console.log( progress )
+        this.logger.log( progress )
 
     }
 
