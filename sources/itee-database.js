@@ -20,6 +20,12 @@ export * from './converters/TAbstractFileConverter'
 
 // Databases
 export * from './databases/TAbstractDatabase'
+export * from './databases/TAbstractResponder'
+
+// Messages
+export * from './messages/_messages'
 
 // Plugins interfaces
 export * from './plugins/TAbstractDatabasePlugin'
+
+export const Databases = new Map()

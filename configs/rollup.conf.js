@@ -89,9 +89,11 @@ function CreateRollupConfigs ( options ) {
                     'buffer',
                     'fs',
                     'stream',
+                    'crypto',
 
                     'itee-validators',
-                    'itee-utils'
+                    'itee-utils',
+                    'itee-core'
                 ],
                 plugins: [
                     commonjs( {
