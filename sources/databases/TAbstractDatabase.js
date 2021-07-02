@@ -155,7 +155,7 @@ class TAbstractDatabase extends TAbstractObject {
         if ( this._registerPackagePlugin( name, config ) ) { return }
         if ( this._registerLocalPlugin( name, config ) ) { return }
 
-        console.error( `Unable to register the plugin ${ name } the package or local folder doesn't seem to exist ! Skip it.` )
+        this.logger.error( `Unable to register the plugin ${ name } the package or local folder doesn't seem to exist ! Skip it.` )
 
     }
 
@@ -168,7 +168,7 @@ class TAbstractDatabase extends TAbstractObject {
             const plugin = require( name )
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
-                console.log( `Use ${ name } plugin from node_modules` )
+                this.logger.log( `Use ${ name } plugin from node_modules` )
                 plugin.__dirname = path.dirname( require.resolve( name ) )
                 plugin.registerTo( this.driver, this.application, this.router )
 
@@ -176,7 +176,7 @@ class TAbstractDatabase extends TAbstractObject {
 
             } else {
 
-                console.error( `The plugin ${ name } doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
+                this.logger.error( `The plugin ${ name } doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
 
             }
 
@@ -184,7 +184,7 @@ class TAbstractDatabase extends TAbstractObject {
 
             if ( !error.code || error.code !== 'MODULE_NOT_FOUND' ) {
 
-                console.error( error )
+                this.logger.error( error )
 
             }
 
@@ -206,7 +206,7 @@ class TAbstractDatabase extends TAbstractObject {
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
-                console.log( `Use ${ name } plugin from local folder` )
+                this.logger.log( `Use ${ name } plugin from local folder` )
                 plugin.__dirname = path.dirname( require.resolve( localPluginPath ) )
                 plugin.registerTo( this.driver, this.application, this.router )
 
@@ -214,13 +214,13 @@ class TAbstractDatabase extends TAbstractObject {
 
             } else {
 
-                console.error( `The plugin ${ name } doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
+                this.logger.error( `The plugin ${ name } doesn't seem to be an instance of an extended class from TAbstractDatabasePlugin ! Skip it.` )
 
             }
 
         } catch ( error ) {
 
-            console.error( error )
+            this.logger.error( error )
 
         }
 

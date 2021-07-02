@@ -1,3 +1,21 @@
+# [8.1.0](https://github.com/Itee/itee-database/compare/v8.0.2...v8.1.0) (2021-07-02)
+
+
+### Bug Fixes
+
+* **abstractdatacontroller:** fix parameter that should not be optional ([66d2949](https://github.com/Itee/itee-database/commit/66d29495270ccd458047769bd2313e2c88e93c6f))
+* **badmappingerror:** fix wrong import path ([69f05e4](https://github.com/Itee/itee-database/commit/69f05e4b31644a74ffa555d4ba44f3f66893d36f))
+* **global:** extends class with tabstractobject and fix all console statement ([8551dbd](https://github.com/Itee/itee-database/commit/8551dbdf10a0e4e559523450945611c7af0ecbe8))
+* **package:** apply npm audit fix ([3c2ee41](https://github.com/Itee/itee-database/commit/3c2ee4132b9fa841a6537d584b090bc8e6c0618a))
+* **package:** fix itee-utils and itee-validator peer dependency usage ([fca0d3a](https://github.com/Itee/itee-database/commit/fca0d3ac3a201f6ed636322b01ffd0de2288800e))
+
+
+### Features
+
+* **httperrors:** add support for http errors 4xx and 5xx ([73fee38](https://github.com/Itee/itee-database/commit/73fee384dc7c127d9b841d699105d5e7232d0167))
+* **iteedatabase:** export global Databases map to allow auto registration and use it as factory ([7c7cf5e](https://github.com/Itee/itee-database/commit/7c7cf5e99b5ba12fa225e0bf059ac4bc795b6570))
+* **tabstractdatabase:** extend tabstractdatabase with tabstractobject and allow to use logger ([16115d9](https://github.com/Itee/itee-database/commit/16115d92512a9b39f41f1447cf6ffdcad8cafe11))
+
 ## [8.0.2](https://github.com/Itee/itee-database/compare/v8.0.1...v8.0.2) (2020-02-17)
 
 

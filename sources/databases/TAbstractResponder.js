@@ -14,6 +14,7 @@ import {
     isObject,
     isString
 }                       from 'itee-validators'
+import { TAbstractObject } from 'itee-core'
 import { UnknownError } from '../messages/http/UnknownError'
 
 /**
@@ -21,7 +22,7 @@ import { UnknownError } from '../messages/http/UnknownError'
  * @classdesc The TAbstractResponder is the base class for all derived database controller that require to send a response to client.
  * It allow to send preformatted response in function of database query result.
  */
-class TAbstractResponder {
+class TAbstractResponder extends TAbstractObject {
 
     /**
      * Normalize errors that can be in different format like single string, object, array of string, or array of object.
