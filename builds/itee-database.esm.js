@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.1.0 - EsModule')
+console.log('Itee.Database v8.1.1 - EsModule')
 import { isNotDefined, isNotString, isEmptyString, isBlankString, isArray, isString, isObject, isFunction, isDefined, isNull, isUndefined, isNotBoolean, isEmptyArray, isEmptyObject, isNotArray, isNotObject } from 'itee-validators';
 import { TAbstractObject } from 'itee-core';
 import crypto from 'crypto';
