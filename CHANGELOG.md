@@ -1,3 +1,10 @@
+## [8.1.1](https://github.com/Itee/itee-database/compare/v8.1.0...v8.1.1) (2021-07-05)
+
+
+### Bug Fixes
+
+* **package:** update all dependencies to their latest version ([ea35523](https://github.com/Itee/itee-database/commit/ea3552387bed4b6d14830be2f7d5ec480bba8190))
+
 # [8.1.0](https://github.com/Itee/itee-database/compare/v8.0.2...v8.1.0) (2021-07-02)
 
 
