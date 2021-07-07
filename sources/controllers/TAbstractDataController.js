@@ -71,7 +71,7 @@ class TAbstractDataController extends TAbstractResponder {
             ...parameters
         }
 
-        super()
+        super(_parameters)
 
         /**
          * The database drive to use internally
