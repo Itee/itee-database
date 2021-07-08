@@ -1,22 +1,29 @@
-console.log('Itee.Database v8.1.1 - EsModule')
+console.log('Itee.Database v8.1.2 - EsModule')
 import { isNotDefined, isNotString, isEmptyString, isBlankString, isArray, isString, isObject, isFunction, isDefined, isNull, isUndefined, isNotBoolean, isEmptyArray, isEmptyObject, isNotArray, isNotObject } from 'itee-validators';
 import { TAbstractObject } from 'itee-core';
-import crypto from 'crypto';
 import path from 'path';
 import * as globalBuffer from 'buffer';
 import fs from 'fs';
 import { Writable } from 'stream';
 
-const rnds8Pool = new Uint8Array(256); // # of random values to pre-allocate
-
-let poolPtr = rnds8Pool.length;
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+var getRandomValues;
+var rnds8 = new Uint8Array(16);
 function rng() {
-  if (poolPtr > rnds8Pool.length - 16) {
-    crypto.randomFillSync(rnds8Pool);
-    poolPtr = 0;
+  // lazy load so that environments that need to polyfill have a chance to do so
+  if (!getRandomValues) {
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+    // find the complete implementation of crypto (msCrypto) on IE11.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+
+    if (!getRandomValues) {
+      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
   }
 
-  return rnds8Pool.slice(poolPtr, poolPtr += 16);
+  return getRandomValues(rnds8);
 }
 
 var REGEX = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
@@ -30,16 +37,17 @@ function validate(uuid) {
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
  */
 
-const byteToHex = [];
+var byteToHex = [];
 
-for (let i = 0; i < 256; ++i) {
+for (var i = 0; i < 256; ++i) {
   byteToHex.push((i + 0x100).toString(16).substr(1));
 }
 
-function stringify(arr, offset = 0) {
+function stringify(arr) {
+  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   // Note: Be careful editing this code!  It's been tuned for performance
   // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-  const uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
   // of the following:
   // - One or more input array values don't map to a hex octet (leading to
   // "undefined" in the uuid)
@@ -54,7 +62,7 @@ function stringify(arr, offset = 0) {
 
 function v4(options, buf, offset) {
   options = options || {};
-  const rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
 
   rnds[6] = rnds[6] & 0x0f | 0x40;
   rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
@@ -62,7 +70,7 @@ function v4(options, buf, offset) {
   if (buf) {
     offset = offset || 0;
 
-    for (let i = 0; i < 16; ++i) {
+    for (var i = 0; i < 16; ++i) {
       buf[offset + i] = rnds[i];
     }
 
@@ -268,6 +276,16 @@ class UnknownError extends AbstractHTTPError {
  * It allow to send preformatted response in function of database query result.
  */
 class TAbstractResponder extends TAbstractObject {
+
+    constructor ( parameters = {} ) {
+        const _parameters = {
+            ...{},
+            ...parameters
+        };
+
+        super(_parameters);
+    }
+
 
     /**
      * Normalize errors that can be in different format like single string, object, array of string, or array of object.
@@ -621,7 +639,7 @@ class TAbstractDataController extends TAbstractResponder {
             ...parameters
         };
 
-        super();
+        super(_parameters);
 
         /**
          * The database drive to use internally
@@ -1770,7 +1788,7 @@ class TAbstractDatabasePlugin extends TAbstractObject {
             ...parameters
         };
 
-        super(_parameters);
+        super( _parameters );
 
         this.controllers = _parameters.controllers;
         this.descriptors = _parameters.descriptors;
@@ -1806,29 +1824,32 @@ class TAbstractDatabasePlugin extends TAbstractObject {
 
     }
 
-    static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors ) {
+    static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors, Logger ) {
 
         for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
 
             const descriptor      = descriptors[ index ];
             const ControllerClass = ControllerCtors.get( descriptor.controller.name );
-            const controller      = new ControllerClass( { driver: Driver, ...descriptor.controller.options } );
+            const controller      = new ControllerClass( {
+                driver: Driver,
+                ...descriptor.controller.options
+            } );
             const router          = Router( { mergeParams: true } );
 
-            this.logger.log( `\tAdd controller for base route: ${ descriptor.route }` );
-            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) );
+            Logger.log( `\tAdd controller for base route: ${ descriptor.route }` );
+            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can, Logger ) );
 
         }
 
     }
 
-    static _populateRouter ( router, controller, can = {} ) {
+    static _populateRouter ( router, controller, can = {}, Logger ) {
 
         for ( let _do in can ) {
 
             const action = can[ _do ];
 
-            this.logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` );
+            Logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` );
             router[ action.on ]( action.over, controller[ _do ].bind( controller ) );
 
         }
@@ -1857,7 +1878,7 @@ class TAbstractDatabasePlugin extends TAbstractObject {
 
         this.beforeRegisterRoutes( driver );
 
-        TAbstractDatabasePlugin._registerRoutesTo( driver, application, router, this._controllers, this._descriptors );
+        TAbstractDatabasePlugin._registerRoutesTo( driver, application, router, this._controllers, this._descriptors, this.logger );
 
     }
 
@@ -1905,7 +1926,6 @@ class TAbstractDatabase extends TAbstractObject {
 
         if ( isNull( value ) ) { throw new TypeError( 'Plugins cannot be null ! Expect an array of TDatabasePlugin.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
-        if ( isNotArray( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
 
         this._plugins = value;
         this._registerPlugins();
@@ -2015,13 +2035,13 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    _registerPackagePlugin ( name ) {
+    _registerPackagePlugin ( name, config ) {
 
         let success = false;
 
         try {
 
-            const plugin = require( name );
+            const plugin = require( name )( config );
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from node_modules` );
@@ -2050,7 +2070,7 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    _registerLocalPlugin ( name ) {
+    _registerLocalPlugin ( name, config ) {
 
         let success = false;
 
@@ -2058,7 +2078,7 @@ class TAbstractDatabase extends TAbstractObject {
 
             // todo use rootPath or need to resolve depth correctly !
             const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` );
-            const plugin          = require( localPluginPath );
+            const plugin          = require( localPluginPath )( config );
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
