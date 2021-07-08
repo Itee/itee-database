@@ -9,7 +9,6 @@
  */
 
 import {
-    isNotArray,
     isNull,
     isUndefined
 }                                  from 'itee-validators'

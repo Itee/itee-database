@@ -83,8 +83,8 @@ function CreateRollupConfigs ( options ) {
             const outputPath = ( isProd ) ? path.join( output, `${ fileName }.${ format }.min.js` ) : path.join( output, `${ fileName }.${ format }.js` )
 
             configs.push( {
-                input:     input,
-                external:  [
+                input:    input,
+                external: [
                     'path',
                     'buffer',
                     'fs',
@@ -95,7 +95,7 @@ function CreateRollupConfigs ( options ) {
                     'itee-utils',
                     'itee-core'
                 ],
-                plugins:   [
+                plugins: [
                     commonjs( {
                         include: 'node_modules/**'
                     } ),
@@ -104,7 +104,7 @@ function CreateRollupConfigs ( options ) {
                     } ),
                     isProd && terser()
                 ],
-                onwarn:    ( {
+                onwarn: ( {
                     loc,
                     frame,
                     message
