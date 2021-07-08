@@ -1,3 +1,16 @@
+## [8.1.2](https://github.com/Itee/itee-database/compare/v8.1.1...v8.1.2) (2021-07-08)
+
+
+### Bug Fixes
+
+* **package:** apply dependencies fix ([904105a](https://github.com/Itee/itee-database/commit/904105acdfba91455ce6e2aef2c0a8ce6366ad91))
+* **package:** apply fix from dependencies ([ffaaca8](https://github.com/Itee/itee-database/commit/ffaaca8c1abdc73e39c32b683b0d6e4c69e1952a))
+* **releaserc:** fix missing dev maps ([3e34131](https://github.com/Itee/itee-database/commit/3e341315a747c1a447431f9b8469ecdb15816d67))
+* **tabstractadatabaseplugin:** fix logger usage over static methods ([f315d23](https://github.com/Itee/itee-database/commit/f315d23777a3d773241a60fe9fa53e2340031f9c))
+* **tabstractdatabase:** fix plugin setter and plugin config usage ([b11ecf6](https://github.com/Itee/itee-database/commit/b11ecf6465085a05fe110fd06542650c21780a0a))
+* **tabstractdatabase:** remove unused import ([b55b778](https://github.com/Itee/itee-database/commit/b55b778f1ac20b112b5a7372dd0b1612e36f8536))
+* **tabstractdatacontroller:** fix transfert parameter to super class ([b3fcb95](https://github.com/Itee/itee-database/commit/b3fcb9585f13056c1da7aca9461247badded5434))
+
 ## [8.1.1](https://github.com/Itee/itee-database/compare/v8.1.0...v8.1.1) (2021-07-05)
 
 
