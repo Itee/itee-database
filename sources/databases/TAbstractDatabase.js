@@ -49,7 +49,6 @@ class TAbstractDatabase extends TAbstractObject {
 
         if ( isNull( value ) ) { throw new TypeError( 'Plugins cannot be null ! Expect an array of TDatabasePlugin.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
-        if ( isNotArray( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
 
         this._plugins = value
         this._registerPlugins()
@@ -159,13 +158,13 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    _registerPackagePlugin ( name ) {
+    _registerPackagePlugin ( name, config ) {
 
         let success = false
 
         try {
 
-            const plugin = require( name )
+            const plugin = require( name )( config )
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from node_modules` )
@@ -194,7 +193,7 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    _registerLocalPlugin ( name ) {
+    _registerLocalPlugin ( name, config ) {
 
         let success = false
 
@@ -202,7 +201,7 @@ class TAbstractDatabase extends TAbstractObject {
 
             // todo use rootPath or need to resolve depth correctly !
             const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` )
-            const plugin          = require( localPluginPath )
+            const plugin          = require( localPluginPath )( config )
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 

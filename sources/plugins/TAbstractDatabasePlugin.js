@@ -7,7 +7,7 @@
 import {
     isNull,
     isUndefined
-} from 'itee-validators'
+}                          from 'itee-validators'
 import { TAbstractObject } from 'itee-core'
 
 class TAbstractDatabasePlugin extends TAbstractObject {
@@ -22,7 +22,7 @@ class TAbstractDatabasePlugin extends TAbstractObject {
             ...parameters
         }
 
-        super(_parameters)
+        super( _parameters )
 
         this.controllers = _parameters.controllers
         this.descriptors = _parameters.descriptors
@@ -58,29 +58,32 @@ class TAbstractDatabasePlugin extends TAbstractObject {
 
     }
 
-    static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors ) {
+    static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors, Logger ) {
 
         for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
 
             const descriptor      = descriptors[ index ]
             const ControllerClass = ControllerCtors.get( descriptor.controller.name )
-            const controller      = new ControllerClass( { driver: Driver, ...descriptor.controller.options } )
+            const controller      = new ControllerClass( {
+                driver: Driver,
+                ...descriptor.controller.options
+            } )
             const router          = Router( { mergeParams: true } )
 
-            this.logger.log( `\tAdd controller for base route: ${ descriptor.route }` )
-            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can ) )
+            Logger.log( `\tAdd controller for base route: ${ descriptor.route }` )
+            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can, Logger ) )
 
         }
 
     }
 
-    static _populateRouter ( router, controller, can = {} ) {
+    static _populateRouter ( router, controller, can = {}, Logger ) {
 
         for ( let _do in can ) {
 
             const action = can[ _do ]
 
-            this.logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` )
+            Logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` )
             router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
 
         }
@@ -109,7 +112,7 @@ class TAbstractDatabasePlugin extends TAbstractObject {
 
         this.beforeRegisterRoutes( driver )
 
-        TAbstractDatabasePlugin._registerRoutesTo( driver, application, router, this._controllers, this._descriptors )
+        TAbstractDatabasePlugin._registerRoutesTo( driver, application, router, this._controllers, this._descriptors, this.logger )
 
     }
 

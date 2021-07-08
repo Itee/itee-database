@@ -24,6 +24,16 @@ import { UnknownError } from '../messages/http/UnknownError'
  */
 class TAbstractResponder extends TAbstractObject {
 
+    constructor ( parameters = {} ) {
+        const _parameters = {
+            ...{},
+            ...parameters
+        }
+
+        super(_parameters)
+    }
+
+
     /**
      * Normalize errors that can be in different format like single string, object, array of string, or array of object.
      *
