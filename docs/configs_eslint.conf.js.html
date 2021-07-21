@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Itee-Database Source: configs/eslint.conf.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cyborg.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Itee-Database</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="module-Building.html">Building</a></li><li><a href="module-Config-EsLint.html">Config-EsLint</a></li><li><a href="module-Config-JsDoc.html">Config-JsDoc</a></li><li><a href="module-Config-Karma-Benchs.html">Config-Karma-Benchs</a></li><li><a href="module-Config-Karma-Units.html">Config-Karma-Units</a></li><li><a href="module-Config-Rollup.html">Config-Rollup</a></li><li><a href="module-Config-Rollup-Test.html">Config-Rollup-Test</a></li><li><a href="module-Databases_TAbstractResponder.html">Databases/TAbstractResponder</a></li><li><a href="module-Messages_AbstractError.html">Messages/AbstractError</a></li><li><a href="module-Messages_HTTP_AbstractHTTPError.html">Messages/HTTP/AbstractHTTPError</a></li><li><a href="module-Messages_HTTP_ATimeoutOccuredError.html">Messages/HTTP/ATimeoutOccuredError</a></li><li><a href="module-Messages_HTTP_BadGatewayError.html">Messages/HTTP/BadGatewayError</a></li><li><a href="module-Messages_HTTP_BadMappingError.html">Messages/HTTP/BadMappingError</a></li><li><a href="module-Messages_HTTP_BadRequestError.html">Messages/HTTP/BadRequestError</a></li><li><a href="module-Messages_HTTP_BandwidthLimitExceededError.html">Messages/HTTP/BandwidthLimitExceededError</a></li><li><a href="module-Messages_HTTP_BlockedByWindowsParentalControlsError.html">Messages/HTTP/BlockedByWindowsParentalControlsError</a></li><li><a href="module-Messages_HTTP_ClientClosedRequestError.html">Messages/HTTP/ClientClosedRequestError</a></li><li><a href="module-Messages_HTTP_ClientErrors_UnprocessableEntityError.html">Messages/HTTP/ClientErrors/UnprocessableEntityError</a></li><li><a href="module-Messages_HTTP_ConflictError.html">Messages/HTTP/ConflictError</a></li><li><a href="module-Messages_HTTP_ConnectionTimedOutError.html">Messages/HTTP/ConnectionTimedOutError</a></li><li><a href="module-Messages_HTTP_ExpectationFailedError.html">Messages/HTTP/ExpectationFailedError</a></li><li><a href="module-Messages_HTTP_ForbiddenError.html">Messages/HTTP/ForbiddenError</a></li><li><a href="module-Messages_HTTP_GatewayTimeOutError.html">Messages/HTTP/GatewayTimeOutError</a></li><li><a href="module-Messages_HTTP_GoneError.html">Messages/HTTP/GoneError</a></li><li><a href="module-Messages_HTTP_HTTPRequestSentToHTTPSPortError.html">Messages/HTTP/HTTPRequestSentToHTTPSPortError</a></li><li><a href="module-Messages_HTTP_HTTPVersionNotSupportedError.html">Messages/HTTP/HTTPVersionNotSupportedError</a></li><li><a href="module-Messages_HTTP_ImATeapotError.html">Messages/HTTP/ImATeapotError</a></li><li><a href="module-Messages_HTTP_InsufficientStorageError.html">Messages/HTTP/InsufficientStorageError</a></li><li><a href="module-Messages_HTTP_InternalServerError.html">Messages/HTTP/InternalServerError</a></li><li><a href="module-Messages_HTTP_InvalidSSLCertificateError.html">Messages/HTTP/InvalidSSLCertificateError</a></li><li><a href="module-Messages_HTTP_LengthRequiredError.html">Messages/HTTP/LengthRequiredError</a></li><li><a href="module-Messages_HTTP_LockedError.html">Messages/HTTP/LockedError</a></li><li><a href="module-Messages_HTTP_LoopDetectedError.html">Messages/HTTP/LoopDetectedError</a></li><li><a href="module-Messages_HTTP_MethodFailureError.html">Messages/HTTP/MethodFailureError</a></li><li><a href="module-Messages_HTTP_MethodNotAllowedError.html">Messages/HTTP/MethodNotAllowedError</a></li><li><a href="module-Messages_HTTP_NetworkAuthenticationRequiredError.html">Messages/HTTP/NetworkAuthenticationRequiredError</a></li><li><a href="module-Messages_HTTP_NoResponseError.html">Messages/HTTP/NoResponseError</a></li><li><a href="module-Messages_HTTP_NotAcceptableError.html">Messages/HTTP/NotAcceptableError</a></li><li><a href="module-Messages_HTTP_NotExtendedError.html">Messages/HTTP/NotExtendedError</a></li><li><a href="module-Messages_HTTP_NotFoundError.html">Messages/HTTP/NotFoundError</a></li><li><a href="module-Messages_HTTP_NotImplementedError.html">Messages/HTTP/NotImplementedError</a></li><li><a href="module-Messages_HTTP_OriginIsUnreachableError.html">Messages/HTTP/OriginIsUnreachableError</a></li><li><a href="module-Messages_HTTP_PaymentRequiredError.html">Messages/HTTP/PaymentRequiredError</a></li><li><a href="module-Messages_HTTP_PreconditionFailedError.html">Messages/HTTP/PreconditionFailedError</a></li><li><a href="module-Messages_HTTP_PreconditionRequiredError.html">Messages/HTTP/PreconditionRequiredError</a></li><li><a href="module-Messages_HTTP_ProxyAuthenticationRequiredError.html">Messages/HTTP/ProxyAuthenticationRequiredError</a></li><li><a href="module-Messages_HTTP_RailgunError.html">Messages/HTTP/RailgunError</a></li><li><a href="module-Messages_HTTP_RequestEntityTooLargeError.html">Messages/HTTP/RequestEntityTooLargeError</a></li><li><a href="module-Messages_HTTP_RequestHeaderFieldsTooLargeError.html">Messages/HTTP/RequestHeaderFieldsTooLargeError</a></li><li><a href="module-Messages_HTTP_RequestRangeUnsatisfiableError.html">Messages/HTTP/RequestRangeUnsatisfiableError</a></li><li><a href="module-Messages_HTTP_RequestTimeOutError.html">Messages/HTTP/RequestTimeOutError</a></li><li><a href="module-Messages_HTTP_RetryWithError.html">Messages/HTTP/RetryWithError</a></li><li><a href="module-Messages_HTTP_ServiceUnavailableError.html">Messages/HTTP/ServiceUnavailableError</a></li><li><a href="module-Messages_HTTP_SSLCertificateError.html">Messages/HTTP/SSLCertificateError</a></li><li><a href="module-Messages_HTTP_SSLCertificateRequiredError.html">Messages/HTTP/SSLCertificateRequiredError</a></li><li><a href="module-Messages_HTTP_SSLHandshakeFailedError.html">Messages/HTTP/SSLHandshakeFailedError</a></li><li><a href="module-Messages_HTTP_TooManyRequestsError.html">Messages/HTTP/TooManyRequestsError</a></li><li><a href="module-Messages_HTTP_UnauthorizedError.html">Messages/HTTP/UnauthorizedError</a></li><li><a href="module-Messages_HTTP_UnavailableForLegalReasonsError.html">Messages/HTTP/UnavailableForLegalReasonsError</a></li><li><a href="module-Messages_HTTP_UnknownError.html">Messages/HTTP/UnknownError</a></li><li><a href="module-Messages_HTTP_UnorderedCollectionError.html">Messages/HTTP/UnorderedCollectionError</a></li><li><a href="module-Messages_HTTP_UnrecoverableError.html">Messages/HTTP/UnrecoverableError</a></li><li><a href="module-Messages_HTTP_UpgradeRequiredError.html">Messages/HTTP/UpgradeRequiredError</a></li><li><a href="module-Messages_HTTP_VariantAlsoNegotiatesError.html">Messages/HTTP/VariantAlsoNegotiatesError</a></li><li><a href="module-Messages_HTTP_WebServerIsDownError.html">Messages/HTTP/WebServerIsDownError</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="module-Databases_TAbstractResponder-TAbstractResponder.html">Databases/TAbstractResponder~TAbstractResponder</a></li><li><a href="module-Messages_AbstractError-AbstractError.html">Messages/AbstractError~AbstractError</a></li><li><a href="module-Messages_HTTP_AbstractHTTPError-AbstractHTTPError.html">Messages/HTTP/AbstractHTTPError~AbstractHTTPError</a></li><li><a href="module-Messages_HTTP_ATimeoutOccuredError-ATimeoutOccuredError.html">Messages/HTTP/ATimeoutOccuredError~ATimeoutOccuredError</a></li><li><a href="module-Messages_HTTP_BadGatewayError-BadGatewayError.html">Messages/HTTP/BadGatewayError~BadGatewayError</a></li><li><a href="module-Messages_HTTP_BadMappingError-BadMappingError.html">Messages/HTTP/BadMappingError~BadMappingError</a></li><li><a href="module-Messages_HTTP_BadRequestError-BadRequestError.html">Messages/HTTP/BadRequestError~BadRequestError</a></li><li><a href="module-Messages_HTTP_BandwidthLimitExceededError-BandwidthLimitExceededError.html">Messages/HTTP/BandwidthLimitExceededError~BandwidthLimitExceededError</a></li><li><a href="module-Messages_HTTP_BlockedByWindowsParentalControlsError-BlockedByWindowsParentalControlsError.html">Messages/HTTP/BlockedByWindowsParentalControlsError~BlockedByWindowsParentalControlsError</a></li><li><a href="module-Messages_HTTP_ClientClosedRequestError-ClientClosedRequestError.html">Messages/HTTP/ClientClosedRequestError~ClientClosedRequestError</a></li><li><a href="module-Messages_HTTP_ClientErrors_UnprocessableEntityError-UnprocessableEntityError.html">Messages/HTTP/ClientErrors/UnprocessableEntityError~UnprocessableEntityError</a></li><li><a href="module-Messages_HTTP_ConflictError-ConflictError.html">Messages/HTTP/ConflictError~ConflictError</a></li><li><a href="module-Messages_HTTP_ConnectionTimedOutError-ConnectionTimedOutError.html">Messages/HTTP/ConnectionTimedOutError~ConnectionTimedOutError</a></li><li><a href="module-Messages_HTTP_ExpectationFailedError-ExpectationFailedError.html">Messages/HTTP/ExpectationFailedError~ExpectationFailedError</a></li><li><a href="module-Messages_HTTP_ForbiddenError-ForbiddenError.html">Messages/HTTP/ForbiddenError~ForbiddenError</a></li><li><a href="module-Messages_HTTP_GatewayTimeOutError-GatewayTimeOutError.html">Messages/HTTP/GatewayTimeOutError~GatewayTimeOutError</a></li><li><a href="module-Messages_HTTP_GoneError-GoneError.html">Messages/HTTP/GoneError~GoneError</a></li><li><a href="module-Messages_HTTP_HTTPRequestSentToHTTPSPortError-HTTPRequestSentToHTTPSPortError.html">Messages/HTTP/HTTPRequestSentToHTTPSPortError~HTTPRequestSentToHTTPSPortError</a></li><li><a href="module-Messages_HTTP_HTTPVersionNotSupportedError-HTTPVersionNotSupportedError.html">Messages/HTTP/HTTPVersionNotSupportedError~HTTPVersionNotSupportedError</a></li><li><a href="module-Messages_HTTP_ImATeapotError-ImATeapotError.html">Messages/HTTP/ImATeapotError~ImATeapotError</a></li><li><a href="module-Messages_HTTP_InsufficientStorageError-InsufficientStorageError.html">Messages/HTTP/InsufficientStorageError~InsufficientStorageError</a></li><li><a href="module-Messages_HTTP_InternalServerError-InternalServerError.html">Messages/HTTP/InternalServerError~InternalServerError</a></li><li><a href="module-Messages_HTTP_InvalidSSLCertificateError-InvalidSSLCertificateError.html">Messages/HTTP/InvalidSSLCertificateError~InvalidSSLCertificateError</a></li><li><a href="module-Messages_HTTP_LengthRequiredError-LengthRequiredError.html">Messages/HTTP/LengthRequiredError~LengthRequiredError</a></li><li><a href="module-Messages_HTTP_LockedError-LockedError.html">Messages/HTTP/LockedError~LockedError</a></li><li><a href="module-Messages_HTTP_LoopDetectedError-LoopDetectedError.html">Messages/HTTP/LoopDetectedError~LoopDetectedError</a></li><li><a href="module-Messages_HTTP_MethodFailureError-MethodFailureError.html">Messages/HTTP/MethodFailureError~MethodFailureError</a></li><li><a href="module-Messages_HTTP_MethodNotAllowedError-MethodNotAllowedError.html">Messages/HTTP/MethodNotAllowedError~MethodNotAllowedError</a></li><li><a href="module-Messages_HTTP_NetworkAuthenticationRequiredError-NetworkAuthenticationRequiredError.html">Messages/HTTP/NetworkAuthenticationRequiredError~NetworkAuthenticationRequiredError</a></li><li><a href="module-Messages_HTTP_NoResponseError-NoResponseError.html">Messages/HTTP/NoResponseError~NoResponseError</a></li><li><a href="module-Messages_HTTP_NotAcceptableError-NotAcceptableError.html">Messages/HTTP/NotAcceptableError~NotAcceptableError</a></li><li><a href="module-Messages_HTTP_NotExtendedError-NotExtendedError.html">Messages/HTTP/NotExtendedError~NotExtendedError</a></li><li><a href="module-Messages_HTTP_NotFoundError-NotFoundError.html">Messages/HTTP/NotFoundError~NotFoundError</a></li><li><a href="module-Messages_HTTP_NotImplementedError-NotImplementedError.html">Messages/HTTP/NotImplementedError~NotImplementedError</a></li><li><a href="module-Messages_HTTP_OriginIsUnreachableError-OriginIsUnreachableError.html">Messages/HTTP/OriginIsUnreachableError~OriginIsUnreachableError</a></li><li><a href="module-Messages_HTTP_PaymentRequiredError-PaymentRequiredError.html">Messages/HTTP/PaymentRequiredError~PaymentRequiredError</a></li><li><a href="module-Messages_HTTP_PreconditionFailedError-PreconditionFailedError.html">Messages/HTTP/PreconditionFailedError~PreconditionFailedError</a></li><li><a href="module-Messages_HTTP_PreconditionRequiredError-PreconditionRequiredError.html">Messages/HTTP/PreconditionRequiredError~PreconditionRequiredError</a></li><li><a href="module-Messages_HTTP_ProxyAuthenticationRequiredError-ProxyAuthenticationRequiredError.html">Messages/HTTP/ProxyAuthenticationRequiredError~ProxyAuthenticationRequiredError</a></li><li><a href="module-Messages_HTTP_RailgunError-RailgunError.html">Messages/HTTP/RailgunError~RailgunError</a></li><li><a href="module-Messages_HTTP_RequestEntityTooLargeError-RequestEntityTooLargeError.html">Messages/HTTP/RequestEntityTooLargeError~RequestEntityTooLargeError</a></li><li><a href="module-Messages_HTTP_RequestHeaderFieldsTooLargeError-RequestHeaderFieldsTooLargeError.html">Messages/HTTP/RequestHeaderFieldsTooLargeError~RequestHeaderFieldsTooLargeError</a></li><li><a href="module-Messages_HTTP_RequestRangeUnsatisfiableError-RequestRangeUnsatisfiableError.html">Messages/HTTP/RequestRangeUnsatisfiableError~RequestRangeUnsatisfiableError</a></li><li><a href="module-Messages_HTTP_RequestTimeOutError-RequestTimeOutError.html">Messages/HTTP/RequestTimeOutError~RequestTimeOutError</a></li><li><a href="module-Messages_HTTP_RetryWithError-RetryWithError.html">Messages/HTTP/RetryWithError~RetryWithError</a></li><li><a href="module-Messages_HTTP_ServiceUnavailableError-ServiceUnavailableError.html">Messages/HTTP/ServiceUnavailableError~ServiceUnavailableError</a></li><li><a href="module-Messages_HTTP_SSLCertificateError-SSLCertificateError.html">Messages/HTTP/SSLCertificateError~SSLCertificateError</a></li><li><a href="module-Messages_HTTP_SSLCertificateRequiredError-SSLCertificateRequiredError.html">Messages/HTTP/SSLCertificateRequiredError~SSLCertificateRequiredError</a></li><li><a href="module-Messages_HTTP_SSLHandshakeFailedError-SSLHandshakeFailedError.html">Messages/HTTP/SSLHandshakeFailedError~SSLHandshakeFailedError</a></li><li><a href="module-Messages_HTTP_TooManyRequestsError-TooManyRequestsError.html">Messages/HTTP/TooManyRequestsError~TooManyRequestsError</a></li><li><a href="module-Messages_HTTP_UnauthorizedError-UnauthorizedError.html">Messages/HTTP/UnauthorizedError~UnauthorizedError</a></li><li><a href="module-Messages_HTTP_UnavailableForLegalReasonsError-UnavailableForLegalReasonsError.html">Messages/HTTP/UnavailableForLegalReasonsError~UnavailableForLegalReasonsError</a></li><li><a href="module-Messages_HTTP_UnknownError-UnknownError.html">Messages/HTTP/UnknownError~UnknownError</a></li><li><a href="module-Messages_HTTP_UnorderedCollectionError-UnorderedCollectionError.html">Messages/HTTP/UnorderedCollectionError~UnorderedCollectionError</a></li><li><a href="module-Messages_HTTP_UnrecoverableError-UnrecoverableError.html">Messages/HTTP/UnrecoverableError~UnrecoverableError</a></li><li><a href="module-Messages_HTTP_UpgradeRequiredError-UpgradeRequiredError.html">Messages/HTTP/UpgradeRequiredError~UpgradeRequiredError</a></li><li><a href="module-Messages_HTTP_VariantAlsoNegotiatesError-VariantAlsoNegotiatesError.html">Messages/HTTP/VariantAlsoNegotiatesError~VariantAlsoNegotiatesError</a></li><li><a href="module-Messages_HTTP_WebServerIsDownError-WebServerIsDownError.html">Messages/HTTP/WebServerIsDownError~WebServerIsDownError</a></li><li><a href="TAbstractDataController.html">TAbstractDataController</a></li><li><a href="TDatabaseController.html">TDatabaseController</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="global.html#npmrunbench">npm run bench</a></li><li><a href="global.html#npmrunbuild">npm run build</a></li><li><a href="global.html#npmrunbuild-test">npm run build-test</a></li><li><a href="global.html#npmrunclean">npm run clean</a></li><li><a href="global.html#npmrundoc">npm run doc</a></li><li><a href="global.html#npmrunhelpdefault">npm run help ( default )</a></li><li><a href="global.html#npmrunlint">npm run lint</a></li><li><a href="global.html#npmrunpatch">npm run patch</a></li><li><a href="global.html#npmrunrelease">npm run release</a></li><li><a href="global.html#npmruntest">npm run test</a></li><li><a href="global.html#npmrununit">npm run unit</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: configs/eslint.conf.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">/**
+ * @author [Tristan Valcke]{@link https://github.com/Itee}
+ * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
+ *
+ * @module Config-EsLint
+ * @description The configuration file of the eslint plugin
+ */
+
+/**
+ * Will create an appropriate configuration object for eslint
+ *
+ * @generator
+ * @returns {object} The eslint configuration
+ */
+function CreateEslintConfiguration () {
+
+    return {
+        env: {
+            'browser': true,
+            'node':    true,
+            'es6':     true
+        },
+        parserOptions: {
+            ecmaVersion: 2018,
+            sourceType:  'module'
+        },
+        extends: [
+            'eslint:recommended'
+        ],
+        plugins: [
+            'mocha'
+        ],
+        rules: {
+            'no-multiple-empty-lines':  [ 1, { 'max': 2 } ],
+            'no-mixed-spaces-and-tabs': 'off',
+            'mocha/no-exclusive-tests': 'error',
+            'no-console':               'error',
+            'no-multi-spaces':          [
+                'error', {
+                    exceptions: {
+                        'Property':             true,
+                        'ImportDeclaration':    true,
+                        'VariableDeclarator':   true,
+                        'AssignmentExpression': true
+                    }
+                }
+            ],
+            'key-spacing': [
+                'error', {
+                    'align': {
+                        'beforeColon': false,
+                        'afterColon':  true,
+                        'on':          'value'
+                    }
+                }
+            ]
+
+        }
+    }
+
+}
+
+module.exports = CreateEslintConfiguration()
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright 2015-Present <a href="https://github.com/Itee">Itee</a> (Tristan Valcke)
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a>
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
