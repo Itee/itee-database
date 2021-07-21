@@ -1,3 +1,10 @@
+## [8.1.3](https://github.com/Itee/itee-database/compare/v8.1.2...v8.1.3) (2021-07-21)
+
+
+### Bug Fixes
+
+* **readme:** fix readme tags ([ac4a9be](https://github.com/Itee/itee-database/commit/ac4a9be00279310bcebb38fa414478e390921aca))
+
 ## [8.1.2](https://github.com/Itee/itee-database/compare/v8.1.1...v8.1.2) (2021-07-08)
 
 

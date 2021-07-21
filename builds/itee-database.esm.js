@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.1.2 - EsModule')
+console.log('Itee.Database v8.1.3 - EsModule')
 import { isNotDefined, isNotString, isEmptyString, isBlankString, isArray, isString, isObject, isFunction, isDefined, isNull, isUndefined, isNotBoolean, isEmptyArray, isEmptyObject, isNotArray, isNotObject } from 'itee-validators';
 import { TAbstractObject } from 'itee-core';
 import path from 'path';
