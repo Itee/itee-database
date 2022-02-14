@@ -54,12 +54,10 @@
     "postversion": "gulp build"
   },
   "dependencies": {
-    "uuid": "^8.3.2"
-  },
-  "peerDependencies": {
-    "itee-utils": "^5.3.0",
-    "itee-validators": "^5.3.3",
-    "itee-core": "^1.1.0"
+    "uuid": "^8.3.2",
+    "itee-utils": "^5.3.2",
+    "itee-validators": "^5.3.5",
+    "itee-core": "^1.2.2"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
