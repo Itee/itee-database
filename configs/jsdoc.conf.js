@@ -38,10 +38,10 @@ function CreateJsdocConfiguration () {
             private:     true
         },
         templates: {
-            cleverLinks:       false,
-            monospaceLinks:    false,
-            navType:           'inline',
-            theme:             [
+            cleverLinks:    false,
+            monospaceLinks: false,
+            navType:        'inline',
+            theme:          [
                                    'cerulean',
                                    'cosmo',
                                    'darkly',

@@ -26,41 +26,6 @@ import { v4 as uuidv4 } from 'uuid'
 class AbstractError extends Error {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isAbstractError () { return true }
-
-    /**
-     * An auto-generated universally unique identifier, this allow to recognize any error by id
-     * @readonly
-     * @type {string}
-     */
-    get uuid () { return this._uuid }
-
-    set uuid ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
-
-    /**
-     * The name of current instanced error (a.k.a the constructor name)
-     * @readonly
-     * @type {string}
-     */
-    get name () { return this._name }
-
-    set name ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
-
-    /**
-     * The error message
-     * @readonly
-     * @type {string}
-     */
-    get message () { return this._message }
-
-    set message ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
-
-    /**
      * @constructor
      * @param message {string} The error message to dispatch
      */
@@ -96,6 +61,34 @@ class AbstractError extends Error {
 
 
     }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isAbstractError () { return true }
+    /**
+     * An auto-generated universally unique identifier, this allow to recognize any error by id
+     * @readonly
+     * @type {string}
+     */
+    get uuid () { return this._uuid }
+    set uuid ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    /**
+     * The name of current instanced error (a.k.a the constructor name)
+     * @readonly
+     * @type {string}
+     */
+    get name () { return this._name }
+    set name ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    /**
+     * The error message
+     * @readonly
+     * @type {string}
+     */
+    get message () { return this._message }
+    set message ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
 
 }
 

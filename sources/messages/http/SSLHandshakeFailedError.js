@@ -21,14 +21,6 @@ import { AbstractHTTPError } from './AbstractHTTPError'
 class SSLHandshakeFailedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isSSLHandshakeFailedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 525
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -37,6 +29,13 @@ class SSLHandshakeFailedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 525 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isSSLHandshakeFailedError () { return true }
 
 }
 

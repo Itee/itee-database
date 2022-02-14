@@ -21,14 +21,6 @@ import { AbstractHTTPError } from './AbstractHTTPError'
 class NotAcceptableError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isNotAcceptableError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 406
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -37,6 +29,13 @@ class NotAcceptableError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 406 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isNotAcceptableError () { return true }
 
 }
 

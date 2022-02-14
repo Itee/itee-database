@@ -21,14 +21,6 @@ import { AbstractHTTPError } from './AbstractHTTPError'
 class BadGatewayError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isBadGatewayError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 502
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -37,6 +29,13 @@ class BadGatewayError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 502 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isBadGatewayError () { return true }
 
 }
 

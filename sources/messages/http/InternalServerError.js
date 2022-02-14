@@ -21,14 +21,6 @@ import { AbstractHTTPError } from './AbstractHTTPError'
 class InternalServerError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isInternalServerError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 500
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -37,6 +29,13 @@ class InternalServerError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 500 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isInternalServerError () { return true }
 
 }
 

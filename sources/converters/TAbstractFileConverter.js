@@ -216,7 +216,7 @@ class TAbstractFileConverter {
                     break
 
                 default:
-                    throw new RangeError( `Invalid switch parameter: ${self._dumpType}` )
+                    throw new RangeError( `Invalid switch parameter: ${ self._dumpType }` )
 
             }
 
@@ -304,7 +304,7 @@ class TAbstractFileConverter {
                     break
 
                 default:
-                    throw new RangeError( `Invalid switch parameter: ${dumpType}` )
+                    throw new RangeError( `Invalid switch parameter: ${ dumpType }` )
 
             }
 

@@ -7,15 +7,15 @@
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+import { TAbstractObject } from 'itee-core'
 import {
     isArray,
     isDefined,
     isFunction,
     isObject,
     isString
-}                       from 'itee-validators'
-import { TAbstractObject } from 'itee-core'
-import { UnknownError } from '../messages/http/UnknownError'
+}                          from 'itee-validators'
+import { UnknownError }    from '../messages/http/UnknownError'
 
 /**
  * @class
@@ -23,16 +23,6 @@ import { UnknownError } from '../messages/http/UnknownError'
  * It allow to send preformatted response in function of database query result.
  */
 class TAbstractResponder extends TAbstractObject {
-
-    constructor ( parameters = {} ) {
-        const _parameters = {
-            ...{},
-            ...parameters
-        }
-
-        super(_parameters)
-    }
-
 
     /**
      * Normalize errors that can be in different format like single string, object, array of string, or array of object.
@@ -60,7 +50,6 @@ class TAbstractResponder extends TAbstractObject {
         return formattedErrors
 
     }
-
     /**
      * Normalize error that can be in different format like single string, object, array of string, or array of object.
      *
@@ -105,7 +94,6 @@ class TAbstractResponder extends TAbstractObject {
         return formattedError
 
     }
-
     /**
      * In case database call return nothing consider that is a not found.
      * If response parameter is a function consider this is a returnNotFound callback function to call,
@@ -122,7 +110,6 @@ class TAbstractResponder extends TAbstractObject {
         response.status( 204 ).end()
 
     }
-
     /**
      * In case database call return an error.
      * If response parameter is a function consider this is a returnError callback function to call,
@@ -153,7 +140,6 @@ class TAbstractResponder extends TAbstractObject {
         } )
 
     }
-
     /**
      * In case database call return some data.
      * If response parameter is a function consider this is a returnData callback function to call,
@@ -184,7 +170,6 @@ class TAbstractResponder extends TAbstractObject {
         } )
 
     }
-
     /**
      * In case database call return some data AND error.
      * If response parameter is a function consider this is a returnErrorAndData callback function to call,
@@ -219,7 +204,6 @@ class TAbstractResponder extends TAbstractObject {
         } )
 
     }
-
     static return ( response, callbacks = {} ) {
 
         const _callbacks = Object.assign( {
@@ -288,6 +272,14 @@ class TAbstractResponder extends TAbstractObject {
 
         return dispatchResult
 
+    }
+    constructor ( parameters = {} ) {
+        const _parameters = {
+            ...{},
+            ...parameters
+        }
+
+        super( _parameters )
     }
 
 }
