@@ -1,3 +1,11 @@
+## [8.1.4](https://github.com/Itee/itee-database/compare/v8.1.3...v8.1.4) (2022-02-14)
+
+
+### Bug Fixes
+
+* **package:** apply npm audit fix ([75a471e](https://github.com/Itee/itee-database/commit/75a471e4bb55b5a03416735881d578c5896b65df))
+* **package:** update deps to latest version ([e7751da](https://github.com/Itee/itee-database/commit/e7751da078c39bc06a757d757733c3021c4e8719))
+
 ## [8.1.3](https://github.com/Itee/itee-database/compare/v8.1.2...v8.1.3) (2021-07-21)
 
 

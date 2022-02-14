@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.1.3 - CommonJs')
+console.log('Itee.Database v8.1.4 - CommonJs')
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -21,14 +21,12 @@ function _interopNamespace(e) {
 				var d = Object.getOwnPropertyDescriptor(e, k);
 				Object.defineProperty(n, k, d.get ? d : {
 					enumerable: true,
-					get: function () {
-						return e[k];
-					}
+					get: function () { return e[k]; }
 				});
 			}
 		});
 	}
-	n['default'] = e;
+	n["default"] = e;
 	return Object.freeze(n);
 }
 
@@ -131,41 +129,6 @@ function v4(options, buf, offset) {
 class AbstractError extends Error {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isAbstractError () { return true }
-
-    /**
-     * An auto-generated universally unique identifier, this allow to recognize any error by id
-     * @readonly
-     * @type {string}
-     */
-    get uuid () { return this._uuid }
-
-    set uuid ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
-
-    /**
-     * The name of current instanced error (a.k.a the constructor name)
-     * @readonly
-     * @type {string}
-     */
-    get name () { return this._name }
-
-    set name ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
-
-    /**
-     * The error message
-     * @readonly
-     * @type {string}
-     */
-    get message () { return this._message }
-
-    set message ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
-
-    /**
      * @constructor
      * @param message {string} The error message to dispatch
      */
@@ -201,6 +164,34 @@ class AbstractError extends Error {
 
 
     }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isAbstractError () { return true }
+    /**
+     * An auto-generated universally unique identifier, this allow to recognize any error by id
+     * @readonly
+     * @type {string}
+     */
+    get uuid () { return this._uuid }
+    set uuid ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    /**
+     * The name of current instanced error (a.k.a the constructor name)
+     * @readonly
+     * @type {string}
+     */
+    get name () { return this._name }
+    set name ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    /**
+     * The error message
+     * @readonly
+     * @type {string}
+     */
+    get message () { return this._message }
+    set message ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
 
 }
 
@@ -272,14 +263,6 @@ class AbstractHTTPError extends AbstractError {
 class UnknownError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isUnknownError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 520
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -288,6 +271,13 @@ class UnknownError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 520 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isUnknownError () { return true }
 
 }
 
@@ -306,16 +296,6 @@ class UnknownError extends AbstractHTTPError {
  * It allow to send preformatted response in function of database query result.
  */
 class TAbstractResponder extends iteeCore.TAbstractObject {
-
-    constructor ( parameters = {} ) {
-        const _parameters = {
-            ...{},
-            ...parameters
-        };
-
-        super(_parameters);
-    }
-
 
     /**
      * Normalize errors that can be in different format like single string, object, array of string, or array of object.
@@ -343,7 +323,6 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         return formattedErrors
 
     }
-
     /**
      * Normalize error that can be in different format like single string, object, array of string, or array of object.
      *
@@ -388,7 +367,6 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         return formattedError
 
     }
-
     /**
      * In case database call return nothing consider that is a not found.
      * If response parameter is a function consider this is a returnNotFound callback function to call,
@@ -405,7 +383,6 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         response.status( 204 ).end();
 
     }
-
     /**
      * In case database call return an error.
      * If response parameter is a function consider this is a returnError callback function to call,
@@ -436,7 +413,6 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         } );
 
     }
-
     /**
      * In case database call return some data.
      * If response parameter is a function consider this is a returnData callback function to call,
@@ -467,7 +443,6 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         } );
 
     }
-
     /**
      * In case database call return some data AND error.
      * If response parameter is a function consider this is a returnErrorAndData callback function to call,
@@ -502,7 +477,6 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         } );
 
     }
-
     static return ( response, callbacks = {} ) {
 
         const _callbacks = Object.assign( {
@@ -572,6 +546,14 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         return dispatchResult
 
     }
+    constructor ( parameters = {} ) {
+        const _parameters = {
+            ...{},
+            ...parameters
+        };
+
+        super( _parameters );
+    }
 
 }
 
@@ -596,14 +578,6 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
 class UnprocessableEntityError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isUnprocessableEntityError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 422
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -612,6 +586,13 @@ class UnprocessableEntityError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 422 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isUnprocessableEntityError () { return true }
 
 }
 
@@ -630,29 +611,6 @@ class UnprocessableEntityError extends AbstractHTTPError {
  */
 class TAbstractDataController extends TAbstractResponder {
 
-    get useNext () {
-        return this._useNext
-    }
-
-    set useNext ( value ) {
-        if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
-        if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
-        if ( iteeValidators.isNotBoolean( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
-
-        this._useNext = value;
-    }
-
-    get driver () {
-        return this._driver
-    }
-
-    set driver ( value ) {
-        if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
-        if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
-
-        this._driver = value;
-    }
-
     /**
      * @constructor
      * @param {Object} [parameters={}] - An object containing all parameters to pass through the inheritance chain to initialize this instance
@@ -669,22 +627,40 @@ class TAbstractDataController extends TAbstractResponder {
             ...parameters
         };
 
-        super(_parameters);
+        super( _parameters );
 
         /**
          * The database drive to use internally
          * @throws {TypeError} Will throw an error if the argument is null.
          * @throws {TypeError} Will throw an error if the argument is undefined.
          */
-        this.driver  = _parameters.driver;
+        this.driver = _parameters.driver;
         this.useNext = _parameters.useNext;
 
+    }
+    get useNext () {
+        return this._useNext
+    }
+    set useNext ( value ) {
+        if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
+        if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
+        if ( iteeValidators.isNotBoolean( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
+
+        this._useNext = value;
+    }
+    get driver () {
+        return this._driver
+    }
+    set driver ( value ) {
+        if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
+        if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
+
+        this._driver = value;
     }
 
     //////////////////
     // CRUD Methods //
     //////////////////
-
     create ( request, response, next ) {
 
         const data = request.body;
@@ -1251,10 +1227,10 @@ class TAbstractConverterManager extends TAbstractResponder {
             if ( this._processedFiles.includes( file.name ) ) {
 
                 if ( this._useNext ) {
-                    next( `Le fichier ${file.name} à déjà été inséré.` );
+                    next( `Le fichier ${ file.name } à déjà été inséré.` );
                     return
                 } else {
-                    TAbstractConverterManager.returnError( `Le fichier ${file.name} à déjà été inséré.`, response );
+                    TAbstractConverterManager.returnError( `Le fichier ${ file.name } à déjà été inséré.`, response );
                 }
 
             }
@@ -1268,10 +1244,10 @@ class TAbstractConverterManager extends TAbstractResponder {
         if ( availableFilesNumber === 0 ) {
 
             if ( this._useNext ) {
-                next( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !` );
+                next( `Impossible d'analyser ${ availableFilesNumber } fichiers associatifs simultanément !` );
                 return
             } else {
-                TAbstractConverterManager.returnError( `Impossible d'analyser ${availableFilesNumber} fichiers associatifs simultanément !`, response );
+                TAbstractConverterManager.returnError( `Impossible d'analyser ${ availableFilesNumber } fichiers associatifs simultanément !`, response );
             }
 
         }
@@ -1284,7 +1260,7 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     _processFiles ( files, parameters, response, next ) {
 
-        const fileExtensions = files.map( ( file ) => path__default['default'].extname( file.name ) );
+        const fileExtensions = files.map( ( file ) => path__default["default"].extname( file.name ) );
         const matchingRules  = this._rules.filter( elem => {
 
             const availables = elem.on;
@@ -1686,7 +1662,7 @@ class TAbstractFileConverter {
                     break
 
                 default:
-                    throw new RangeError( `Invalid switch parameter: ${self._dumpType}` )
+                    throw new RangeError( `Invalid switch parameter: ${ self._dumpType }` )
 
             }
 
@@ -1734,7 +1710,7 @@ class TAbstractFileConverter {
 
         let isOnError = false;
 
-        const fileReadStream = fs__default['default'].createReadStream( file );
+        const fileReadStream = fs__default["default"].createReadStream( file );
 
         fileReadStream.on( 'error', ( error ) => {
 
@@ -1774,7 +1750,7 @@ class TAbstractFileConverter {
                     break
 
                 default:
-                    throw new RangeError( `Invalid switch parameter: ${dumpType}` )
+                    throw new RangeError( `Invalid switch parameter: ${ dumpType }` )
 
             }
 
@@ -1808,52 +1784,6 @@ TAbstractFileConverter.DumpType = Object.freeze( {
 
 class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
 
-    constructor ( parameters = {} ) {
-
-        const _parameters = {
-            ...{
-                controllers: new Map(),
-                descriptors: []
-            },
-            ...parameters
-        };
-
-        super( _parameters );
-
-        this.controllers = _parameters.controllers;
-        this.descriptors = _parameters.descriptors;
-
-        this.__dirname = undefined;
-
-    }
-
-    get controllers () {
-        return this._controllers
-    }
-
-    set controllers ( value ) {
-
-        if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Controllers cannot be null ! Expect a map of controller.' ) }
-        if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Controllers cannot be undefined ! Expect a map of controller.' ) }
-        if ( !( value instanceof Map ) ) { throw new TypeError( `Controllers cannot be an instance of ${ value.constructor.name } ! Expect a map of controller.` ) }
-
-        this._controllers = value;
-
-    }
-
-    get descriptors () {
-        return this._descriptors
-    }
-
-    set descriptors ( value ) {
-
-        if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Descriptors cannot be null ! Expect an array of POJO.' ) }
-        if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Descriptors cannot be undefined ! Expect an array of POJO.' ) }
-
-        this._descriptors = value;
-
-    }
-
     static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors, Logger ) {
 
         for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
@@ -1872,7 +1802,6 @@ class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
         }
 
     }
-
     static _populateRouter ( router, controller, can = {}, Logger ) {
 
         for ( let _do in can ) {
@@ -1887,7 +1816,47 @@ class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
         return router
 
     }
+    constructor ( parameters = {} ) {
 
+        const _parameters = {
+            ...{
+                controllers: new Map(),
+                descriptors: []
+            },
+            ...parameters
+        };
+
+        super( _parameters );
+
+        this.controllers = _parameters.controllers;
+        this.descriptors = _parameters.descriptors;
+
+        this.__dirname = undefined;
+
+    }
+    get controllers () {
+        return this._controllers
+    }
+    set controllers ( value ) {
+
+        if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Controllers cannot be null ! Expect a map of controller.' ) }
+        if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Controllers cannot be undefined ! Expect a map of controller.' ) }
+        if ( !( value instanceof Map ) ) { throw new TypeError( `Controllers cannot be an instance of ${ value.constructor.name } ! Expect a map of controller.` ) }
+
+        this._controllers = value;
+
+    }
+    get descriptors () {
+        return this._descriptors
+    }
+    set descriptors ( value ) {
+
+        if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Descriptors cannot be null ! Expect an array of POJO.' ) }
+        if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Descriptors cannot be undefined ! Expect an array of POJO.' ) }
+
+        this._descriptors = value;
+
+    }
     addController ( value ) {
 
         this._controllers.set( value.name, value );
@@ -2075,7 +2044,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from node_modules` );
-                plugin.__dirname = path__default['default'].dirname( require.resolve( name ) );
+                plugin.__dirname = path__default["default"].dirname( require.resolve( name ) );
                 plugin.registerTo( this.driver, this.application, this.router );
 
                 success = true;
@@ -2107,13 +2076,13 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
         try {
 
             // todo use rootPath or need to resolve depth correctly !
-            const localPluginPath = path__default['default'].join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` );
+            const localPluginPath = path__default["default"].join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` );
             const plugin          = require( localPluginPath )( config );
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from local folder` );
-                plugin.__dirname = path__default['default'].dirname( require.resolve( localPluginPath ) );
+                plugin.__dirname = path__default["default"].dirname( require.resolve( localPluginPath ) );
                 plugin.registerTo( this.driver, this.application, this.router );
 
                 success = true;
@@ -2163,14 +2132,6 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 class BadRequestError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isBadRequestError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 400
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2179,6 +2140,13 @@ class BadRequestError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 400 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isBadRequestError () { return true }
 
 }
 
@@ -2203,14 +2171,6 @@ class BadRequestError extends AbstractHTTPError {
 class BadMappingError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isBadMappingError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 421
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2219,6 +2179,13 @@ class BadMappingError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 421 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isBadMappingError () { return true }
 
 }
 
@@ -2243,14 +2210,6 @@ class BadMappingError extends AbstractHTTPError {
 class BlockedByWindowsParentalControlsError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isBlockedByWindowsParentalControlsError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 450
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2259,6 +2218,13 @@ class BlockedByWindowsParentalControlsError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 450 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isBlockedByWindowsParentalControlsError () { return true }
 
 }
 
@@ -2283,14 +2249,6 @@ class BlockedByWindowsParentalControlsError extends AbstractHTTPError {
 class ClientClosedRequestError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isClientClosedRequestError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 499
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2299,6 +2257,13 @@ class ClientClosedRequestError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 499 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isClientClosedRequestError () { return true }
 
 }
 
@@ -2323,14 +2288,6 @@ class ClientClosedRequestError extends AbstractHTTPError {
 class ConflictError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isConflictError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 409
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2339,6 +2296,13 @@ class ConflictError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 409 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isConflictError () { return true }
 
 }
 
@@ -2363,14 +2327,6 @@ class ConflictError extends AbstractHTTPError {
 class ExpectationFailedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isExpectationFailedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 417
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2379,6 +2335,13 @@ class ExpectationFailedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 417 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isExpectationFailedError () { return true }
 
 }
 
@@ -2403,14 +2366,6 @@ class ExpectationFailedError extends AbstractHTTPError {
 class ForbiddenError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isForbiddenError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 403
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2419,6 +2374,13 @@ class ForbiddenError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 403 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isForbiddenError () { return true }
 
 }
 
@@ -2443,14 +2405,6 @@ class ForbiddenError extends AbstractHTTPError {
 class GoneError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isGoneError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 410
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2459,6 +2413,13 @@ class GoneError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 410 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isGoneError () { return true }
 
 }
 
@@ -2483,14 +2444,6 @@ class GoneError extends AbstractHTTPError {
 class HTTPRequestSentToHTTPSPortError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isHTTPRequestSentToHTTPSPortError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 497
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2499,6 +2452,13 @@ class HTTPRequestSentToHTTPSPortError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 497 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isHTTPRequestSentToHTTPSPortError () { return true }
 
 }
 
@@ -2523,14 +2483,6 @@ class HTTPRequestSentToHTTPSPortError extends AbstractHTTPError {
 class ImATeapotError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isImATeapotError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 418
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2539,6 +2491,13 @@ class ImATeapotError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 418 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isImATeapotError () { return true }
 
 }
 
@@ -2563,14 +2522,6 @@ class ImATeapotError extends AbstractHTTPError {
 class LengthRequiredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isLengthRequiredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 411
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2579,6 +2530,13 @@ class LengthRequiredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 411 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isLengthRequiredError () { return true }
 
 }
 
@@ -2603,14 +2561,6 @@ class LengthRequiredError extends AbstractHTTPError {
 class LockedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isLockedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 423
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2619,6 +2569,13 @@ class LockedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 423 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isLockedError () { return true }
 
 }
 
@@ -2643,14 +2600,6 @@ class LockedError extends AbstractHTTPError {
 class MethodFailureError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isMethodFailureError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 424
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2659,6 +2608,13 @@ class MethodFailureError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 424 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isMethodFailureError () { return true }
 
 }
 
@@ -2683,14 +2639,6 @@ class MethodFailureError extends AbstractHTTPError {
 class MethodNotAllowedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isMethodNotAllowedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 405
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2699,6 +2647,13 @@ class MethodNotAllowedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 405 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isMethodNotAllowedError () { return true }
 
 }
 
@@ -2723,14 +2678,6 @@ class MethodNotAllowedError extends AbstractHTTPError {
 class NoResponseError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isNoResponseError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 444
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2739,6 +2686,13 @@ class NoResponseError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 444 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isNoResponseError () { return true }
 
 }
 
@@ -2763,14 +2717,6 @@ class NoResponseError extends AbstractHTTPError {
 class NotAcceptableError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isNotAcceptableError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 406
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2779,6 +2725,13 @@ class NotAcceptableError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 406 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isNotAcceptableError () { return true }
 
 }
 
@@ -2803,14 +2756,6 @@ class NotAcceptableError extends AbstractHTTPError {
 class NotFoundError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isNotFoundError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 404
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2819,6 +2764,13 @@ class NotFoundError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 404 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isNotFoundError () { return true }
 
 }
 
@@ -2843,14 +2795,6 @@ class NotFoundError extends AbstractHTTPError {
 class PaymentRequiredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isPaymentRequiredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 402
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2859,6 +2803,13 @@ class PaymentRequiredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 402 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isPaymentRequiredError () { return true }
 
 }
 
@@ -2883,14 +2834,6 @@ class PaymentRequiredError extends AbstractHTTPError {
 class PreconditionFailedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isPreconditionFailedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 412
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2899,6 +2842,13 @@ class PreconditionFailedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 412 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isPreconditionFailedError () { return true }
 
 }
 
@@ -2923,14 +2873,6 @@ class PreconditionFailedError extends AbstractHTTPError {
 class PreconditionRequiredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isPreconditionRequiredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 428
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2939,6 +2881,13 @@ class PreconditionRequiredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 428 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isPreconditionRequiredError () { return true }
 
 }
 
@@ -2963,14 +2912,6 @@ class PreconditionRequiredError extends AbstractHTTPError {
 class ProxyAuthenticationRequiredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isProxyAuthenticationRequiredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 407
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -2979,6 +2920,13 @@ class ProxyAuthenticationRequiredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 407 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isProxyAuthenticationRequiredError () { return true }
 
 }
 
@@ -3003,14 +2951,6 @@ class ProxyAuthenticationRequiredError extends AbstractHTTPError {
 class RequestEntityTooLargeError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isRequestEntityTooLargeError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 413
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3019,6 +2959,13 @@ class RequestEntityTooLargeError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 413 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isRequestEntityTooLargeError () { return true }
 
 }
 
@@ -3043,14 +2990,6 @@ class RequestEntityTooLargeError extends AbstractHTTPError {
 class RequestHeaderFieldsTooLargeError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isRequestHeaderFieldsTooLargeError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 431
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3059,6 +2998,13 @@ class RequestHeaderFieldsTooLargeError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 431 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isRequestHeaderFieldsTooLargeError () { return true }
 
 }
 
@@ -3083,14 +3029,6 @@ class RequestHeaderFieldsTooLargeError extends AbstractHTTPError {
 class RequestRangeUnsatisfiableError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isRequestRangeUnsatisfiableError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 416
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3099,6 +3037,13 @@ class RequestRangeUnsatisfiableError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 416 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isRequestRangeUnsatisfiableError () { return true }
 
 }
 
@@ -3123,14 +3068,6 @@ class RequestRangeUnsatisfiableError extends AbstractHTTPError {
 class RequestTimeOutError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isRequestTimeOutError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 408
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3139,6 +3076,13 @@ class RequestTimeOutError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 408 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isRequestTimeOutError () { return true }
 
 }
 
@@ -3163,14 +3107,6 @@ class RequestTimeOutError extends AbstractHTTPError {
 class RetryWithError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isRetryWithError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 449
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3179,6 +3115,13 @@ class RetryWithError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 449 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isRetryWithError () { return true }
 
 }
 
@@ -3203,14 +3146,6 @@ class RetryWithError extends AbstractHTTPError {
 class SSLCertificateError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isSSLCertificateError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 495
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3219,6 +3154,13 @@ class SSLCertificateError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 495 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isSSLCertificateError () { return true }
 
 }
 
@@ -3243,14 +3185,6 @@ class SSLCertificateError extends AbstractHTTPError {
 class SSLCertificateRequiredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isSSLCertificateRequiredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 496
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3259,6 +3193,13 @@ class SSLCertificateRequiredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 496 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isSSLCertificateRequiredError () { return true }
 
 }
 
@@ -3283,14 +3224,6 @@ class SSLCertificateRequiredError extends AbstractHTTPError {
 class TooManyRequestsError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isTooManyRequestsError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 429
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3299,6 +3232,13 @@ class TooManyRequestsError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 429 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isTooManyRequestsError () { return true }
 
 }
 
@@ -3323,14 +3263,6 @@ class TooManyRequestsError extends AbstractHTTPError {
 class UnauthorizedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isUnauthorizedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 401
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3339,6 +3271,13 @@ class UnauthorizedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 401 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isUnauthorizedError () { return true }
 
 }
 
@@ -3363,14 +3302,6 @@ class UnauthorizedError extends AbstractHTTPError {
 class UnavailableForLegalReasonsError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isUnavailableForLegalReasonsError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 451
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3379,6 +3310,13 @@ class UnavailableForLegalReasonsError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 451 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isUnavailableForLegalReasonsError () { return true }
 
 }
 
@@ -3403,14 +3341,6 @@ class UnavailableForLegalReasonsError extends AbstractHTTPError {
 class UnorderedCollectionError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isUnorderedCollectionError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 425
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3419,6 +3349,13 @@ class UnorderedCollectionError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 425 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isUnorderedCollectionError () { return true }
 
 }
 
@@ -3443,14 +3380,6 @@ class UnorderedCollectionError extends AbstractHTTPError {
 class UnrecoverableError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isUnrecoverableError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 456
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3459,6 +3388,13 @@ class UnrecoverableError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 456 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isUnrecoverableError () { return true }
 
 }
 
@@ -3483,14 +3419,6 @@ class UnrecoverableError extends AbstractHTTPError {
 class UpgradeRequiredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isUpgradeRequiredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 426
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3499,6 +3427,13 @@ class UpgradeRequiredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 426 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isUpgradeRequiredError () { return true }
 
 }
 
@@ -3523,14 +3458,6 @@ class UpgradeRequiredError extends AbstractHTTPError {
 class ATimeoutOccuredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isATimeoutOccuredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 524
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3539,6 +3466,13 @@ class ATimeoutOccuredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 524 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isATimeoutOccuredError () { return true }
 
 }
 
@@ -3563,14 +3497,6 @@ class ATimeoutOccuredError extends AbstractHTTPError {
 class BadGatewayError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isBadGatewayError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 502
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3579,6 +3505,13 @@ class BadGatewayError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 502 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isBadGatewayError () { return true }
 
 }
 
@@ -3603,14 +3536,6 @@ class BadGatewayError extends AbstractHTTPError {
 class BandwidthLimitExceededError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isBandwidthLimitExceededError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 509
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3619,6 +3544,13 @@ class BandwidthLimitExceededError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 509 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isBandwidthLimitExceededError () { return true }
 
 }
 
@@ -3643,14 +3575,6 @@ class BandwidthLimitExceededError extends AbstractHTTPError {
 class ConnectionTimedOutError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isConnectionTimedOutError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 522
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3659,6 +3583,13 @@ class ConnectionTimedOutError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 522 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isConnectionTimedOutError () { return true }
 
 }
 
@@ -3683,14 +3614,6 @@ class ConnectionTimedOutError extends AbstractHTTPError {
 class GatewayTimeOutError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isGatewayTimeOutError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 504
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3699,6 +3622,13 @@ class GatewayTimeOutError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 504 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isGatewayTimeOutError () { return true }
 
 }
 
@@ -3723,14 +3653,6 @@ class GatewayTimeOutError extends AbstractHTTPError {
 class HTTPVersionNotSupportedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isHTTPVersionNotSupportedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 505
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3739,6 +3661,13 @@ class HTTPVersionNotSupportedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 505 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isHTTPVersionNotSupportedError () { return true }
 
 }
 
@@ -3763,14 +3692,6 @@ class HTTPVersionNotSupportedError extends AbstractHTTPError {
 class InsufficientStorageError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isInsufficientStorageError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 507
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3779,6 +3700,13 @@ class InsufficientStorageError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 507 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isInsufficientStorageError () { return true }
 
 }
 
@@ -3803,14 +3731,6 @@ class InsufficientStorageError extends AbstractHTTPError {
 class InternalServerError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isInternalServerError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 500
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3819,6 +3739,13 @@ class InternalServerError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 500 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isInternalServerError () { return true }
 
 }
 
@@ -3843,14 +3770,6 @@ class InternalServerError extends AbstractHTTPError {
 class InvalidSSLCertificateError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isInvalidSSLCertificateError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 526
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3859,6 +3778,13 @@ class InvalidSSLCertificateError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 526 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isInvalidSSLCertificateError () { return true }
 
 }
 
@@ -3883,14 +3809,6 @@ class InvalidSSLCertificateError extends AbstractHTTPError {
 class LoopDetectedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isLoopDetectedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 508
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3899,6 +3817,13 @@ class LoopDetectedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 508 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isLoopDetectedError () { return true }
 
 }
 
@@ -3923,14 +3848,6 @@ class LoopDetectedError extends AbstractHTTPError {
 class NetworkAuthenticationRequiredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isNetworkAuthenticationRequiredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 511
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3939,6 +3856,13 @@ class NetworkAuthenticationRequiredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 511 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isNetworkAuthenticationRequiredError () { return true }
 
 }
 
@@ -3963,14 +3887,6 @@ class NetworkAuthenticationRequiredError extends AbstractHTTPError {
 class NotExtendedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isNotExtendedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 510
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -3979,6 +3895,13 @@ class NotExtendedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 510 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isNotExtendedError () { return true }
 
 }
 
@@ -4003,14 +3926,6 @@ class NotExtendedError extends AbstractHTTPError {
 class NotImplementedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isNotImplementedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 501
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -4019,6 +3934,13 @@ class NotImplementedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 501 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isNotImplementedError () { return true }
 
 }
 
@@ -4043,14 +3965,6 @@ class NotImplementedError extends AbstractHTTPError {
 class OriginIsUnreachableError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isOriginIsUnreachableError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 523
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -4059,6 +3973,13 @@ class OriginIsUnreachableError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 523 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isOriginIsUnreachableError () { return true }
 
 }
 
@@ -4083,14 +4004,6 @@ class OriginIsUnreachableError extends AbstractHTTPError {
 class RailgunError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isRailgunError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 527
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -4099,6 +4012,13 @@ class RailgunError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 527 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isRailgunError () { return true }
 
 }
 
@@ -4123,14 +4043,6 @@ class RailgunError extends AbstractHTTPError {
 class ServiceUnavailableError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isServiceUnavailableError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 503
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -4139,6 +4051,13 @@ class ServiceUnavailableError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 503 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isServiceUnavailableError () { return true }
 
 }
 
@@ -4163,14 +4082,6 @@ class ServiceUnavailableError extends AbstractHTTPError {
 class SSLHandshakeFailedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isSSLHandshakeFailedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 525
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -4179,6 +4090,13 @@ class SSLHandshakeFailedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 525 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isSSLHandshakeFailedError () { return true }
 
 }
 
@@ -4203,14 +4121,6 @@ class SSLHandshakeFailedError extends AbstractHTTPError {
 class VariantAlsoNegotiatesError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isVariantAlsoNegotiatesError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 506
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -4219,6 +4129,13 @@ class VariantAlsoNegotiatesError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 506 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isVariantAlsoNegotiatesError () { return true }
 
 }
 
@@ -4243,14 +4160,6 @@ class VariantAlsoNegotiatesError extends AbstractHTTPError {
 class WebServerIsDownError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isWebServerIsDownError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 521
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -4259,6 +4168,13 @@ class WebServerIsDownError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 521 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isWebServerIsDownError () { return true }
 
 }
 
