@@ -32,29 +32,6 @@ import { UnprocessableEntityError } from '../messages/http/UnprocessableEntityEr
  */
 class TAbstractDataController extends TAbstractResponder {
 
-    get useNext () {
-        return this._useNext
-    }
-
-    set useNext ( value ) {
-        if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
-        if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
-        if ( isNotBoolean( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
-
-        this._useNext = value
-    }
-
-    get driver () {
-        return this._driver
-    }
-
-    set driver ( value ) {
-        if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
-        if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
-
-        this._driver = value
-    }
-
     /**
      * @constructor
      * @param {Object} [parameters={}] - An object containing all parameters to pass through the inheritance chain to initialize this instance
@@ -71,22 +48,40 @@ class TAbstractDataController extends TAbstractResponder {
             ...parameters
         }
 
-        super(_parameters)
+        super( _parameters )
 
         /**
          * The database drive to use internally
          * @throws {TypeError} Will throw an error if the argument is null.
          * @throws {TypeError} Will throw an error if the argument is undefined.
          */
-        this.driver  = _parameters.driver
+        this.driver = _parameters.driver
         this.useNext = _parameters.useNext
 
+    }
+    get useNext () {
+        return this._useNext
+    }
+    set useNext ( value ) {
+        if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
+        if ( isNotBoolean( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
+
+        this._useNext = value
+    }
+    get driver () {
+        return this._driver
+    }
+    set driver ( value ) {
+        if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
+
+        this._driver = value
     }
 
     //////////////////
     // CRUD Methods //
     //////////////////
-
     create ( request, response, next ) {
 
         const data = request.body

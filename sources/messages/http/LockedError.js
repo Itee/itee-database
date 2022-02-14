@@ -21,14 +21,6 @@ import { AbstractHTTPError } from './AbstractHTTPError'
 class LockedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isLockedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 423
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -37,6 +29,13 @@ class LockedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 423 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isLockedError () { return true }
 
 }
 

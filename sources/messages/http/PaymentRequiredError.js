@@ -21,14 +21,6 @@ import { AbstractHTTPError } from './AbstractHTTPError'
 class PaymentRequiredError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isPaymentRequiredError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 402
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -37,6 +29,13 @@ class PaymentRequiredError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 402 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isPaymentRequiredError () { return true }
 
 }
 

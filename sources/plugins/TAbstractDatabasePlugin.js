@@ -4,59 +4,13 @@
  *
  */
 
+import { TAbstractObject } from 'itee-core'
 import {
     isNull,
     isUndefined
 }                          from 'itee-validators'
-import { TAbstractObject } from 'itee-core'
 
 class TAbstractDatabasePlugin extends TAbstractObject {
-
-    constructor ( parameters = {} ) {
-
-        const _parameters = {
-            ...{
-                controllers: new Map(),
-                descriptors: []
-            },
-            ...parameters
-        }
-
-        super( _parameters )
-
-        this.controllers = _parameters.controllers
-        this.descriptors = _parameters.descriptors
-
-        this.__dirname = undefined
-
-    }
-
-    get controllers () {
-        return this._controllers
-    }
-
-    set controllers ( value ) {
-
-        if ( isNull( value ) ) { throw new TypeError( 'Controllers cannot be null ! Expect a map of controller.' ) }
-        if ( isUndefined( value ) ) { throw new TypeError( 'Controllers cannot be undefined ! Expect a map of controller.' ) }
-        if ( !( value instanceof Map ) ) { throw new TypeError( `Controllers cannot be an instance of ${ value.constructor.name } ! Expect a map of controller.` ) }
-
-        this._controllers = value
-
-    }
-
-    get descriptors () {
-        return this._descriptors
-    }
-
-    set descriptors ( value ) {
-
-        if ( isNull( value ) ) { throw new TypeError( 'Descriptors cannot be null ! Expect an array of POJO.' ) }
-        if ( isUndefined( value ) ) { throw new TypeError( 'Descriptors cannot be undefined ! Expect an array of POJO.' ) }
-
-        this._descriptors = value
-
-    }
 
     static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors, Logger ) {
 
@@ -76,7 +30,6 @@ class TAbstractDatabasePlugin extends TAbstractObject {
         }
 
     }
-
     static _populateRouter ( router, controller, can = {}, Logger ) {
 
         for ( let _do in can ) {
@@ -91,7 +44,47 @@ class TAbstractDatabasePlugin extends TAbstractObject {
         return router
 
     }
+    constructor ( parameters = {} ) {
 
+        const _parameters = {
+            ...{
+                controllers: new Map(),
+                descriptors: []
+            },
+            ...parameters
+        }
+
+        super( _parameters )
+
+        this.controllers = _parameters.controllers
+        this.descriptors = _parameters.descriptors
+
+        this.__dirname = undefined
+
+    }
+    get controllers () {
+        return this._controllers
+    }
+    set controllers ( value ) {
+
+        if ( isNull( value ) ) { throw new TypeError( 'Controllers cannot be null ! Expect a map of controller.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Controllers cannot be undefined ! Expect a map of controller.' ) }
+        if ( !( value instanceof Map ) ) { throw new TypeError( `Controllers cannot be an instance of ${ value.constructor.name } ! Expect a map of controller.` ) }
+
+        this._controllers = value
+
+    }
+    get descriptors () {
+        return this._descriptors
+    }
+    set descriptors ( value ) {
+
+        if ( isNull( value ) ) { throw new TypeError( 'Descriptors cannot be null ! Expect an array of POJO.' ) }
+        if ( isUndefined( value ) ) { throw new TypeError( 'Descriptors cannot be undefined ! Expect an array of POJO.' ) }
+
+        this._descriptors = value
+
+    }
     addController ( value ) {
 
         this._controllers.set( value.name, value )

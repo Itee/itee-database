@@ -21,14 +21,6 @@ import { AbstractHTTPError } from './AbstractHTTPError'
 class UnauthorizedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isUnauthorizedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 401
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -37,6 +29,13 @@ class UnauthorizedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 401 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isUnauthorizedError () { return true }
 
 }
 

@@ -21,14 +21,6 @@ import { AbstractHTTPError } from './AbstractHTTPError'
 class PreconditionFailedError extends AbstractHTTPError {
 
     /**
-     * A boolean based on classname that allow fast type checking, will ever be true
-     * @constant
-     * @default true
-     * @type {boolean}
-     */
-    get isPreconditionFailedError () { return true }
-
-    /**
      * The static statusCode getter reimplementation for this kind of error, will return 412
      * @see module:Messages/HTTP/AbstractHTTPError~AbstractHTTPError#statusCode
      * @static
@@ -37,6 +29,13 @@ class PreconditionFailedError extends AbstractHTTPError {
      * @type {number}
      */
     static get statusCode () { return 412 }
+    /**
+     * A boolean based on classname that allow fast type checking, will ever be true
+     * @constant
+     * @default true
+     * @type {boolean}
+     */
+    get isPreconditionFailedError () { return true }
 
 }
 
