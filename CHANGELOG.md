@@ -1,3 +1,10 @@
+## [8.1.5](https://github.com/Itee/itee-database/compare/v8.1.4...v8.1.5) (2022-02-14)
+
+
+### Bug Fixes
+
+* **package:** update deps to latest version and move itee peer to deps ([60f378e](https://github.com/Itee/itee-database/commit/60f378e01d17665e354c7aca2c7f2b25eda8c247))
+
 ## [8.1.4](https://github.com/Itee/itee-database/compare/v8.1.3...v8.1.4) (2022-02-14)
 
 
