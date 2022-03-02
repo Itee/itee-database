@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.1.5 - EsModule')
+console.log('Itee.Database v8.2.0 - EsModule')
 import { isNotDefined, isNotString, isEmptyString, isBlankString, isArray, isString, isObject, isFunction, isDefined, isNull, isUndefined, isNotBoolean, isEmptyArray, isEmptyObject, isNotArray, isNotObject } from 'itee-validators';
 import { TAbstractObject } from 'itee-core';
 import path from 'path';
@@ -2012,7 +2012,12 @@ class TAbstractDatabase extends TAbstractObject {
 
         try {
 
-            const plugin = require( name )( config );
+            //[Itee:01/03/2022] Todo: Waiting better plugin management for package that expose more than instancied plugin
+            let plugin = require( name );
+            if(plugin.registerPlugin) {
+                plugin = plugin.registerPlugin( config );
+            }
+
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from node_modules` );
@@ -2047,9 +2052,13 @@ class TAbstractDatabase extends TAbstractObject {
 
         try {
 
+            //[Itee:01/03/2022] Todo: Waiting better plugin management for package that expose more than instancied plugin
             // todo use rootPath or need to resolve depth correctly !
             const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` );
-            const plugin          = require( localPluginPath )( config );
+            let plugin = require( localPluginPath );
+            if(plugin.registerPlugin) {
+                plugin = plugin.registerPlugin( config );
+            }
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 

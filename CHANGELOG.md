@@ -1,3 +1,10 @@
+# [8.2.0](https://github.com/Itee/itee-database/compare/v8.1.5...v8.2.0) (2022-03-02)
+
+
+### Features
+
+* **tabstractdatabase:** allow to use wrapper function named registerPlugin to allow multiexport ([6a401c7](https://github.com/Itee/itee-database/commit/6a401c70ac2d96fee593500d793c8a384e0c1d2d))
+
 ## [8.1.5](https://github.com/Itee/itee-database/compare/v8.1.4...v8.1.5) (2022-02-14)
 
 
