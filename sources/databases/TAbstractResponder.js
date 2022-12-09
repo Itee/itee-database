@@ -70,6 +70,7 @@ class TAbstractResponder extends TAbstractObject {
         if ( error instanceof Error ) {
 
             formattedError = error
+            formattedError.statusCode = 500
 
         } else if ( isString( error ) ) {
 
