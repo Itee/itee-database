@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.2.0 - EsModule')
+console.log('Itee.Database v8.2.1 - EsModule')
 import { isNotDefined, isNotString, isEmptyString, isBlankString, isArray, isString, isObject, isFunction, isDefined, isNull, isUndefined, isNotBoolean, isEmptyArray, isEmptyObject, isNotArray, isNotObject } from 'itee-validators';
 import { TAbstractObject } from 'itee-core';
 import path from 'path';
@@ -315,6 +315,7 @@ class TAbstractResponder extends TAbstractObject {
         if ( error instanceof Error ) {
 
             formattedError = error;
+            formattedError.statusCode = 500;
 
         } else if ( isString( error ) ) {
 
