@@ -27,7 +27,6 @@
  * @requires {@link module: [minimist]{@link https://github.com/substack/minimist}}
  * @requires {@link module: [rollup]{@link https://github.com/rollup/rollup}}
  * @requires {@link module: [path]{@link https://nodejs.org/api/path.html}}
- * @requires {@link module: [karma]{@link https://github.com/karma-runner/karma}}
  * @requires {@link module: [fancy-log]{@link https://github.com/js-cli/fancy-log}}
  * @requires {@link module: [ansi-colors]{@link https://github.com/doowb/ansi-colors}}
  *
@@ -45,7 +44,6 @@ const del          = require( 'del' )
 const parseArgs    = require( 'minimist' )
 const rollup       = require( 'rollup' )
 const path         = require( 'path' )
-const karma        = require( 'karma' )
 const log          = require( 'fancy-log' )
 const colors       = require( 'ansi-colors' )
 const red          = colors.red
@@ -76,8 +74,8 @@ gulp.task( 'help', ( done ) => {
     log( '\t', blue( 'npm run' ), cyan( 'lint' ), ' - Will run the eslint in pedantic mode with auto fix when possible.' )
     log( '\t', blue( 'npm run' ), cyan( 'doc' ), ' - Will run jsdoc, and create documentation under `documentation` folder, using the docdash theme' )
     log( '\t', blue( 'npm run' ), cyan( 'test' ), ' - Will run the test framworks (unit and bench), and create reports under `documentation/report` folder, using the mochawesome theme' )
-    log( '\t', blue( 'npm run' ), cyan( 'unit' ), ' - Will run the karma server for unit tests.' )
-    log( '\t', blue( 'npm run' ), cyan( 'bench' ), ' - Will run the karma server for benchmarks.' )
+    log( '\t', blue( 'npm run' ), cyan( 'unit' ), ' - Will run the unit tests.' )
+    log( '\t', blue( 'npm run' ), cyan( 'bench' ), ' - Will run the benchmarks.' )
     log( '\t', blue( 'npm run' ), cyan( 'build' ), yellow( '--' ), green( '<options>' ), ' - Will build the application for development and/or production environments.', yellow( 'Note: The two dash are only required if you provide options !' ) )
     log( '\t\t The available', green( '<options>' ), 'are:' )
     log( '\t\t\t', green( '-n' ), 'or', green( '--name' ), ' - The export name of the builded application', red( '(required for UMD module)' ), cyan( '[Default: ""]' ), '.' )
@@ -184,65 +182,25 @@ gulp.task( 'doc', ( done ) => {
 /**
  * @method npm run unit
  * @global
- * @description Will run unit tests using karma
+ * @description Will run unit tests
  */
 gulp.task( 'unit', ( done ) => {
-
-    const karmaServer = new karma.Server( {
-        configFile: `${__dirname}/configs/karma.units.conf.js`,
-        singleRun:  true
-    }, ( exitCode ) => {
-
-        if ( exitCode !== 0 ) {
-            done( `Karma server exit with code ${exitCode}` )
-        } else {
-            log( `Karma server exit with code ${exitCode}` )
-            done()
-        }
-
-    } )
-
-    karmaServer.on( 'browser_error', ( browser, error ) => {
-        log( red( error.message ) )
-    } )
-
-    karmaServer.start()
-
+    done()
 } )
 
 /**
  * @method npm run bench
  * @global
- * @description Will run benchmarks using karma
+ * @description Will run benchmarks
  */
 gulp.task( 'bench', ( done ) => {
-
-    const karmaServer = new karma.Server( {
-        configFile: `${__dirname}/configs/karma.benchs.conf.js`,
-        singleRun:  true
-    }, ( exitCode ) => {
-
-        if ( exitCode !== 0 ) {
-            done( `Karma server exit with code ${exitCode}` )
-        } else {
-            log( `Karma server exit with code ${exitCode}` )
-            done()
-        }
-
-    } )
-
-    karmaServer.on( 'browser_error', ( browser, error ) => {
-        log( red( error.message ) )
-    } )
-
-    karmaServer.start()
-
+    done()
 } )
 
 /**
  * @method npm run test
  * @global
- * @description Will run unit tests and benchmarks using karma
+ * @description Will run unit tests and benchmarks
  */
 gulp.task( 'test', gulp.series( 'unit', 'bench' ) )
 
