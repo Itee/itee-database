@@ -84,7 +84,7 @@
     "mochawesome": "^7.0.1",
     "rollup": "^2.67.2",
     "rollup-plugin-terser": "^7.0.2",
-    "semantic-release": "^19.0.2"
+    "semantic-release": "^21.0.1"
   },
   "config": {
     "commitizen": {
