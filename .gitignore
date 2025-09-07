@@ -1,2 +1,4 @@
-node_modules/
-tests/builds/
+/.idea/
+/node_modules/
+/tests/units/builds/
+/tests/benchmarks/builds/
