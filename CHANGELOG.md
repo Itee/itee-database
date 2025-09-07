@@ -1,3 +1,11 @@
+## [8.2.1](https://github.com/Itee/itee-database/compare/v8.2.0...v8.2.1) (2023-02-09)
+
+
+### Bug Fixes
+
+* **package:** remove karme dependencies with broken peer deps ([d03dc72](https://github.com/Itee/itee-database/commit/d03dc721c923049a5664851d2494462f4da29f6f))
+* **tabstractresponder:** add default status code to formatted error from Error ([309a152](https://github.com/Itee/itee-database/commit/309a152e8cba75c37393d6d7fb55425046da6e6a))
+
 # [8.2.0](https://github.com/Itee/itee-database/compare/v8.1.5...v8.2.0) (2022-03-02)
 
 

@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.2.0 - CommonJs')
+console.log('Itee.Database v8.2.1 - CommonJs')
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -343,6 +343,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         if ( error instanceof Error ) {
 
             formattedError = error;
+            formattedError.statusCode = 500;
 
         } else if ( iteeValidators.isString( error ) ) {
 
