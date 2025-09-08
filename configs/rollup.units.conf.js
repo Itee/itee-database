@@ -8,6 +8,7 @@
 
 const packageInfos = require( '../package' )
 const {nodeResolve} = require('@rollup/plugin-node-resolve')
+const cleanup       = require('rollup-plugin-cleanup')
 
 /**
  * Will create an appropriate configuration object for rollup, related to the given arguments.
@@ -30,6 +31,9 @@ function CreateUnitsRollupConfigs ( /*options*/ ) {
             plugins: [
                 nodeResolve( {
                     preferBuiltins: true
+                } ),
+                cleanup( {
+                    comments: 'none'
                 } )
             ],
             treeshake: true,

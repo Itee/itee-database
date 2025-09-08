@@ -63,12 +63,14 @@ function _computeBanner ( name, format ) {
 function CreateRollupConfigs ( options ) {
     'use strict'
 
-    const name      = options.name
-    const input     = options.input
-    const output    = options.output
-    const formats   = options.format.split( ',' )
-    const envs      = options.env.split( ',' )
-    const treeshake = options.treeshake
+    const {
+              name,
+              input,
+              output,
+              formats,
+              envs,
+              treeshake
+          }        = options
     const fileName  = path.basename( input, '.js' )
 
     const configs = []
