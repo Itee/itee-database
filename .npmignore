@@ -1,6 +1,6 @@
-.idea/
-/.releaserc
-/.travis.yml
+.releaserc
+.travis.yml
+/.idea/
 /configs/
 /docs/
 /gulpfile.mjs
