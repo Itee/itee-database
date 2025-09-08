@@ -1,3 +1,10 @@
+## [8.2.2](https://github.com/Itee/itee-database/compare/v8.2.1...v8.2.2) (2025-09-08)
+
+
+### Bug Fixes
+
+* **npm:** run npm audit fix ([74c5885](https://github.com/Itee/itee-database/commit/74c588558f6ad4094ce8218058cb8bb9baa8b0bb))
+
 ## [8.2.1](https://github.com/Itee/itee-database/compare/v8.2.0...v8.2.1) (2023-02-09)
 
 
