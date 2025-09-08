@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.2.1 - EsModule')
+console.log('Itee.Core v8.2.1 - EsModule')
 import { isNotDefined, isNotString, isEmptyString, isBlankString, isArray, isString, isObject, isFunction, isDefined, isNull, isUndefined, isNotBoolean, isEmptyArray, isEmptyObject, isNotArray, isNotObject } from 'itee-validators';
 import { TAbstractObject } from 'itee-core';
 import path from 'path';
@@ -278,7 +278,7 @@ class TAbstractResponder extends TAbstractObject {
      *     message: 'the error message'
      * }
      *
-     * @param {String|Object|Array.<String>|Array.<Object>} error - The error object to normalize
+     * @param {String|Object|Array.<String>|Array.<Object>} errors - The error object to normalize
      * @returns {Array.<Object>}
      * @private
      */

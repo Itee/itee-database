@@ -33,7 +33,7 @@ class TAbstractResponder extends TAbstractObject {
      *     message: 'the error message'
      * }
      *
-     * @param {String|Object|Array.<String>|Array.<Object>} error - The error object to normalize
+     * @param {String|Object|Array.<String>|Array.<Object>} errors - The error object to normalize
      * @returns {Array.<Object>}
      * @private
      */
