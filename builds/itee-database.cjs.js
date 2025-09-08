@@ -1,4 +1,4 @@
-console.log('Itee.Database v8.2.1 - CommonJs')
+console.log('Itee.Core v8.2.1 - CommonJs')
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -306,7 +306,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
      *     message: 'the error message'
      * }
      *
-     * @param {String|Object|Array.<String>|Array.<Object>} error - The error object to normalize
+     * @param {String|Object|Array.<String>|Array.<Object>} errors - The error object to normalize
      * @returns {Array.<Object>}
      * @private
      */
