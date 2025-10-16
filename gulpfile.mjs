@@ -55,7 +55,7 @@ import jsdocConfiguration          from './configs/jsdoc.conf.js'
 import rollupConfigurator          from './configs/rollup.conf.js'
 import rollupUnitTestsConfigurator from './configs/rollup.units.conf.js'
 import rollupBenchesConfigurator   from './configs/rollup.benchs.conf.js'
-import { getGulpConfigForTask }    from './configs/gulp.conf.js'
+import { getGulpConfigForTask }    from './configs/gulp.conf.mjs'
 
 const red     = colors.red
 const green   = colors.green
