@@ -2,3 +2,4 @@
 /node_modules/
 /tests/units/builds/
 /tests/benchmarks/builds/
+/tests/bundles/
