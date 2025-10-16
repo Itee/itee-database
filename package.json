@@ -75,6 +75,7 @@
     "del": "^7.1.0",
     "eslint-plugin-mocha": "^10.0.3",
     "fancy-log": "^2.0.0",
+    "figlet": "^1.9.3",
     "glob": "^7.2.0",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
