@@ -87,10 +87,5 @@
     "rollup-plugin-terser": "^7.0.2",
     "semantic-release": "^19.0.2",
     "semantic-release-gitmoji": "^1.6.8"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
