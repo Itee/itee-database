@@ -17,10 +17,13 @@ function getDirname() {
         __dirname = dirname( import.meta.filename )
     } else if ( import.meta.url ) {
         const __filename = fileURLToPath( import.meta.url )
-        __dirname        = join( dirname( __filename ), '..' )
+        __dirname        = dirname( __filename )
     } else {
         throw new Error( 'Unable to retrieve module dirname.' )
     }
+
+    // Todo: distinguish between dirname and packageRootFolder to avoid misusing
+    __dirname = join( __dirname, '..' )
 
     return __dirname
 
