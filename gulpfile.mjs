@@ -187,9 +187,9 @@ gulp.task( 'build', build )
 /**
  * @method npm run release
  * @global
- * @description Will perform a complet release of the library including 'clean', 'lint', 'doc', 'build-tests', 'test' and finally 'build'.
+ * @description Will perform a complete release of the library including 'clean', 'lint', 'doc', 'build-tests', 'test' and finally 'build'.
  */
-gulp.task( 'release', gulp.series( 'clean', 'lint', 'doc', 'build', 'build-tests', 'test' ) )
+gulp.task( 'release', gulp.series( 'clean', 'build', 'build-tests', 'lint', 'doc', 'test' ) )
 
 //---------
 
