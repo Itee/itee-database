@@ -1,22 +1,101 @@
 {
-    "branch": "master",
-    "plugins": [
-        "@semantic-release/commit-analyzer",
-        "@semantic-release/release-notes-generator",
-        "@semantic-release/changelog",
-        "@semantic-release/npm",
-        "@semantic-release/github",
-        [
-            "@semantic-release/git",
-            {
-                "assets": [
-                    "builds/**",
-                    "docs/**",
-                    "package.json",
-                    "CHANGELOG.md"
-                ],
-                "message": "chore(release): v${nextRelease.version}"
-            }
-        ]
+  "branch": "master",
+  "plugins": [
+    [
+      "semantic-release-gitmoji",
+      {
+        "releaseRules": {
+          "major": [
+            ":boom:"
+          ],
+          "minor": [
+            ":sparkles:"
+          ],
+          "patch": [
+            ":art:",
+            ":zap:",
+            ":fire:",
+            ":bug:",
+            ":ambulance:",
+            ":pencil:",
+            ":rocket:",
+            ":lipstick:",
+            ":white_check_mark:",
+            ":lock:",
+            ":apple:",
+            ":penguin:",
+            ":checkered_flag:",
+            ":robot:",
+            ":green_apple:",
+            ":rotating_light:",
+            ":green_heart:",
+            ":arrow_down:",
+            ":pushpin:",
+            ":construction_worker:",
+            ":chart_with_upwards_trend:",
+            ":recycle:",
+            ":whale:",
+            ":heavy_plus_sign:",
+            ":heavy_minus_sign:",
+            ":wrench:",
+            ":globe_with_meridians:",
+            ":pencil2:",
+            ":poop:",
+            ":rewind:",
+            ":package:",
+            ":alien:",
+            ":truck:",
+            ":page_facing_up:",
+            ":bento:",
+            ":ok_hand:",
+            ":wheelchair:",
+            ":bulb:",
+            ":beers:",
+            ":speech_balloon:",
+            ":card_file_box:",
+            ":loud_sound:",
+            ":mute:",
+            ":busts_in_silhouette:",
+            ":children_crossing:",
+            ":building_construction:",
+            ":iphone:",
+            ":clown_face:",
+            ":see_no_evil:",
+            ":camera_flash:",
+            ":alembic:",
+            ":mag:",
+            ":wheel_of_dharma:",
+            ":label:",
+            ":seedling:",
+            ":dizzy:",
+            ":wastebasket:",
+            ":passport_control:",
+            ":adhesive_bandage:",
+            ":monocle_face:",
+            ":coffin:",
+            ":test_tube:",
+            ":necktie:",
+            ":stethoscope:",
+            ":bricks:",
+            ":technologist:"
+          ]
+        }
+      }
+    ],
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    "@semantic-release/github",
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "builds/**",
+          "docs/**",
+          "package.json",
+          "CHANGELOG.md"
+        ],
+        "message": "chore(release): v${nextRelease.version}"
+      }
     ]
+  ]
 }

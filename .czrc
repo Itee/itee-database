@@ -1,0 +1,6 @@
+{
+  "path": "./node_modules/cz-emoji",
+  "config": {
+    "cz-emoji": {}
+  }
+}
