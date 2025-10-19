@@ -11,21 +11,22 @@ import {
     packageInfos
 }                               from '../../_utils.mjs'
 import glob                     from 'glob'
-import fs                       from 'fs'
+import {
+    existsSync,
+    mkdirSync,
+    writeFileSync
+}                               from 'fs'
 import log                      from 'fancy-log'
 import colors                   from 'ansi-colors'
 import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
 import childProcess             from 'child_process'
+import { isNotEmptyArray }      from 'itee-validators'
 
 const {
           red,
           green,
-          blue,
-          cyan,
-          yellow,
-          magenta
+          yellow
       } = colors
-
 
 function computeUnitTests( done ) {
 
@@ -34,7 +35,10 @@ function computeUnitTests( done ) {
     const testsDir   = join( baseDir, 'tests' )
     const unitsDir   = join( testsDir, 'units' )
 
-    fs.mkdirSync( unitsDir, { recursive: true } )
+    if ( !existsSync( unitsDir ) ) {
+        log( 'Creating', green( unitsDir ) )
+        mkdirSync( unitsDir, { recursive: true } )
+    }
 
     const filePathsToIgnore = getGulpConfigForTask( 'compute-unit-tests' )
 
@@ -67,8 +71,7 @@ function computeUnitTests( done ) {
         try {
 
             const jsdocPath   = join( baseDir, '/node_modules/jsdoc/jsdoc.js' )
-            const jsdocOutput = childProcess.execFileSync( 'node', [ jsdocPath, '-X', sourceFile ] )
-                                            .toString()
+            const jsdocOutput = childProcess.execFileSync( 'node', [ jsdocPath, '-X', sourceFile ] ).toString()
 
             const classNames    = []
             const usedLongnames = []
@@ -531,8 +534,8 @@ function computeUnitTests( done ) {
             } )
 
             log( green( `Create ${ unitFilePath }` ) )
-            fs.mkdirSync( unitDirPath, { recursive: true } )
-            fs.writeFileSync( unitFilePath, template )
+            mkdirSync( unitDirPath, { recursive: true } )
+            writeFileSync( unitFilePath, template )
 
         } catch ( error ) {
 
@@ -542,34 +545,48 @@ function computeUnitTests( done ) {
 
     }
 
-    // Global units file
-    let computedImports   = ''
-    let computedUnitCalls = ''
-    for ( let entry of unitsImportMap ) {
-        computedImports += `import { ${ entry.exportName } }   from './${ entry.path }'` + '\n'
-        computedUnitCalls += `    ${ entry.exportName }.call( root )` + '\n'
-    }
+    // If some tests to import generate global units file
+    let unitsTemplate
+    if ( isNotEmptyArray( unitsImportMap ) ) {
 
-    const unitsTemplate = '' +
-        'import { describe }      from \'mocha\'' + '\n' +
-        `${ computedImports }` +
-        '\n' +
-        'const root = typeof window === \'undefined\'' + '\n' +
-        '    ? typeof global === \'undefined\'' + '\n' +
-        '        ? Function( \'return this\' )() ' + '\n' +
-        '        : global ' + '\n' +
-        '    : window' + '\n' +
-        '\n' +
-        'describe( \'Itee#Validators\', () => {' + '\n' +
-        '\n' +
-        `${ computedUnitCalls }` +
-        '\n' +
-        '} )' + '\n'
+        let computedImports   = ''
+        let computedUnitCalls = ''
+        for ( let entry of unitsImportMap ) {
+            computedImports += `import { ${ entry.exportName } }   from './${ entry.path }'` + '\n'
+            computedUnitCalls += `    ${ entry.exportName }.call( root )` + '\n'
+        }
+
+        unitsTemplate = '' +
+            'import { describe }      from \'mocha\'' + '\n' +
+            `${ computedImports }` +
+            '\n' +
+            'const root = typeof window === \'undefined\'' + '\n' +
+            '    ? typeof global === \'undefined\'' + '\n' +
+            '        ? Function( \'return this\' )() ' + '\n' +
+            '        : global ' + '\n' +
+            '    : window' + '\n' +
+            '\n' +
+            'describe( \'Itee#Validators\', () => {' + '\n' +
+            '\n' +
+            `${ computedUnitCalls }` +
+            '\n' +
+            '} )' + '\n'
+
+    } else {
+
+        log( yellow( 'No tests were generated. Create fallback global root import file.' ) )
+
+        unitsTemplate = '' +
+            'import { describe }      from \'mocha\'' + '\n' +
+            '\n' +
+            'describe( \'Itee#Validators\', () => {} )' + '\n'
+
+    }
 
     const unitsFilePath = join( unitsDir, `${ packageInfos.name }.units.js` )
 
-    log( green( `Create ${ unitsFilePath }` ) )
-    fs.writeFileSync( unitsFilePath, unitsTemplate )
+    log( 'Creating', green( unitsFilePath ) )
+    writeFileSync( unitsFilePath, unitsTemplate )
 
     done()
 

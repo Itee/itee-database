@@ -10,22 +10,23 @@ import {
     getDirname,
     packageInfos
 }                               from '../../_utils.mjs'
-import glob                     from 'glob'
-import fs                       from 'fs'
-import log                      from 'fancy-log'
+import glob from 'glob'
+import {
+    existsSync,
+    mkdirSync,
+    writeFileSync
+} from 'fs'
+import log  from 'fancy-log'
 import colors                   from 'ansi-colors'
 import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
 import childProcess             from 'child_process'
+import { isNotEmptyArray }      from 'itee-validators'
 
 const {
           red,
           green,
-          blue,
-          cyan,
-          yellow,
-          magenta
+          yellow
       } = colors
-
 
 function computeBenchmarks( done ) {
 
@@ -34,7 +35,10 @@ function computeBenchmarks( done ) {
     const testsDir   = join( baseDir, 'tests' )
     const benchesDir = join( testsDir, 'benchmarks' )
 
-    fs.mkdirSync( benchesDir, { recursive: true } )
+    if ( !existsSync( benchesDir ) ) {
+        log( 'Creating', green( benchesDir ) )
+        mkdirSync( benchesDir, { recursive: true } )
+    }
 
     const filePathsToIgnore = getGulpConfigForTask( 'compute-benchmarks' )
 
@@ -169,8 +173,8 @@ function computeBenchmarks( done ) {
             } )
 
             log( green( `Create ${ benchFilePath }` ) )
-            fs.mkdirSync( benchDirPath, { recursive: true } )
-            fs.writeFileSync( benchFilePath, template )
+            mkdirSync( benchDirPath, { recursive: true } )
+            writeFileSync( benchFilePath, template )
 
         } catch ( error ) {
 
@@ -206,7 +210,7 @@ function computeBenchmarks( done ) {
     const benchesFilePath = join( benchesDir, `${ packageInfos.name }.benchs.js` )
 
     log( green( `Create ${ benchesFilePath }` ) )
-    fs.writeFileSync( benchesFilePath, benchesTemplate )
+    writeFileSync( benchesFilePath, benchesTemplate )
 
     done()
 
