@@ -16,6 +16,7 @@ const config = {
         'configs/**/*.js',
         'sources/**/*.js',
         'tests/**/*.js',
+        '!tests/bundles/**/*.js',
         '!tests/**/builds/*.js'
     ],
     'doc':                [
