@@ -1,4 +1,13 @@
-console.log('Itee.Core v8.2.2 - EsModule')
+/**
+ * ┳      ┳┓     ┓          ┏┓ ┏┓ ┏┓      ┏┓ ┳┳┓   ┓  ┓  
+ * ┃╋┏┓┏┓ ┃┃┏┓╋┏┓┣┓┏┓┏┏┓  ┓┏┣┫ ┏┛ ┏┛  ━━  ┣ ┏┃┃┃┏┓┏┫┓┏┃┏┓
+ * ┻┗┗ ┗ •┻┛┗┻┗┗┻┗┛┗┻┛┗   ┗┛┗┛•┗━•┗━      ┗┛┛┛ ┗┗┛┗┻┗┻┗┗ 
+ *                                                       
+ * @desc    The abstract database side of the Itee solution for 3d web content, this package is design to be inherited and run on an Itee server.
+ * @author  [Tristan Valcke]{@link https://github.com/Itee}
+ * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
+ * 
+ */
 import { isNotDefined, isNotString, isEmptyString, isBlankString, isArray, isString, isObject, isFunction, isDefined, isNull, isUndefined, isNotBoolean, isEmptyArray, isEmptyObject, isNotArray, isNotObject } from 'itee-validators';
 import { TAbstractObject } from 'itee-core';
 import path from 'path';
@@ -1743,7 +1752,7 @@ class TAbstractFileConverter {
 
 TAbstractFileConverter.MAX_FILE_SIZE = 67108864;
 
-TAbstractFileConverter.DumpType = Object.freeze( {
+TAbstractFileConverter.DumpType = /*#__PURE__*/Object.freeze( {
     ArrayBuffer: 0,
     String:      1,
     JSON:        2
