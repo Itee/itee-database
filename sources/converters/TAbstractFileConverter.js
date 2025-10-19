@@ -324,7 +324,7 @@ class TAbstractFileConverter {
 
 TAbstractFileConverter.MAX_FILE_SIZE = 67108864
 
-TAbstractFileConverter.DumpType = Object.freeze( {
+TAbstractFileConverter.DumpType = /*#__PURE__*/Object.freeze( {
     ArrayBuffer: 0,
     String:      1,
     JSON:        2
