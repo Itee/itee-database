@@ -1,7 +1,7 @@
 /**
  * ┳      ┳┓     ┓          ┏┓ ┏┓ ┏┓      ┏┓            ┏┳ 
- * ┃╋┏┓┏┓ ┃┃┏┓╋┏┓┣┓┏┓┏┏┓  ┓┏┣┫ ┏┛ ┏┛  ━━  ┃ ┏┓┏┳┓┏┳┓┏┓┏┓ ┃┏
- * ┻┗┗ ┗ •┻┛┗┻┗┗┻┗┛┗┻┛┗   ┗┛┗┛•┗━•┗━      ┗┛┗┛┛┗┗┛┗┗┗┛┛┗┗┛┛
+ * ┃╋┏┓┏┓ ┃┃┏┓╋┏┓┣┓┏┓┏┏┓  ┓┏┣┫  ┫ ┃┫  ━━  ┃ ┏┓┏┳┓┏┳┓┏┓┏┓ ┃┏
+ * ┻┗┗ ┗ •┻┛┗┻┗┗┻┗┛┗┻┛┗   ┗┛┗┛•┗┛•┗┛      ┗┛┗┛┛┗┗┛┗┗┗┛┛┗┗┛┛
  *                                                         
  * @desc    The abstract database side of the Itee solution for 3d web content, this package is design to be inherited and run on an Itee server.
  * @author  [Tristan Valcke]{@link https://github.com/Itee}
