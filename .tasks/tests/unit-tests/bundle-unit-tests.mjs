@@ -4,6 +4,7 @@ import { rollup }                    from 'rollup'
 import colors                        from 'ansi-colors'
 
 const red = colors.red
+const green = colors.green
 
 async function bundleUnitTests( done ) {
 
@@ -12,9 +13,11 @@ async function bundleUnitTests( done ) {
         getRollupConfigurationFor( 'units-frontend' )
     ]
 
+    let buildError = null
+
     for ( let config of configs ) {
 
-        log( `Building ${ config.output.file }` )
+        log( 'Building', green( config.output.file ) )
 
         try {
 
@@ -24,12 +27,14 @@ async function bundleUnitTests( done ) {
         } catch ( error ) {
 
             log( red( error ) )
+            buildError = error
+            break
 
         }
 
     }
 
-    done()
+    done( buildError )
 
 }
 

@@ -1,39 +1,39 @@
-import { CreateRollupConfigs }  from '../../configs/rollup.conf.mjs'
 import { rollup }               from 'rollup'
 import log                      from 'fancy-log'
 import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
+import { CreateRollupConfigs }  from '../../configs/rollup.conf.mjs'
+import colors                   from 'ansi-colors'
 
-function build( done ) {
+const red   = colors.red
+const green = colors.green
+
+async function build( done ) {
 
     const options = getGulpConfigForTask( 'builds' )
     const configs = CreateRollupConfigs( options )
 
-    nextBuild()
+    let buildError = null
 
-    function nextBuild( error ) {
-        'use strict'
+    for ( let config of configs ) {
 
-        if ( error ) {
+        log( 'Building', green( config.output.file ) )
 
-            done( error )
+        try {
 
-        } else if ( configs.length === 0 ) {
+            const bundle = await rollup( config )
+            await bundle.write( config.output )
 
-            done()
+        } catch ( error ) {
 
-        } else {
-
-            const config = configs.pop()
-            log( `Building ${ config.output.file }` )
-
-            rollup( config )
-                .then( ( bundle ) => { return bundle.write( config.output ) } )
-                .then( () => { nextBuild() } )
-                .catch( nextBuild )
+            log( red( error ) )
+            buildError = error
+            break
 
         }
 
     }
+
+    done( buildError )
 
 }
 
