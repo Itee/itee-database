@@ -1,4 +1,4 @@
-import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
+import { getGulpConfigForTask } from '../configs/gulp.conf.mjs'
 import { deleteAsync }          from 'del'
 import log                      from 'fancy-log'
 import colors                   from 'ansi-colors'

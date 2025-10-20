@@ -1,4 +1,4 @@
-import { getRollupConfigurationFor } from '../../../configs/rollup.conf.mjs'
+import { getRollupConfigurationFor } from '../../configs/rollup.conf.mjs'
 import log                           from 'fancy-log'
 import { rollup }                    from 'rollup'
 import colors                        from 'ansi-colors'

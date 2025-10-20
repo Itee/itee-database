@@ -6,7 +6,7 @@
  * @description The file manage the karma configuration for run benchmarks that are under `tests/benchmarks` folder
  */
 
-const packageInfos = require( '../package' )
+const packageInfos = require( '../../package.json' )
 
 /**
  * Will assign an appropriate configuration object about benchmarks for karma.
@@ -19,7 +19,7 @@ function CreateKarmaBenchmarkConfiguration ( config ) {
     config.set( {
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '../tests/',
+        basePath: '../../tests',
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter

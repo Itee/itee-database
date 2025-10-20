@@ -16,7 +16,7 @@ import glob                     from 'glob'
 import { nodeResolve }          from '@rollup/plugin-node-resolve'
 import cleanup                  from 'rollup-plugin-cleanup'
 import { rollup }               from 'rollup'
-import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
+import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
 import {
     packageSourcesDirectory as sourcesDir,
     packageTestsBundlesDirectory as bundlesDir

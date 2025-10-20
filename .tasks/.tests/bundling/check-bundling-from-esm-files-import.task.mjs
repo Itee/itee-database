@@ -18,7 +18,7 @@ import { nodeResolve }          from '@rollup/plugin-node-resolve'
 import cleanup                  from 'rollup-plugin-cleanup'
 import { rollup }               from 'rollup'
 import colors                   from 'ansi-colors'
-import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
+import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
 import {
     packageSourcesDirectory as sourcesDir,
     packageTestsBundlesDirectory as bundleDir

@@ -1,4 +1,4 @@
-import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
+import { getGulpConfigForTask } from '../configs/gulp.conf.mjs'
 import { normalize }            from 'path'
 import { promisify }            from 'node:util'
 import glob                     from 'glob'

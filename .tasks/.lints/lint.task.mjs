@@ -1,4 +1,4 @@
-import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
+import { getGulpConfigForTask } from '../configs/gulp.conf.mjs'
 import gulp                     from 'gulp'
 import eslint                   from 'gulp-eslint'
 import log                      from 'fancy-log'

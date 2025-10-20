@@ -20,7 +20,7 @@ import {
 }                               from 'fs'
 import log                      from 'fancy-log'
 import colors                   from 'ansi-colors'
-import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
+import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
 import childProcess             from 'child_process'
 import { isNotEmptyArray }      from 'itee-validators'
 

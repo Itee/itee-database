@@ -1,7 +1,7 @@
 import { rollup }               from 'rollup'
 import log                      from 'fancy-log'
-import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
-import { CreateRollupConfigs }  from '../../configs/rollup.conf.mjs'
+import { getGulpConfigForTask } from '../configs/gulp.conf.mjs'
+import { CreateRollupConfigs }  from '../configs/rollup.conf.mjs'
 import colors                   from 'ansi-colors'
 
 const red   = colors.red
