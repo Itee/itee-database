@@ -5,7 +5,7 @@ import colors                   from 'ansi-colors'
 
 const red = colors.red
 
-function clean( done ) {
+function cleanTask( done ) {
 
     const filesToClean = getGulpConfigForTask( 'clean' )
 
@@ -17,4 +17,4 @@ function clean( done ) {
 
 }
 
-export { clean }
+export { cleanTask }

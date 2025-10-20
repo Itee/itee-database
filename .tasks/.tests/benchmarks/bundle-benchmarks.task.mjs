@@ -6,11 +6,11 @@ import colors                        from 'ansi-colors'
 const red = colors.red
 const green = colors.green
 
-async function bundleUnitTests( done ) {
+async function bundleBenchmarksTask( done ) {
 
     const configs = [
-        getRollupConfigurationFor( 'units-backend' ),
-        getRollupConfigurationFor( 'units-frontend' )
+        getRollupConfigurationFor( 'benchmarks-backend' ),
+        getRollupConfigurationFor( 'benchmarks-frontend' )
     ]
 
     let buildError = null
@@ -38,4 +38,4 @@ async function bundleUnitTests( done ) {
 
 }
 
-export { bundleUnitTests }
+export { bundleBenchmarksTask }

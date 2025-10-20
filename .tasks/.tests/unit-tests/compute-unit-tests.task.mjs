@@ -30,7 +30,7 @@ const {
           yellow
       } = colors
 
-function computeUnitTests( done ) {
+function computeUnitTestsTask( done ) {
 
     if ( !existsSync( unitsDir ) ) {
         log( 'Creating', green( unitsDir ) )
@@ -589,4 +589,4 @@ function computeUnitTests( done ) {
 
 }
 
-export { computeUnitTests }
+export { computeUnitTestsTask }

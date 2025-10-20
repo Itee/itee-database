@@ -6,7 +6,7 @@ import {
 } from '../../_utils.mjs'
 
 
-function runBenchmarksForBackend( done ) {
+function runBenchmarksForBackendTask( done ) {
 
     const benchesPath = path.join( packageTestsBenchmarksDirectory, `/builds/${ packageName }.benchs.cjs.js` )
     const benchmark   = childProcess.spawn( 'node', [ benchesPath ], { stdio: 'inherit' } )
@@ -20,4 +20,4 @@ function runBenchmarksForBackend( done ) {
 
 }
 
-export { runBenchmarksForBackend }
+export { runBenchmarksForBackendTask }

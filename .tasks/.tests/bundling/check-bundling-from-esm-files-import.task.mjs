@@ -2,7 +2,7 @@ import {
     join,
     normalize,
     basename,
-    extname,
+    parse,
     dirname,
     relative
 }                               from 'path'
@@ -12,17 +12,17 @@ import {
     mkdirSync,
     writeFileSync
 }                               from 'fs'
+import log                      from 'fancy-log'
 import glob                     from 'glob'
 import { nodeResolve }          from '@rollup/plugin-node-resolve'
 import cleanup                  from 'rollup-plugin-cleanup'
 import { rollup }               from 'rollup'
+import colors                   from 'ansi-colors'
 import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
 import {
     packageSourcesDirectory as sourcesDir,
-    packageTestsBundlesDirectory as bundlesDir
+    packageTestsBundlesDirectory as bundleDir
 }                               from '../../_utils.mjs'
-import log                      from 'fancy-log'
-import colors                   from 'ansi-colors'
 
 const {
           red,
@@ -33,9 +33,10 @@ const {
           magenta
       } = colors
 
-async function checkBundlingFromEsmFilesDirect( done ) {
+async function checkBundlingFromEsmFilesImportTask( done ) {
 
-    const outputDir         = join( bundlesDir, 'from_files_direct' )
+    const outputDir         = join( bundleDir, 'from_files_import' )
+    const temporariesDir    = join( outputDir, '.tmp' )
     const filePathsToIgnore = getGulpConfigForTask( 'check-bundling' )
 
     if ( existsSync( outputDir ) ) {
@@ -43,8 +44,10 @@ async function checkBundlingFromEsmFilesDirect( done ) {
         rmSync( outputDir, { recursive: true } )
     }
 
-    const sourcesFiles = glob.sync( join( sourcesDir, '**' ) )
-                             .map( filePath => normalize( filePath ) )
+    const sourcesFiles = glob.sync( join( sourcesDir, '/**' ) )
+                             .map( filePath => {
+                                 return normalize( filePath )
+                             } )
                              .filter( filePath => {
                                  const fileName         = basename( filePath )
                                  const isJsFile         = fileName.endsWith( '.js' )
@@ -55,22 +58,32 @@ async function checkBundlingFromEsmFilesDirect( done ) {
 
     for ( let sourceFile of sourcesFiles ) {
 
+        const {
+                  dir:  sourceDir,
+                  base: sourceBase,
+                  name: sourceName
+              }                = parse( sourceFile )
         const specificFilePath = sourceFile.replace( sourcesDir, '' )
         const specificDir      = dirname( specificFilePath )
-        const fileName         = basename( sourceFile, extname( sourceFile ) )
 
-        const bundleFileName = `${ fileName }.bundle.js`
+        // Create temp import file per file in package
+        const temporaryFileName = `${ sourceName }.import.js`
+        const temporaryDir      = join( temporariesDir, specificDir )
+        const temporaryFile     = join( temporaryDir, temporaryFileName )
+        const importDir         = relative( temporaryDir, sourceDir )
+        const importFile        = join( importDir, sourceBase )
+        const temporaryFileData = `import '${ importFile.replace( /\\/g, '/' ) }'`
+
+        // Bundle tmp file and check content for side effects
+        const bundleFileName = `${ sourceName }.bundle.js`
         const bundleFilePath = join( outputDir, specificDir, bundleFileName )
 
         const config = {
-            input:     sourceFile,
-            external:  [ '' ],
+            input:     temporaryFile,
             plugins:   [
-                nodeResolve( {
-                    preferBuiltins: true
-                } ),
+                nodeResolve(),
                 cleanup( {
-                    comments: 'none'
+                    comments: 'all' // else remove __PURE__ declaration... -_-'
                 } )
             ],
             onwarn:    ( {
@@ -105,18 +118,25 @@ async function checkBundlingFromEsmFilesDirect( done ) {
             }
         }
 
+        // create tmp file
         try {
 
-            log( `Bundling ${ config.output.file }` )
+            mkdirSync( temporaryDir, { recursive: true } )
+            writeFileSync( temporaryFile, temporaryFileData )
 
-            const bundle = await rollup( config )
-            await bundle.generate( config.output )
-            await bundle.write( config.output )
+            const bundle     = await rollup( config )
+            const { output } = await bundle.generate( config.output )
+
+            let code = output[ 0 ].code
+            if ( code.length > 1 ) {
+                log( red( `[${ specificFilePath }] contain side-effects !` ) )
+                await bundle.write( config.output )
+            } else {
+                log( green( `[${ specificFilePath }] is side-effect free.` ) )
+            }
 
         } catch ( error ) {
-
             log( red( error.message ) )
-
         }
 
     }
@@ -125,4 +145,4 @@ async function checkBundlingFromEsmFilesDirect( done ) {
 
 }
 
-export { checkBundlingFromEsmFilesDirect }
+export { checkBundlingFromEsmFilesImportTask }

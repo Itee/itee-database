@@ -29,7 +29,7 @@ const {
           yellow
       } = colors
 
-function computeBenchmarks( done ) {
+function computeBenchmarksTask( done ) {
 
     if ( !existsSync( benchesDir ) ) {
         log( 'Creating', green( benchesDir ) )
@@ -212,4 +212,4 @@ function computeBenchmarks( done ) {
 
 }
 
-export { computeBenchmarks }
+export { computeBenchmarksTask }

@@ -9,7 +9,7 @@ import {
 const red = colors.red
 
 
-async function runUnitTestsForFrontend( done ) {
+async function runUnitTestsForFrontendTask( done ) {
 
     const configFile  = normalize( `${ packageRootDirectory }/configs/karma.units.conf.js` )
     const karmaConfig = karma.config.parseConfig( configFile )
@@ -29,4 +29,4 @@ async function runUnitTestsForFrontend( done ) {
 
 }
 
-export { runUnitTestsForFrontend }
+export { runUnitTestsForFrontendTask }

@@ -57,7 +57,7 @@ function alignTextRight( text, width ) {
 
 }
 
-function help( done ) {
+function helpTask( done ) {
 
     const bannerWidth          = 70
     const prettyPackageName    = getPrettyPackageName()
@@ -134,4 +134,4 @@ function help( done ) {
 
 }
 
-export { help }
+export { helpTask }

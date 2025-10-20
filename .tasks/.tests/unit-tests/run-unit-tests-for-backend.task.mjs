@@ -7,7 +7,7 @@ import {
 }                from '../../_utils.mjs'
 
 
-function runUnitTestsForBackend( done ) {
+function runUnitTestsForBackendTask( done ) {
 
     const mochaPath = join( nodeModulesDirectory, '/mocha/bin/mocha' )
     const testsPath = join( packageTestsUnitsDirectory, `/builds/${ packageName }.units.cjs.js` )
@@ -22,4 +22,4 @@ function runUnitTestsForBackend( done ) {
 
 }
 
-export { runUnitTestsForBackend }
+export { runUnitTestsForBackendTask }

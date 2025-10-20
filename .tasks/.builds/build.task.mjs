@@ -7,7 +7,7 @@ import colors                   from 'ansi-colors'
 const red   = colors.red
 const green = colors.green
 
-async function build( done ) {
+async function buildTask( done ) {
 
     const options = getGulpConfigForTask( 'builds' )
     const configs = CreateRollupConfigs( options )
@@ -37,4 +37,4 @@ async function build( done ) {
 
 }
 
-export { build }
+export { buildTask }

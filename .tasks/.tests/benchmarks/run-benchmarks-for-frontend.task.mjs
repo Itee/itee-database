@@ -14,7 +14,7 @@ const {
       } = colors
 
 
-async function runBenchmarksForFrontend( done ) {
+async function runBenchmarksForFrontendTask( done ) {
 
     const configFile  = path.normalize( `${ packageRootDirectory }/configs/karma.benchs.conf.js` )
     const karmaConfig = karma.config.parseConfig( configFile )
@@ -34,4 +34,4 @@ async function runBenchmarksForFrontend( done ) {
 
 }
 
-export { runBenchmarksForFrontend }
+export { runBenchmarksForFrontendTask }

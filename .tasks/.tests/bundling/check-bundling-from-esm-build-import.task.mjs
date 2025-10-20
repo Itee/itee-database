@@ -31,7 +31,7 @@ const {
           magenta
       } = colors
 
-async function checkBundlingFromEsmBuildImport( done ) {
+async function checkBundlingFromEsmBuildImportTask( done ) {
 
     const buildFilePath = join( buildsDir, `${ packageName }.esm.js` )
     if ( !existsSync( buildFilePath ) ) {
@@ -163,4 +163,4 @@ async function checkBundlingFromEsmBuildImport( done ) {
 
 }
 
-export { checkBundlingFromEsmBuildImport }
+export { checkBundlingFromEsmBuildImportTask }

@@ -9,7 +9,7 @@ import colors                   from 'ansi-colors'
 const execFile = promisify( child_process.execFile )
 const red      = colors.red
 
-async function doc( done ) {
+async function docTask( done ) {
 
     const filesToDocPatterns = getGulpConfigForTask( 'doc' )
 
@@ -39,4 +39,4 @@ async function doc( done ) {
 
 }
 
-export { doc }
+export { docTask }

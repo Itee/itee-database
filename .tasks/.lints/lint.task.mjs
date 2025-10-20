@@ -3,7 +3,7 @@ import gulp                     from 'gulp'
 import eslint                   from 'gulp-eslint'
 import log                      from 'fancy-log'
 
-function lint( done ) {
+function lintTask( done ) {
 
     const filesToLint = getGulpConfigForTask( 'lint' )
 
@@ -30,4 +30,4 @@ function lint( done ) {
 
 }
 
-export { lint }
+export { lintTask }
