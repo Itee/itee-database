@@ -1,35 +1,40 @@
-import log                      from 'fancy-log'
-import jsdocConfiguration       from '../../configs/jsdoc.conf.js'
 import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
-import gulp                     from 'gulp'
-import jsdoc                    from 'gulp-jsdoc3'
+import { normalize }            from 'path'
+import { promisify }            from 'node:util'
+import glob                     from 'glob'
+import log                      from 'fancy-log'
+import child_process            from 'node:child_process'
+import colors                   from 'ansi-colors'
 
+const execFile = promisify( child_process.execFile )
+const red      = colors.red
 
 async function doc( done ) {
 
-    const config     = jsdocConfiguration
-    const filesToDoc = getGulpConfigForTask( 'doc' )
+    const filesToDocPatterns = getGulpConfigForTask( 'doc' )
 
-    for ( let fileIndex = 0, numberOfFiles = filesToDoc.length ; fileIndex < numberOfFiles ; fileIndex++ ) {
-        log( `[${ fileIndex + 1 }/${ numberOfFiles }] Documenting ${ filesToDoc[ fileIndex ] }` )
+    const filesToDoc = []
+    for ( const pattern of filesToDocPatterns ) {
+        const files = glob.sync( pattern )
+                          .map( filePath => normalize( filePath ) )
+
+        filesToDoc.push( ...files )
     }
 
-    // gulp
-    //     .src( filesToDoc, {
-    //         read:       false,
-    //         allowEmpty: true
-    //     } )
-    //     .pipe( jsdoc( config, done ) )
-    //     .on( 'error', done )
+    try {
+        const { stdout } = await execFile(
+            './node_modules/.bin/jsdoc',
+            [
+                '--configure', './configs/jsdoc.conf.js',
+                '--destination', './docs',
+                ...filesToDoc
+            ]
+        )
+        log( stdout )
+    } catch ( error ) {
+        log( red( error ) )
+    }
 
-    await new Promise( ( ( resolve, reject ) => {
-        gulp.src( filesToDoc, {
-            read:       false,
-            allowEmpty: true
-        } )
-            .pipe( jsdoc( config, resolve ) )
-            .on( 'error', reject )
-    } ) )
     done()
 
 }

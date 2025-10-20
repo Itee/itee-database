@@ -2,7 +2,7 @@
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  *
- * @module Config-JsDoc
+ * @module configs/JsDoc
  * @description The configuration file of the jsdoc plugin
  */
 
@@ -12,23 +12,24 @@
  * @generator
  * @returns {object} The jsdoc configuration
  */
-function CreateJsdocConfiguration () {
+function CreateJsdocConfiguration() {
 
     return {
-        tags: {
+        tags:         {
             allowUnknownTags: false,
             dictionaries:     [ 'jsdoc', 'closure' ]
         },
-        source: {
+        source:       {
             include:        [ 'README.md' ],
-            includePattern: '.+\\.js(doc|x)?$',
-            excludePattern: '(node_modules|docs|builds|tests)',
+            includePattern: '.+\\.(js|mjs|jsx)?$',
+            excludePattern: '(node_modules|docs|builds)',
             exclude:        []
         },
         sourceType:   'module',
         plugins:      [],
         recurseDepth: 5,
         opts:         {
+            template:    './node_modules/ink-docstrap/template',
             access:      'all',
             debug:       false,
             encoding:    'utf8',
@@ -37,11 +38,11 @@ function CreateJsdocConfiguration () {
             verbose:     true,
             private:     true
         },
-        templates: {
-            cleverLinks:    false,
-            monospaceLinks: false,
-            navType:        'inline',
-            theme:          [
+        templates:    {
+            cleverLinks:       false,
+            monospaceLinks:    false,
+            navType:           'inline',
+            theme:             [
                                    'cerulean',
                                    'cosmo',
                                    'darkly',
@@ -64,7 +65,7 @@ function CreateJsdocConfiguration () {
             collapseSymbols:   false,
             sort:              'longname, version, since',
             search:            true,
-            systemName:        'Itee-Database',
+            systemName:        'Itee-Validators',
             footer:            '',
             copyright:         'Copyright 2015-Present <a href="https://github.com/Itee">Itee</a> (Tristan Valcke)',
             includeDate:       false,
