@@ -16,7 +16,7 @@ jobs:
       MOZ_HEADLESS: 1
     strategy:
       matrix:
-        node-version: [ 18.x, 20.x, 22.x ]
+        node-version: [ 20.x, 22.x, 24.x ]
         firefox: [ 'latest' ]
     steps:
       - name: Use Node.js ${{ matrix.node-version }}

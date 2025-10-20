@@ -27,7 +27,7 @@
     "url": "https://github.com/Itee/itee-database/issues"
   },
   "engines": {
-    "node": ">=8.16.0"
+    "node": ">=20"
   },
   "os": [
     "win32",
