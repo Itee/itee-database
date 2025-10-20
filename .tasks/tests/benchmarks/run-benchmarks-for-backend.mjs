@@ -1,16 +1,15 @@
 import path from 'path'
 import childProcess from 'child_process'
 import {
-    getDirname,
-    packageInfos
+    packageTestsBenchmarksDirectory,
+    packageName
 } from '../../_utils.mjs'
 
 
 function runBenchmarksForBackend( done ) {
 
-    const projectDir = getDirname()
-    const benchsPath = path.join( projectDir, `tests/benchmarks/builds/${ packageInfos.name }.benchs.cjs.js` )
-    const benchmark  = childProcess.spawn( 'node', [ benchsPath ], { stdio: 'inherit' } )
+    const benchesPath = path.join( packageTestsBenchmarksDirectory, `/builds/${ packageName }.benchs.cjs.js` )
+    const benchmark   = childProcess.spawn( 'node', [ benchesPath ], { stdio: 'inherit' } )
     benchmark.on( 'close', ( code ) => {
 
         ( code === 0 )

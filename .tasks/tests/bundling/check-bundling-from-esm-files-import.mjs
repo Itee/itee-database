@@ -19,7 +19,10 @@ import cleanup                  from 'rollup-plugin-cleanup'
 import { rollup }               from 'rollup'
 import colors                   from 'ansi-colors'
 import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
-import { getDirname }           from '../../_utils.mjs'
+import {
+    packageSourcesDirectory as sourcesDir,
+    packageTestsBundlesDirectory as bundleDir
+}                               from '../../_utils.mjs'
 
 const {
           red,
@@ -32,10 +35,6 @@ const {
 
 async function checkBundlingFromEsmFilesImport( done ) {
 
-    const baseDir           = getDirname()
-    const sourcesDir        = join( baseDir, 'sources' )
-    const testsDir          = join( baseDir, 'tests' )
-    const bundleDir         = join( testsDir, 'bundles' )
     const outputDir         = join( bundleDir, 'from_files_import' )
     const temporariesDir    = join( outputDir, '.tmp' )
     const filePathsToIgnore = getGulpConfigForTask( 'check-bundling' )

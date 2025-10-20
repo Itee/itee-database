@@ -1,10 +1,12 @@
-import childProcess from 'child_process'
-import log          from 'fancy-log'
-import colors       from 'ansi-colors'
+import log    from 'fancy-log'
+import colors from 'ansi-colors'
 import {
-    packageInfos,
+    getPrettyPackageName,
+    getPrettyPackageVersion,
+    getPrettyNodeVersion,
+    getPrettyNpmVersion,
     Indenter
-}                   from '../_utils.mjs'
+}             from '../_utils.mjs'
 
 const {
           red,
@@ -15,66 +17,6 @@ const {
           magenta,
           unstyle
       } = colors
-
-function getPrettyPackageName() {
-
-    let packageName = ''
-
-    const nameSplits = packageInfos.name.split( '-' )
-    for ( const nameSplit of nameSplits ) {
-        packageName += nameSplit.charAt( 0 ).toUpperCase() + nameSplit.slice( 1 ) + ' '
-    }
-    packageName = packageName.slice( 0, -1 )
-
-    return packageName
-
-}
-
-function getPrettyPackageVersion() {
-
-    return 'v' + packageInfos.version
-
-}
-
-function getPrettyNodeVersion() {
-
-    let nodeVersion = 'vX.x.ₓ'
-
-    try {
-        nodeVersion = childProcess.execFileSync( 'node', [ '--version' ] )
-                                  .toString()
-                                  .replace( /(\r\n|\n|\r)/gm, '' )
-    } catch ( e ) {
-        log( red( e ) )
-
-        if ( e.message.includes( 'ENOENT' ) ) {
-            nodeVersion += yellow( ' Not seems to be accessible from the path environment.' )
-        }
-    }
-
-    return ' node: ' + nodeVersion
-
-}
-
-function getPrettyNpmVersion() {
-
-    let npmVersion = 'X.x.ₓ'
-
-    try {
-        npmVersion = childProcess.execFileSync( 'npm', [ '--version' ] )
-                                 .toString()
-                                 .replace( /(\r\n|\n|\r)/gm, '' )
-    } catch ( e ) {
-        log( red( e ) )
-
-        if ( e.message.includes( 'ENOENT' ) ) {
-            npmVersion += yellow( ' Not seems to be accessible from the path environment.' )
-        }
-    }
-
-    return ' npm:  v' + npmVersion
-
-}
 
 function alignTextCenter( text, width ) {
 

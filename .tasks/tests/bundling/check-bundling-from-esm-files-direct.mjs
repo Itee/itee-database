@@ -17,7 +17,10 @@ import { nodeResolve }          from '@rollup/plugin-node-resolve'
 import cleanup                  from 'rollup-plugin-cleanup'
 import { rollup }               from 'rollup'
 import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
-import { getDirname }           from '../../_utils.mjs'
+import {
+    packageSourcesDirectory as sourcesDir,
+    packageTestsBundlesDirectory as bundlesDir
+}                               from '../../_utils.mjs'
 import log                      from 'fancy-log'
 import colors                   from 'ansi-colors'
 
@@ -32,10 +35,6 @@ const {
 
 async function checkBundlingFromEsmFilesDirect( done ) {
 
-    const baseDir           = getDirname()
-    const sourcesDir        = join( baseDir, 'sources' )
-    const testsDir          = join( baseDir, 'tests' )
-    const bundlesDir        = join( testsDir, 'bundles' )
     const outputDir         = join( bundlesDir, 'from_files_direct' )
     const filePathsToIgnore = getGulpConfigForTask( 'check-bundling' )
 

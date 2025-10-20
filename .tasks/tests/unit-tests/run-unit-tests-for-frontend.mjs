@@ -1,26 +1,17 @@
-import { normalize }   from 'path'
-import karma  from 'karma'
-import log    from 'fancy-log'
-import colors from 'ansi-colors'
+import { normalize } from 'path'
+import karma         from 'karma'
+import log           from 'fancy-log'
+import colors        from 'ansi-colors'
 import {
-    getDirname,
-    packageInfos
-}             from '../../_utils.mjs'
+    packageRootDirectory
+}                    from '../../_utils.mjs'
 
-const {
-          red,
-          green,
-          blue,
-          cyan,
-          yellow,
-          magenta
-      } = colors
+const red = colors.red
 
 
 async function runUnitTestsForFrontend( done ) {
 
-    const projectDir  = getDirname()
-    const configFile  = normalize( `${ projectDir }/configs/karma.units.conf.js` )
+    const configFile  = normalize( `${ packageRootDirectory }/configs/karma.units.conf.js` )
     const karmaConfig = karma.config.parseConfig( configFile )
     const karmaServer = new karma.Server( karmaConfig, ( exitCode ) => {
         if ( exitCode === 0 ) {

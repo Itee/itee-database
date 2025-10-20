@@ -1,12 +1,12 @@
-import rollupConfigurator from '../../configs/rollup.conf.js'
-import { rollup }         from 'rollup'
-import log                from 'fancy-log'
+import { CreateRollupConfigs }  from '../../configs/rollup.conf.mjs'
+import { rollup }               from 'rollup'
+import log                      from 'fancy-log'
 import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
 
 function build( done ) {
 
-    const options = getGulpConfigForTask('builds')
-    const configs = rollupConfigurator( options )
+    const options = getGulpConfigForTask( 'builds' )
+    const configs = CreateRollupConfigs( options )
 
     nextBuild()
 

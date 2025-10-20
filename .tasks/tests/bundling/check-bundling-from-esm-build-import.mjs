@@ -5,21 +5,24 @@ import {
     parse,
     dirname,
     relative
-}                       from 'path'
+}                      from 'path'
 import {
     existsSync,
     rmSync,
     mkdirSync,
     writeFileSync,
     readFileSync
-}                       from 'fs'
-import log              from 'fancy-log'
-import { nodeResolve }  from '@rollup/plugin-node-resolve'
-import cleanup          from 'rollup-plugin-cleanup'
-import { rollup }       from 'rollup'
-import colors           from 'ansi-colors'
-import { getDirname }   from '../../_utils.mjs'
-import { packageInfos } from '../../_utils.mjs'
+}                      from 'fs'
+import log             from 'fancy-log'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import cleanup         from 'rollup-plugin-cleanup'
+import { rollup }      from 'rollup'
+import colors          from 'ansi-colors'
+import {
+    packageBuildsDirectory as buildsDir,
+    packageTestsBundlesDirectory as bundlesDir,
+    packageName
+}                      from '../../_utils.mjs'
 
 
 const {
@@ -30,19 +33,15 @@ const {
 
 async function checkBundlingFromEsmBuildImport( done ) {
 
-    const baseDir        = getDirname()
-    const buildsDir      = join( baseDir, 'builds' )
-    const buildFilePath  = join( buildsDir, `${ packageInfos.name }.esm.js` )
-    const testsDir       = join( baseDir, 'tests' )
-    const bundlesDir     = join( testsDir, 'bundles' )
-    const outputDir      = join( bundlesDir, 'from_build_import' )
-    const temporaryDir   = join( bundlesDir, 'from_build_import', '.tmp' )
-    const importDir      = relative( temporaryDir, buildsDir )
-    const importFilePath = join( importDir, `${ packageInfos.name }.esm.js` )
-
+    const buildFilePath = join( buildsDir, `${ packageName }.esm.js` )
     if ( !existsSync( buildFilePath ) ) {
         done( red( buildFilePath + ' does not exist' ) )
     }
+
+    const outputDir      = join( bundlesDir, 'from_build_import' )
+    const temporaryDir   = join( bundlesDir, 'from_build_import', '.tmp' )
+    const importDir      = relative( temporaryDir, buildsDir )
+    const importFilePath = join( importDir, `${ packageName }.esm.js` )
 
     if ( existsSync( outputDir ) ) {
         log( 'Clean up', magenta( outputDir ) )

@@ -7,20 +7,21 @@ import {
     relative
 }                               from 'path'
 import {
-    getDirname,
-    packageInfos
+    packageSourcesDirectory as sourcesDir,
+    packageTestsBenchmarksDirectory as benchesDir,
+    nodeModulesDirectory,
+    packageName
 }                               from '../../_utils.mjs'
-import glob from 'glob'
+import glob                     from 'glob'
 import {
     existsSync,
     mkdirSync,
     writeFileSync
-} from 'fs'
-import log  from 'fancy-log'
+}                               from 'fs'
+import log                      from 'fancy-log'
 import colors                   from 'ansi-colors'
 import { getGulpConfigForTask } from '../../../configs/gulp.conf.mjs'
 import childProcess             from 'child_process'
-import { isNotEmptyArray }      from 'itee-validators'
 
 const {
           red,
@@ -29,11 +30,6 @@ const {
       } = colors
 
 function computeBenchmarks( done ) {
-
-    const baseDir    = getDirname()
-    const sourcesDir = join( baseDir, 'sources' )
-    const testsDir   = join( baseDir, 'tests' )
-    const benchesDir = join( testsDir, 'benchmarks' )
 
     if ( !existsSync( benchesDir ) ) {
         log( 'Creating', green( benchesDir ) )
@@ -69,7 +65,7 @@ function computeBenchmarks( done ) {
 
         try {
 
-            const jsdocPath   = join( baseDir, '/node_modules/jsdoc/jsdoc.js' )
+            const jsdocPath   = join( nodeModulesDirectory, '/jsdoc/jsdoc.js' )
             const jsdocOutput = childProcess.execFileSync( 'node', [ jsdocPath, '-X', sourceFile ] ).toString()
 
             const classNames    = []
@@ -207,7 +203,7 @@ function computeBenchmarks( done ) {
         `\tsuite.run()` + '\n' +
         `}` + '\n'
 
-    const benchesFilePath = join( benchesDir, `${ packageInfos.name }.benchs.js` )
+    const benchesFilePath = join( benchesDir, `${ packageName }.benchs.js` )
 
     log( green( `Create ${ benchesFilePath }` ) )
     writeFileSync( benchesFilePath, benchesTemplate )

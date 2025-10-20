@@ -2,7 +2,7 @@ import path           from 'path'
 import karma          from 'karma'
 import log            from 'fancy-log'
 import colors         from 'ansi-colors'
-import { getDirname } from '../../_utils.mjs'
+import { packageRootDirectory } from '../../_utils.mjs'
 
 const {
           red,
@@ -16,8 +16,7 @@ const {
 
 async function runBenchmarksForFrontend( done ) {
 
-    const projectDir  = getDirname()
-    const configFile  = path.normalize( `${ projectDir }/configs/karma.benchs.conf.js` )
+    const configFile  = path.normalize( `${ packageRootDirectory }/configs/karma.benchs.conf.js` )
     const karmaConfig = karma.config.parseConfig( configFile )
     const karmaServer = new karma.Server( karmaConfig, ( exitCode ) => {
         if ( exitCode === 0 ) {

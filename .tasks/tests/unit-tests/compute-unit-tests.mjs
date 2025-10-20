@@ -7,8 +7,10 @@ import {
     relative
 }                               from 'path'
 import {
-    getDirname,
-    packageInfos
+    packageSourcesDirectory as sourcesDir,
+    packageTestsUnitsDirectory as unitsDir,
+    nodeModulesDirectory,
+    packageName
 }                               from '../../_utils.mjs'
 import glob                     from 'glob'
 import {
@@ -29,11 +31,6 @@ const {
       } = colors
 
 function computeUnitTests( done ) {
-
-    const baseDir    = getDirname()
-    const sourcesDir = join( baseDir, 'sources' )
-    const testsDir   = join( baseDir, 'tests' )
-    const unitsDir   = join( testsDir, 'units' )
 
     if ( !existsSync( unitsDir ) ) {
         log( 'Creating', green( unitsDir ) )
@@ -70,7 +67,7 @@ function computeUnitTests( done ) {
 
         try {
 
-            const jsdocPath   = join( baseDir, '/node_modules/jsdoc/jsdoc.js' )
+            const jsdocPath   = join( nodeModulesDirectory, '/jsdoc/jsdoc.js' )
             const jsdocOutput = childProcess.execFileSync( 'node', [ jsdocPath, '-X', sourceFile ] ).toString()
 
             const classNames    = []
@@ -583,7 +580,7 @@ function computeUnitTests( done ) {
 
     }
 
-    const unitsFilePath = join( unitsDir, `${ packageInfos.name }.units.js` )
+    const unitsFilePath = join( unitsDir, `${ packageName }.units.js` )
 
     log( 'Creating', green( unitsFilePath ) )
     writeFileSync( unitsFilePath, unitsTemplate )
