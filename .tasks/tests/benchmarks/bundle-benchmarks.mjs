@@ -1,13 +1,16 @@
-import rollupBenchesConfigurator from '../../../configs/rollup.benchs.conf.js'
-import log                       from 'fancy-log'
-import { rollup }                from 'rollup'
-import colors                    from 'ansi-colors'
+import { getRollupConfigurationFor } from '../../../configs/rollup.conf.mjs'
+import log                           from 'fancy-log'
+import { rollup }                    from 'rollup'
+import colors                        from 'ansi-colors'
 
 const red = colors.red
 
 async function bundleBenchmarks( done ) {
 
-    const configs = rollupBenchesConfigurator()
+    const configs = [
+        getRollupConfigurationFor( 'benchmarks-backend' ),
+        getRollupConfigurationFor( 'benchmarks-frontend' )
+    ]
 
     for ( let config of configs ) {
 
