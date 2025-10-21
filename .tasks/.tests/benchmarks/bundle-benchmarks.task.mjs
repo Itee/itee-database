@@ -1,10 +1,13 @@
-import { getRollupConfigurationFor } from '../../configs/rollup.conf.mjs'
-import log                           from 'fancy-log'
 import { rollup }                    from 'rollup'
+import log                           from 'fancy-log'
 import colors                        from 'ansi-colors'
+import { getRollupConfigurationFor } from '../../configs/build.conf.mjs'
 
-const red = colors.red
-const green = colors.green
+const {
+          red,
+          green,
+          yellow
+      } = colors
 
 async function bundleBenchmarksTask( done ) {
 
@@ -13,9 +16,12 @@ async function bundleBenchmarksTask( done ) {
         getRollupConfigurationFor( 'benchmarks-frontend' )
     ]
 
-    let buildError = null
-
     for ( let config of configs ) {
+
+        if ( config === undefined || config === null || config.length === 0 ) {
+            log( yellow( 'Empty configuration object... Skip it!' ) )
+            continue
+        }
 
         log( 'Building', green( config.output.file ) )
 
@@ -26,15 +32,14 @@ async function bundleBenchmarksTask( done ) {
 
         } catch ( error ) {
 
-            log( red( error ) )
-            buildError = error
-            break
+            done( red( error.message ) )
+            return
 
         }
 
     }
 
-    done( buildError )
+    done()
 
 }
 

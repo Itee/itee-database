@@ -1,19 +1,24 @@
-import { getGulpConfigForTask } from '../configs/gulp.conf.mjs'
-import { deleteAsync }          from 'del'
-import log                      from 'fancy-log'
-import colors                   from 'ansi-colors'
+import { cleanConf as filesToClean } from '../configs/clean.conf.mjs'
+import { deleteAsync }               from 'del'
+import log                           from 'fancy-log'
+import colors                        from 'ansi-colors'
 
 const red = colors.red
 
-function cleanTask( done ) {
+async function cleanTask( done ) {
 
-    const filesToClean = getGulpConfigForTask( 'clean' )
-
-    for ( let fileIndex = 0, numberOfFiles = filesToClean.length ; fileIndex < numberOfFiles ; fileIndex++ ) {
-        log( red( `[${ fileIndex + 1 }/${ numberOfFiles }] Delete ${ filesToClean[ fileIndex ] }` ) )
+    try {
+        await deleteAsync( filesToClean, {
+            onProgress: progress => {
+                const path = progress.path || 'Nothing to clean...'
+                log( `Delete [${ progress.deletedCount }/${ progress.totalCount }] (${ Math.round( progress.percent * 100 ) }%):`, red( path ) )
+            }
+        } )
+        done()
+    } catch ( error ) {
+        done( red( error.message ) )
     }
 
-    return deleteAsync( filesToClean )
 
 }
 

@@ -1,27 +1,25 @@
 import {
     join,
-    normalize,
     basename,
     dirname,
     extname,
     relative
-}                               from 'path'
+}                       from 'path'
 import {
     packageSourcesDirectory as sourcesDir,
     packageTestsBenchmarksDirectory as benchesDir,
     nodeModulesDirectory,
     packageName
-}                               from '../../_utils.mjs'
-import glob                     from 'glob'
+}                       from '../../_utils.mjs'
 import {
     existsSync,
     mkdirSync,
     writeFileSync
-}                               from 'fs'
-import log                      from 'fancy-log'
-import colors                   from 'ansi-colors'
-import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
-import childProcess             from 'child_process'
+}                       from 'fs'
+import log              from 'fancy-log'
+import colors           from 'ansi-colors'
+import childProcess     from 'child_process'
+import { sourcesFiles } from '../../configs/compute-benchmarks.conf.mjs'
 
 const {
           red,
@@ -35,18 +33,6 @@ function computeBenchmarksTask( done ) {
         log( 'Creating', green( benchesDir ) )
         mkdirSync( benchesDir, { recursive: true } )
     }
-
-    const filePathsToIgnore = getGulpConfigForTask( 'compute-benchmarks' )
-
-    const sourcesFiles = glob.sync( join( sourcesDir, '**' ) )
-                             .map( filePath => normalize( filePath ) )
-                             .filter( filePath => {
-                                 const fileName         = basename( filePath )
-                                 const isJsFile         = fileName.endsWith( '.js' )
-                                 const isNotPrivateFile = !fileName.startsWith( '_' )
-                                 const isNotIgnoredFile = !filePathsToIgnore.includes( fileName )
-                                 return isJsFile && isNotPrivateFile && isNotIgnoredFile
-                             } )
 
     const benchRootImports = []
     for ( let sourceFile of sourcesFiles ) {

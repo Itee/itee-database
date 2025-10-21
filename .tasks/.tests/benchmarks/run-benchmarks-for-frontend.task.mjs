@@ -1,22 +1,25 @@
-import path           from 'path'
-import karma          from 'karma'
-import log            from 'fancy-log'
-import colors         from 'ansi-colors'
+import { existsSync }           from 'fs'
+import path                     from 'path'
+import karma                    from 'karma'
+import log                      from 'fancy-log'
+import colors                   from 'ansi-colors'
 import { packageRootDirectory } from '../../_utils.mjs'
 
 const {
           red,
-          green,
-          blue,
-          cyan,
-          yellow,
-          magenta
+          yellow
       } = colors
 
 
 async function runBenchmarksForFrontendTask( done ) {
 
-    const configFile  = path.normalize( `${ packageRootDirectory }/configs/karma.benchs.conf.js` )
+    const configFile = path.normalize( `${ packageRootDirectory }/configs/karma.benchs.conf.js` )
+    if ( !existsSync( configFile ) ) {
+        log( yellow( `${ configFile } does not exist, skip frontend benchmarks...` ) )
+        done()
+        return
+    }
+
     const karmaConfig = karma.config.parseConfig( configFile )
     const karmaServer = new karma.Server( karmaConfig, ( exitCode ) => {
         if ( exitCode === 0 ) {

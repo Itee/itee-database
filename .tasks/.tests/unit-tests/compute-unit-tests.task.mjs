@@ -20,9 +20,9 @@ import {
 }                               from 'fs'
 import log                      from 'fancy-log'
 import colors                   from 'ansi-colors'
-import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
 import childProcess             from 'child_process'
 import { isNotEmptyArray }      from 'itee-validators'
+import { sourcesFiles } from '../../configs/compute-unit-tests.conf.mjs'
 
 const {
           red,
@@ -36,18 +36,6 @@ function computeUnitTestsTask( done ) {
         log( 'Creating', green( unitsDir ) )
         mkdirSync( unitsDir, { recursive: true } )
     }
-
-    const filePathsToIgnore = getGulpConfigForTask( 'compute-unit-tests' )
-
-    const sourcesFiles = glob.sync( join( sourcesDir, '**' ) )
-                             .map( filePath => normalize( filePath ) )
-                             .filter( filePath => {
-                                 const fileName         = basename( filePath )
-                                 const isJsFile         = fileName.endsWith( '.js' )
-                                 const isNotPrivateFile = !fileName.startsWith( '_' )
-                                 const isNotIgnoredFile = !filePathsToIgnore.includes( fileName )
-                                 return isJsFile && isNotPrivateFile && isNotIgnoredFile
-                             } )
 
     const unitsImportMap = []
     for ( let sourceFile of sourcesFiles ) {

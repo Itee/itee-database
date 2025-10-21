@@ -18,11 +18,12 @@ import { nodeResolve }          from '@rollup/plugin-node-resolve'
 import cleanup                  from 'rollup-plugin-cleanup'
 import { rollup }               from 'rollup'
 import colors                   from 'ansi-colors'
-import { getGulpConfigForTask } from '../../configs/gulp.conf.mjs'
 import {
     packageSourcesDirectory as sourcesDir,
     packageTestsBundlesDirectory as bundleDir
 }                               from '../../_utils.mjs'
+import { sourcesFiles }              from '../../configs/check-bundling.conf.mjs'
+import { getRollupConfigurationFor } from '../../configs/build.conf.mjs'
 
 const {
           red,
@@ -37,25 +38,13 @@ async function checkBundlingFromEsmFilesImportTask( done ) {
 
     const outputDir         = join( bundleDir, 'from_files_import' )
     const temporariesDir    = join( outputDir, '.tmp' )
-    const filePathsToIgnore = getGulpConfigForTask( 'check-bundling' )
 
     if ( existsSync( outputDir ) ) {
         log( 'Clean up', magenta( outputDir ) )
         rmSync( outputDir, { recursive: true } )
     }
 
-    const sourcesFiles = glob.sync( join( sourcesDir, '/**' ) )
-                             .map( filePath => {
-                                 return normalize( filePath )
-                             } )
-                             .filter( filePath => {
-                                 const fileName         = basename( filePath )
-                                 const isJsFile         = fileName.endsWith( '.js' )
-                                 const isNotPrivateFile = !fileName.startsWith( '_' )
-                                 const isNotIgnoredFile = !filePathsToIgnore.includes( fileName )
-                                 return isJsFile && isNotPrivateFile && isNotIgnoredFile
-                             } )
-
+    const config = getRollupConfigurationFor( 'check-bundling-from-esm-files-import' )
     for ( let sourceFile of sourcesFiles ) {
 
         const {
@@ -78,45 +67,8 @@ async function checkBundlingFromEsmFilesImportTask( done ) {
         const bundleFileName = `${ sourceName }.bundle.js`
         const bundleFilePath = join( outputDir, specificDir, bundleFileName )
 
-        const config = {
-            input:     temporaryFile,
-            plugins:   [
-                nodeResolve(),
-                cleanup( {
-                    comments: 'all' // else remove __PURE__ declaration... -_-'
-                } )
-            ],
-            onwarn:    ( {
-                loc,
-                frame,
-                message
-            } ) => {
-
-                // Ignore some errors
-                if ( message.includes( 'Circular dependency' ) ) { return }
-                if ( message.includes( 'Generated an empty chunk' ) ) { return }
-
-                if ( loc ) {
-                    process.stderr.write( `/!\\ ${ loc.file } (${ loc.line }:${ loc.column }) ${ frame } ${ message }\n` )
-                } else {
-                    process.stderr.write( `/!\\ ${ message }\n` )
-                }
-
-            },
-            treeshake: {
-                moduleSideEffects:                true,
-                annotations:                      true,
-                correctVarValueBeforeDeclaration: true,
-                propertyReadSideEffects:          true,
-                tryCatchDeoptimization:           true,
-                unknownGlobalSideEffects:         true
-            },
-            output:    {
-                indent: '\t',
-                format: 'esm',
-                file:   bundleFilePath
-            }
-        }
+        config.input       = temporaryFile
+        config.output.file = bundleFilePath
 
         // create tmp file
         try {

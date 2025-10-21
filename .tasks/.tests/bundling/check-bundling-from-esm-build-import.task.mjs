@@ -14,8 +14,6 @@ import {
     readFileSync
 }                      from 'fs'
 import log             from 'fancy-log'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import cleanup         from 'rollup-plugin-cleanup'
 import { rollup }      from 'rollup'
 import colors          from 'ansi-colors'
 import {
@@ -23,6 +21,7 @@ import {
     packageTestsBundlesDirectory as bundlesDir,
     packageName
 }                      from '../../_utils.mjs'
+import { getRollupConfigurationFor } from '../../configs/build.conf.mjs'
 
 
 const {
@@ -80,49 +79,8 @@ async function checkBundlingFromEsmBuildImportTask( done ) {
             temporaryFilePaths.push( temporaryFilePath )
         }
 
-        // Bundle each temporary files and check side-effects
-        const config = {
-            input:     null,
-            external:  [ '' ],
-            plugins:   [
-                nodeResolve( {
-                    preferBuiltins: true
-                } ),
-                cleanup( {
-                    comments: 'all' // else remove __PURE__ declaration... -_-'
-                } )
-            ],
-            onwarn:    ( {
-                loc,
-                frame,
-                message
-            } ) => {
-
-                // Ignore some errors
-                if ( message.includes( 'Circular dependency' ) ) { return }
-                if ( message.includes( 'Generated an empty chunk' ) ) { return }
-
-                if ( loc ) {
-                    process.stderr.write( `/!\\ ${ loc.file } (${ loc.line }:${ loc.column }) ${ frame } ${ message }\n` )
-                } else {
-                    process.stderr.write( `/!\\ ${ message }\n` )
-                }
-
-            },
-            treeshake: {
-                moduleSideEffects:                true,
-                annotations:                      true,
-                correctVarValueBeforeDeclaration: true,
-                propertyReadSideEffects:          true,
-                tryCatchDeoptimization:           true,
-                unknownGlobalSideEffects:         true
-            },
-            output:    {
-                indent: '\t',
-                format: 'esm',
-                file:   null
-            }
-        }
+        // Bundle each temporary files and check side effects
+        const config = getRollupConfigurationFor('check-bundling-from-esm-build-import')
         let fileName, bundleFileName, bundleFilePath
         for ( const temporaryFilePath of temporaryFilePaths ) {
 

@@ -2,7 +2,10 @@ import {
     join,
     dirname
 }                        from 'path'
-import { readFileSync }  from 'fs'
+import {
+    readFileSync,
+    existsSync
+}                        from 'fs'
 import { fileURLToPath } from 'url'
 import childProcess      from 'child_process'
 import log               from 'fancy-log'
@@ -37,27 +40,40 @@ function getPackageRootDirectory() {
 
 }
 
+const packageRootDirectory            = getPackageRootDirectory()
+const packageJsonPath                 = join( packageRootDirectory, 'package.json' )
+const nodeModulesDirectory            = join( packageRootDirectory, 'node_modules' )
+const packageBuildsDirectory          = join( packageRootDirectory, 'builds' )
+const packageSourcesDirectory         = join( packageRootDirectory, 'sources' )
+const packageSourcesBackendDirectory  = join( packageSourcesDirectory, 'backend' )
+const packageSourcesCommonDirectory   = join( packageSourcesDirectory, 'common' )
+const packageSourcesFrontendDirectory = join( packageSourcesDirectory, 'frontend' )
+const packageTestsDirectory           = join( packageRootDirectory, 'tests' )
+const packageTestsBenchmarksDirectory = join( packageTestsDirectory, 'benchmarks' )
+const packageTestsBundlesDirectory    = join( packageTestsDirectory, 'bundles' )
+const packageTestsUnitsDirectory      = join( packageTestsDirectory, 'units' )
+const packageDocsDirectory            = join( packageRootDirectory, 'docs' )
+const packageTutorialsDirectory       = join( packageRootDirectory, 'tutorials' )
+
 function getPackageJson() {
 
-    const packageRootDirectory = getPackageRootDirectory()
-    const packagePath          = join( packageRootDirectory, 'package.json' )
-    const packageData          = readFileSync( packagePath )
-
+    const packageData = readFileSync( packageJsonPath )
     return JSON.parse( packageData )
 
 }
 
-const packageJson    = getPackageJson()
-const packageName    = packageJson.name
-const packageVersion = packageJson.version
+const packageJson        = getPackageJson()
+const packageName        = packageJson.name
+const packageVersion     = packageJson.version
+const packageDescription = packageJson.description
 
-function getPrettyPackageName() {
+function getPrettyPackageName( separator = ' ' ) {
 
     let prettyPackageName = ''
 
     const nameSplits = packageName.split( '-' )
     for ( const nameSplit of nameSplits ) {
-        prettyPackageName += nameSplit.charAt( 0 ).toUpperCase() + nameSplit.slice( 1 ) + ' '
+        prettyPackageName += nameSplit.charAt( 0 ).toUpperCase() + nameSplit.slice( 1 ) + separator
     }
     prettyPackageName = prettyPackageName.slice( 0, -1 )
 
@@ -111,20 +127,6 @@ function getPrettyNpmVersion() {
 
 }
 
-const packageRootDirectory            = getPackageRootDirectory()
-const nodeModulesDirectory            = join( packageRootDirectory, 'node_modules' )
-const packageBuildsDirectory          = join( packageRootDirectory, 'builds' )
-const packageSourcesDirectory         = join( packageRootDirectory, 'sources' )
-const packageSourcesBackendDirectory  = join( packageSourcesDirectory, 'backend' )
-const packageSourcesCommonDirectory   = join( packageSourcesDirectory, 'common' )
-const packageSourcesFrontendDirectory = join( packageSourcesDirectory, 'frontend' )
-const packageTestsDirectory           = join( packageRootDirectory, 'tests' )
-const packageTestsBenchmarksDirectory = join( packageTestsDirectory, 'benchmarks' )
-const packageTestsBundlesDirectory    = join( packageTestsDirectory, 'bundles' )
-const packageTestsUnitsDirectory      = join( packageTestsDirectory, 'units' )
-const packageDocsDirectory            = join( packageRootDirectory, 'docs' )
-const packageTutorialsDirectory       = join( packageRootDirectory, 'tutorials' )
-
 class Indenter {
 
     _          = ''
@@ -151,15 +153,8 @@ class Indenter {
 }
 
 export {
-    packageJson,
-    packageName,
-    packageVersion,
-    getPrettyPackageName,
-    getPrettyPackageVersion,
-    getPrettyNodeVersion,
-    getPrettyNpmVersion,
-
     packageRootDirectory,
+    packageJsonPath,
     packageBuildsDirectory,
     packageSourcesDirectory,
     packageSourcesBackendDirectory,
@@ -172,6 +167,15 @@ export {
     packageDocsDirectory,
     packageTutorialsDirectory,
     nodeModulesDirectory,
+
+    packageJson,
+    packageName,
+    packageVersion,
+    packageDescription,
+    getPrettyPackageName,
+    getPrettyPackageVersion,
+    getPrettyNodeVersion,
+    getPrettyNpmVersion,
 
     Indenter
 }

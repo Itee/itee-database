@@ -1,20 +1,24 @@
-import { rollup }               from 'rollup'
-import log                      from 'fancy-log'
-import { getGulpConfigForTask } from '../configs/gulp.conf.mjs'
-import { CreateRollupConfigs }  from '../configs/rollup.conf.mjs'
-import colors                   from 'ansi-colors'
+import { rollup }                    from 'rollup'
+import log                           from 'fancy-log'
+import colors                        from 'ansi-colors'
+import { getRollupConfigurationFor } from '../configs/build.conf.mjs'
 
-const red   = colors.red
-const green = colors.green
+const {
+          red,
+          green,
+          yellow
+      } = colors
 
 async function buildTask( done ) {
 
-    const options = getGulpConfigForTask( 'builds' )
-    const configs = CreateRollupConfigs( options )
-
-    let buildError = null
+    const configs = getRollupConfigurationFor( 'build' )
 
     for ( let config of configs ) {
+
+        if ( config === undefined || config === null || config.length === 0 ) {
+            log( yellow( 'Empty configuration object... Skip it!' ) )
+            continue
+        }
 
         log( 'Building', green( config.output.file ) )
 
@@ -25,15 +29,14 @@ async function buildTask( done ) {
 
         } catch ( error ) {
 
-            log( red( error ) )
-            buildError = error
-            break
+            done( red( error.message ) )
+            return
 
         }
 
     }
 
-    done( buildError )
+    done()
 
 }
 
