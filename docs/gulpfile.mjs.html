@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Itee-Database Class: TDatabaseController</title>
+	<title>Itee-Database Source: gulpfile.mjs</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -74,149 +74,216 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: TDatabaseController</h1>
+		<h1 class="page-title">Source: gulpfile.mjs</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">/**
+ * @author [Tristan Valcke]{@link https://github.com/Itee}
+ * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
+ *
+ * @module Building
+ *
+ * @description The gulp tasks file. It allow to run some tasks from command line interface.&lt;br>
+ * The available tasks are:
+ * &lt;ul>
+ * &lt;li>help&lt;/li>
+ * &lt;li>patch&lt;/li>
+ * &lt;li>clean&lt;/li>
+ * &lt;li>lint&lt;/li>
+ * &lt;li>doc&lt;/li>
+ * &lt;li>unit&lt;/li>
+ * &lt;li>bench&lt;/li>
+ * &lt;li>test&lt;/li>
+ * &lt;li>build-test&lt;/li>
+ * &lt;li>build&lt;/li>
+ * &lt;li>release&lt;/li>
+ * &lt;/ul>
+ * You could find a complet explanation about these tasks using: &lt;b>npm run help&lt;/b>.
+ *
+ * @requires {@link module: [gulp]{@link https://github.com/gulpjs/gulp}}
+ * @requires {@link module: [gulp-jsdoc3]{@link https://github.com/mlucool/gulp-jsdoc3}}
+ * @requires {@link module: [gulp-eslint]{@link https://github.com/adametry/gulp-eslint}}
+ * @requires {@link module: [del]{@link https://github.com/sindresorhus/del}}
+ * @requires {@link module: [minimist]{@link https://github.com/substack/minimist}}
+ * @requires {@link module: [rollup]{@link https://github.com/rollup/rollup}}
+ * @requires {@link module: [path]{@link https://nodejs.org/api/path.html}}
+ * @requires {@link module: [karma]{@link https://github.com/karma-runner/karma}}
+ * @requires {@link module: [fancy-log]{@link https://github.com/js-cli/fancy-log}}
+ * @requires {@link module: [ansi-colors]{@link https://github.com/doowb/ansi-colors}}
+ *
+ *
+ */
 
-<header>
-    
-        <h2>
-        TDatabaseController
-        </h2>
-        
-            <div class="class-description">The TDatabaseController is the base class to perform CRUD operations on the database</div>
-        
-    
-</header>
+import gulp                                    from 'gulp'
+import { helpTask }                            from './.tasks/.helps/help.task.mjs'
+import { patchTask }                           from './.tasks/.patches/patch.task.mjs'
+import { cleanTask }                           from './.tasks/.cleans/clean.task.mjs'
+import { lintTask }                            from './.tasks/.lints/lint.task.mjs'
+import { docTask }                             from './.tasks/.docs/doc.task.mjs'
+import { checkBundlingFromEsmFilesImportTask } from './.tasks/.tests/bundling/check-bundling-from-esm-files-import.task.mjs'
+import { checkBundlingFromEsmBuildImportTask } from './.tasks/.tests/bundling/check-bundling-from-esm-build-import.task.mjs'
+import { checkBundlingFromEsmFilesDirectTask } from './.tasks/.tests/bundling/check-bundling-from-esm-files-direct.task.mjs'
+import { computeUnitTestsTask }                from './.tasks/.tests/unit-tests/compute-unit-tests.task.mjs'
+import { bundleUnitTestsTask }                 from './.tasks/.tests/unit-tests/bundle-unit-tests.task.mjs'
+import { runUnitTestsForFrontendTask }         from './.tasks/.tests/unit-tests/run-unit-tests-for-frontend.task.mjs'
+import { runUnitTestsForBackendTask }          from './.tasks/.tests/unit-tests/run-unit-tests-for-backend.task.mjs'
+import { bundleBenchmarksTask }                from './.tasks/.tests/benchmarks/bundle-benchmarks.task.mjs'
+import { computeBenchmarksTask }               from './.tasks/.tests/benchmarks/compute-benchmarks.task.mjs'
+import { runBenchmarksForBackendTask }         from './.tasks/.tests/benchmarks/run-benchmarks-for-backend.task.mjs'
+import { runBenchmarksForFrontendTask }        from './.tasks/.tests/benchmarks/run-benchmarks-for-frontend.task.mjs'
+import { buildTask }                           from './.tasks/.builds/build.task.mjs'
 
+//---------
 
-<article>
-    <div class="container-overview">
-    
-        
-<hr>
-<dt>
-    <h4 class="name" id="TDatabaseController"><span class="type-signature"></span>new TDatabaseController()</h4>
-    
-    
-</dt>
-<dd>
+/**
+ * @method npm run help ( default )
+ * @global
+ * @description Will display the help in console
+ */
+gulp.task( 'help', helpTask )
 
-    
+/**
+ * @method npm run patch
+ * @global
+ * @description Will apply some patch/replacements in dependencies
+ */
+gulp.task( 'patch', patchTask )
 
-    
+/**
+ * @method npm run clean
+ * @global
+ * @description Will delete builds and temporary folders
+ */
+gulp.task( 'clean', cleanTask )
 
-    
+/**
+ * @method npm run lint
+ * @global
+ * @description Will lint the sources files and try to fix the style when possible
+ */
+gulp.task( 'lint', lintTask )
 
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
-	<dd class="tag-author">
-		<ul>
-			<li><a href="https://github.com/Itee">Tristan Valcke</a></li>
-			</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
-	<dd class="tag-license">
-		<ul class="dummy">
-			<li><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></li>
-		</ul>
-	</dd>
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="sources_controllers_TAbstractDataController.js.html">sources/controllers/TAbstractDataController.js</a>,
-				 <a href="sources_controllers_TAbstractDataController.js.html#sunlight-1-line-1">line 1</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
+/**
+ * @method npm run doc
+ * @global
+ * @description Will generate this documentation
+ */
+gulp.task( 'doc', docTask )
 
 
-    
+//---------
 
-    
+/**
+ * @description In view to detect bundling side effects this task will
+ * create intermediary file for each individual export from this package
+ * and then create rollup config for each of them and bundle
+ * Todo: Check for differents target env like next task below this one
+ */
+gulp.task( 'check-bundling-from-esm-files-import', checkBundlingFromEsmFilesImportTask )
+gulp.task( 'check-bundling-from-esm-build-import', checkBundlingFromEsmBuildImportTask )
+gulp.task( 'check-bundling-from-esm-files-direct', checkBundlingFromEsmFilesDirectTask )
+gulp.task( 'check-bundling', gulp.series( 'check-bundling-from-esm-files-import', 'check-bundling-from-esm-build-import', 'check-bundling-from-esm-files-direct' ) )
 
-    
+/**
+ * @description Will generate unit test files from source code using type inference from comments
+ */
+gulp.task( 'compute-unit-tests', computeUnitTestsTask )
+/**
+ * @description Will generate unit test bundles based on provided configs
+ */
+gulp.task( 'bundle-unit-tests', bundleUnitTestsTask )
+/**
+ * @description Will compte and generate bundle for unit tests
+ */
+gulp.task( 'build-unit-tests', gulp.series( 'compute-unit-tests', 'bundle-unit-tests' ) )
 
-    
+/**
+ * @description Will generate benchmarks files from source code against provided alternatives
+ */
+gulp.task( 'compute-benchmarks', computeBenchmarksTask )
+/**
+ * @description Will generate benchmarks bundles based on provided configs
+ */
+gulp.task( 'bundle-benchmarks', bundleBenchmarksTask )
+/**
+ * @description Will compte and generate bundle for benchmarks
+ */
+gulp.task( 'build-benchmarks', gulp.series( 'compute-benchmarks', 'bundle-benchmarks' ) )
 
-    
+/**
+ * @method npm run build-test
+ * @global
+ * @description Will build all tests.
+ */
+gulp.task( 'build-tests', gulp.series( 'check-bundling', 'build-unit-tests', 'build-benchmarks' ) )
 
-    
+//---------
 
-    
-</dd>
+/**
+ * @description Will run unit tests with node
+ */
+gulp.task( 'run-unit-tests-for-backend', runUnitTestsForBackendTask )
+/**
+ * @description Will run unit tests with karma
+ */
+gulp.task( 'run-unit-tests-for-frontend', runUnitTestsForFrontendTask )
+/**
+ * @description Will run unit tests in back and front environments
+ */
+gulp.task( 'run-unit-tests', gulp.series( 'run-unit-tests-for-backend'/*, 'run-unit-tests-for-frontend'*/ ) )
 
-    
-    </div>
+/**
+ * @description Will run benchmarks with node
+ */
+gulp.task( 'run-benchmarks-for-backend', runBenchmarksForBackendTask )
+/**
+ * @description Will run benchmarks with karma
+ */
+gulp.task( 'run-benchmarks-for-frontend', runBenchmarksForFrontendTask )
+/**
+ * @description Will run benchmarks in back and front environments
+ */
+gulp.task( 'run-benchmarks', gulp.series( 'run-benchmarks-for-backend'/*, 'run-benchmarks-for-frontend'*/ ) )
 
-    
+/**
+ * @method npm run test
+ * @global
+ * @description Will run unit tests and benchmarks for node (backend) and karma (frontend) environments
+ */
+gulp.task( 'test', gulp.series( 'run-unit-tests', 'run-benchmarks' ) )
 
-    
+//---------
 
-    
+/**
+ * @method npm run build
+ * @global
+ * @description Will build itee client module using optional arguments. See help to further informations.
+ */
+gulp.task( 'build', buildTask )
 
-    
+//---------
 
-    
+/**
+ * @method npm run release
+ * @global
+ * @description Will perform a complete release of the library including 'clean', 'lint', 'doc', 'build-tests', 'test' and finally 'build'.
+ */
+gulp.task( 'release', gulp.series( 'clean', 'build', 'build-tests', 'lint', 'doc', 'test' ) )
 
-    
+//---------
 
-    
-
-    
-
-    
-</article>
-
+gulp.task( 'default', gulp.series( 'help' ) )
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -226,10 +293,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
