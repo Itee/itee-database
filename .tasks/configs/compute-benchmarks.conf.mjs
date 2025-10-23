@@ -1,3 +1,4 @@
+import glob from 'glob'
 import {
     basename,
     join,
@@ -7,7 +8,6 @@ import {
     packageName,
     packageSourcesDirectory
 }           from '../_utils.mjs'
-import glob from 'glob'
 
 
 const filePathsToIgnore = [

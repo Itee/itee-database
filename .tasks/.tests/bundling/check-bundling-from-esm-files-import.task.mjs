@@ -1,43 +1,35 @@
-import {
-    join,
-    normalize,
-    basename,
-    parse,
-    dirname,
-    relative
-}                               from 'path'
+import colors                        from 'ansi-colors'
+import log                           from 'fancy-log'
 import {
     existsSync,
-    rmSync,
     mkdirSync,
+    rmSync,
     writeFileSync
-}                               from 'fs'
-import log                      from 'fancy-log'
-import glob                     from 'glob'
-import { nodeResolve }          from '@rollup/plugin-node-resolve'
-import cleanup                  from 'rollup-plugin-cleanup'
-import { rollup }               from 'rollup'
-import colors                   from 'ansi-colors'
+}                                    from 'fs'
+import {
+    dirname,
+    join,
+    parse,
+    relative
+}                                    from 'path'
+import { rollup }                    from 'rollup'
 import {
     packageSourcesDirectory as sourcesDir,
     packageTestsBundlesDirectory as bundleDir
-}                               from '../../_utils.mjs'
-import { sourcesFiles }              from '../../configs/check-bundling.conf.mjs'
+}                                    from '../../_utils.mjs'
 import { getRollupConfigurationFor } from '../../configs/build.conf.mjs'
+import { sourcesFiles }              from '../../configs/check-bundling.conf.mjs'
 
 const {
           red,
           green,
-          blue,
-          cyan,
-          yellow,
           magenta
       } = colors
 
 async function checkBundlingFromEsmFilesImportTask( done ) {
 
-    const outputDir         = join( bundleDir, 'from_files_import' )
-    const temporariesDir    = join( outputDir, '.tmp' )
+    const outputDir      = join( bundleDir, 'from_files_import' )
+    const temporariesDir = join( outputDir, '.tmp' )
 
     if ( existsSync( outputDir ) ) {
         log( 'Clean up', magenta( outputDir ) )

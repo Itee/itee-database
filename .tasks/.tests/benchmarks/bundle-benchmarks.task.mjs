@@ -1,6 +1,6 @@
-import { rollup }                    from 'rollup'
-import log                           from 'fancy-log'
 import colors                        from 'ansi-colors'
+import log                           from 'fancy-log'
+import { rollup }                    from 'rollup'
 import { getRollupConfigurationFor } from '../../configs/build.conf.mjs'
 
 const {

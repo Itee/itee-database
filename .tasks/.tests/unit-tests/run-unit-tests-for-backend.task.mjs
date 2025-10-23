@@ -1,13 +1,13 @@
-import { existsSync }       from 'fs'
-import { join }             from 'path'
-import { spawn }            from 'child_process'
-import log                  from 'fancy-log'
-import colors               from 'ansi-colors'
+import colors         from 'ansi-colors'
+import { spawn }      from 'child_process'
+import log            from 'fancy-log'
+import { existsSync } from 'fs'
+import { join }       from 'path'
 import {
     nodeModulesDirectory,
-    packageTestsUnitsDirectory,
-    packageName
-}                           from '../../_utils.mjs'
+    packageName,
+    packageTestsUnitsDirectory
+}                     from '../../_utils.mjs'
 
 const {
           red,

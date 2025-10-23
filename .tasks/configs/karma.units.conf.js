@@ -14,7 +14,7 @@ const packageInfos = require( '../../package.json' )
  * @generator
  * @param {object} config - The karma configuration object to extend
  */
-function CreateKarmaUnitsConfiguration ( config ) {
+function CreateKarmaUnitsConfiguration( config ) {
 
     config.set( {
 
@@ -26,7 +26,7 @@ function CreateKarmaUnitsConfiguration ( config ) {
         frameworks: [ 'mocha', 'chai' ],
 
         // list of files / patterns to load in the browser
-        files: [ `builds/${packageInfos.name}.units.js` ],
+        files: [ `builds/${ packageInfos.name }.units.js` ],
 
         // list of files to exclude
         exclude: [],

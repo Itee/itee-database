@@ -12,24 +12,23 @@
  * @requires {@link module: [rollup-plugin-node-resolve]{@link https://github.com/rollup/rollup-plugin-node-resolve}}
  * @requires {@link module: [rollup-plugin-terser]{@link https://github.com/TrySound/rollup-plugin-terser}}
  */
-import {
-    packageSourcesDirectory,
-    packageBuildsDirectory,
-    packageName,
-    packageJson,
-    packageDescription,
-    getPrettyPackageName,
-    getPrettyPackageVersion
-}                  from '../_utils.mjs'
-import {
-    join,
-    basename
-}                  from 'path'
 import commonjs    from '@rollup/plugin-commonjs'
 import nodeResolve from '@rollup/plugin-node-resolve'
-import { terser }  from 'rollup-plugin-terser'
-import cleanup     from 'rollup-plugin-cleanup'
 import figlet      from 'figlet'
+import {
+    basename,
+    join
+}                  from 'path'
+import cleanup     from 'rollup-plugin-cleanup'
+import { terser }  from 'rollup-plugin-terser'
+import {
+    getPrettyPackageName,
+    getPrettyPackageVersion,
+    packageBuildsDirectory,
+    packageDescription,
+    packageName,
+    packageSourcesDirectory
+}                  from '../_utils.mjs'
 
 // Utils
 
@@ -126,7 +125,7 @@ function _createRollupConfigs( options ) {
               envs,
               treeshake
           }        = options
-    const name     = getPrettyPackageName('.')
+    const name     = getPrettyPackageName( '.' )
     const fileName = basename( input, '.js' )
 
     const configs = []
@@ -141,8 +140,8 @@ function _createRollupConfigs( options ) {
             const outputPath = ( isProd ) ? join( output, `${ fileName }.${ format }.min.js` ) : join( output, `${ fileName }.${ format }.js` )
 
             configs.push( {
-                input:    input,
-                external: [
+                input:     input,
+                external:  [
                     'path',
                     'buffer',
                     'fs',
@@ -153,7 +152,7 @@ function _createRollupConfigs( options ) {
                     'itee-utils',
                     'itee-core'
                 ],
-                plugins: [
+                plugins:   [
                     commonjs( {
                         include: 'node_modules/**'
                     } ),
@@ -162,7 +161,7 @@ function _createRollupConfigs( options ) {
                     } ),
                     isProd && terser()
                 ],
-                onwarn: ( {
+                onwarn:    ( {
                     loc,
                     frame,
                     message
@@ -342,9 +341,9 @@ const configs = {
             file:   null
         }
     },
-    'benchmarks-backend':  {
-        input:    `tests/benchmarks/${packageName}.benchs.js`,
-        external: [
+    'benchmarks-backend':                   {
+        input:     `tests/benchmarks/${ packageName }.benchs.js`,
+        external:  [
             'benchmark',
             'express',
             'http',
@@ -353,7 +352,7 @@ const configs = {
             'path',
             'crypto'
         ],
-        plugins: [
+        plugins:   [
             nodeResolve( {
                 preferBuiltins: true
             } ),
@@ -366,18 +365,18 @@ const configs = {
             indent: '\t',
             format: 'cjs',
             name:   'Itee.Benchs',
-            file:   `tests/benchmarks/builds/${packageName}.benchs.cjs.js`
+            file:   `tests/benchmarks/builds/${ packageName }.benchs.cjs.js`
         }
     },
-    'benchmarks-frontend': null,
-    'units-backend':       {
-        input:    `tests/units/${packageName}.units.js`,
-        external: [
+    'benchmarks-frontend':                  null,
+    'units-backend':                        {
+        input:     `tests/units/${ packageName }.units.js`,
+        external:  [
             'mocha',
             'chai',
             'express'
         ],
-        plugins: [
+        plugins:   [
             nodeResolve( {
                 preferBuiltins: true
             } ),
@@ -390,10 +389,10 @@ const configs = {
             indent: '\t',
             format: 'cjs',
             name:   'Itee.Units',
-            file:   `tests/units/builds/${packageName}.units.cjs.js`
+            file:   `tests/units/builds/${ packageName }.units.cjs.js`
         }
     },
-    'units-frontend':      null,
+    'units-frontend':                       null,
 }
 
 function getRollupConfigurationFor( bundleName ) {

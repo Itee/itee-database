@@ -28,14 +28,14 @@ class SSLHandshakeFailedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 525 }
+    static get statusCode() { return 525 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isSSLHandshakeFailedError () { return true }
+    get isSSLHandshakeFailedError() { return true }
 
 }
 

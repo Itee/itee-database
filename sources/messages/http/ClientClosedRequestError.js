@@ -28,14 +28,14 @@ class ClientClosedRequestError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 499 }
+    static get statusCode() { return 499 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isClientClosedRequestError () { return true }
+    get isClientClosedRequestError() { return true }
 
 }
 

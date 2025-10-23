@@ -11,25 +11,7 @@ import { TAbstractResponder } from '../databases/TAbstractResponder'
 // Todo: Extend sort of Factory
 class TAbstractConverterManager extends TAbstractResponder {
 
-    static _convertFilesObjectToArray ( files ) {
-
-        const fileArray = []
-
-        for ( let field in files ) {
-
-            if ( Object.prototype.hasOwnProperty.call( files, field ) ) {
-
-                fileArray.push( files[ field ] )
-
-            }
-
-        }
-
-        return fileArray
-
-    }
-
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -57,8 +39,24 @@ class TAbstractConverterManager extends TAbstractResponder {
         this._processedFiles = []
         this._filesToProcess = 0
     }
+    static _convertFilesObjectToArray( files ) {
 
-    _fileConversionSuccessCallback ( response, next, extraSuccessCallback, data ) {
+        const fileArray = []
+
+        for ( let field in files ) {
+
+            if ( Object.prototype.hasOwnProperty.call( files, field ) ) {
+
+                fileArray.push( files[ field ] )
+
+            }
+
+        }
+
+        return fileArray
+
+    }
+    _fileConversionSuccessCallback( response, next, extraSuccessCallback, data ) {
 
         if ( extraSuccessCallback ) {
             extraSuccessCallback( data )
@@ -75,20 +73,20 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     }
 
-    _fileInsertionSuccessCallback ( response, next, data ) {
+    _fileInsertionSuccessCallback( response, next, data ) {
 
         this._filesToProcess--
         this._checkEndOfReturns( response, next, data )
 
     }
 
-    _fileConversionProgressCallback ( response, progress ) {
+    _fileConversionProgressCallback( response, progress ) {
 
         this.logger.log( progress )
 
     }
 
-    _fileConversionErrorCallback ( response, next, error ) {
+    _fileConversionErrorCallback( response, next, error ) {
 
         this._errors.push( error )
         this._filesToProcess--
@@ -96,7 +94,7 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     }
 
-    _checkEndOfReturns ( response, next, data ) {
+    _checkEndOfReturns( response, next, data ) {
 
         if ( this._errors.length > 0 ) {
 
@@ -117,7 +115,7 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     }
 
-    processFiles ( request, response, next ) {
+    processFiles( request, response, next ) {
 
         const files         = TAbstractConverterManager._convertFilesObjectToArray( request.files )
         const numberOfFiles = files.length
@@ -174,7 +172,7 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     }
 
-    _processFiles ( files, parameters, response, next ) {
+    _processFiles( files, parameters, response, next ) {
 
         const fileExtensions = files.map( ( file ) => path.extname( file.name ) )
         const matchingRules  = this._rules.filter( elem => {

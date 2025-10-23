@@ -1,16 +1,16 @@
-import {
-    join,
-    basename,
-    extname,
-    dirname
-}                                    from 'path'
+import colors                        from 'ansi-colors'
+import log                           from 'fancy-log'
 import {
     existsSync,
     rmSync
 }                                    from 'fs'
+import {
+    basename,
+    dirname,
+    extname,
+    join
+}                                    from 'path'
 import { rollup }                    from 'rollup'
-import log                           from 'fancy-log'
-import colors                        from 'ansi-colors'
 import {
     packageSourcesDirectory as sourcesDir,
     packageTestsBundlesDirectory as bundlesDir

@@ -11,7 +11,7 @@
     // Todo: Extend from TDataQueueProcessor
 class TAbstractDataInserter {
 
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -26,7 +26,7 @@ class TAbstractDataInserter {
 
     }
 
-    save ( data, parameters, onSuccess, onProgress, onError ) {
+    save( data, parameters, onSuccess, onProgress, onError ) {
 
         if ( !data ) {
             onError( 'Data cannot be null or empty, aborting database insert !!!' )
@@ -50,7 +50,7 @@ class TAbstractDataInserter {
 
     }
 
-    _processQueue () {
+    _processQueue() {
 
         if ( this._queue.length === 0 || this._isProcessing ) { return }
 
@@ -72,7 +72,7 @@ class TAbstractDataInserter {
             _onSaveError
         )
 
-        function _onSaveSuccess ( result ) {
+        function _onSaveSuccess( result ) {
 
             onSuccess( result )
 
@@ -81,13 +81,13 @@ class TAbstractDataInserter {
 
         }
 
-        function _onSaveProgress ( progress ) {
+        function _onSaveProgress( progress ) {
 
             onProgress( progress )
 
         }
 
-        function _onSaveError ( error ) {
+        function _onSaveError( error ) {
 
             onError( error )
 
@@ -98,7 +98,7 @@ class TAbstractDataInserter {
 
     }
 
-    _save ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
+    _save( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 

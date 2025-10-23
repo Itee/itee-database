@@ -38,7 +38,7 @@ class TAbstractDataController extends TAbstractResponder {
      * @param {external:Others~DatabaseDriver} parameters.driver Any official database driver that will be used internally by inherited class
      * @param {boolean} [parameters.useNext=false] A boolean flag to indicate that this instance should use "next()" function instead of return response to client.
      */
-    constructor ( parameters ) {
+    constructor( parameters ) {
 
         const _parameters = {
             ...{
@@ -59,20 +59,20 @@ class TAbstractDataController extends TAbstractResponder {
         this.useNext = _parameters.useNext
 
     }
-    get useNext () {
+    get useNext() {
         return this._useNext
     }
-    set useNext ( value ) {
+    set useNext( value ) {
         if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
         if ( isNotBoolean( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
 
         this._useNext = value
     }
-    get driver () {
+    get driver() {
         return this._driver
     }
-    set driver ( value ) {
+    set driver( value ) {
         if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
 
@@ -82,7 +82,7 @@ class TAbstractDataController extends TAbstractResponder {
     //////////////////
     // CRUD Methods //
     //////////////////
-    create ( request, response, next ) {
+    create( request, response, next ) {
 
         const data = request.body
 
@@ -134,11 +134,11 @@ class TAbstractDataController extends TAbstractResponder {
 
     }
 
-    _createOne ( /*data, response, next*/ ) {}
+    _createOne( /*data, response, next*/ ) {}
 
-    _createMany ( /*datas, response, next*/ ) {}
+    _createMany( /*datas, response, next*/ ) {}
 
-    read ( request, response, next ) {
+    read( request, response, next ) {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
@@ -221,15 +221,15 @@ class TAbstractDataController extends TAbstractResponder {
 
     }
 
-    _readOne ( /*id, projection, response, next*/ ) {}
+    _readOne( /*id, projection, response, next*/ ) {}
 
-    _readMany ( /*ids, projection, response, next*/ ) {}
+    _readMany( /*ids, projection, response, next*/ ) {}
 
-    _readWhere ( /*query, projection, response, next*/ ) {}
+    _readWhere( /*query, projection, response, next*/ ) {}
 
-    _readAll ( /*projection, response, next*/ ) {}
+    _readAll( /*projection, response, next*/ ) {}
 
-    update ( request, response, next ) {
+    update( request, response, next ) {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
@@ -319,15 +319,15 @@ class TAbstractDataController extends TAbstractResponder {
 
     }
 
-    _updateOne ( /*id, update, response, next*/ ) {}
+    _updateOne( /*id, update, response, next*/ ) {}
 
-    _updateMany ( /*ids, updates, response, next*/ ) {}
+    _updateMany( /*ids, updates, response, next*/ ) {}
 
-    _updateWhere ( /*query, update, response, next*/ ) {}
+    _updateWhere( /*query, update, response, next*/ ) {}
 
-    _updateAll ( /*update, response, next*/ ) {}
+    _updateAll( /*update, response, next*/ ) {}
 
-    delete ( request, response, next ) {
+    delete( request, response, next ) {
 
         const id          = request.params[ 'id' ]
         const requestBody = request.body
@@ -409,13 +409,13 @@ class TAbstractDataController extends TAbstractResponder {
 
     }
 
-    _deleteOne ( /*id, response, next*/ ) {}
+    _deleteOne( /*id, response, next*/ ) {}
 
-    _deleteMany ( /*ids, response, next*/ ) {}
+    _deleteMany( /*ids, response, next*/ ) {}
 
-    _deleteWhere ( /*query, response, next*/ ) {}
+    _deleteWhere( /*query, response, next*/ ) {}
 
-    _deleteAll ( /*response, next*/ ) {}
+    _deleteAll( /*response, next*/ ) {}
 
 }
 

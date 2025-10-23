@@ -28,14 +28,14 @@ class SSLCertificateError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 495 }
+    static get statusCode() { return 495 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isSSLCertificateError () { return true }
+    get isSSLCertificateError() { return true }
 
 }
 

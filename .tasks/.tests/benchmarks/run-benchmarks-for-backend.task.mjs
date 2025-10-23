@@ -1,12 +1,12 @@
-import log                  from 'fancy-log'
-import { existsSync }       from 'fs'
-import path                 from 'path'
-import childProcess         from 'child_process'
-import colors               from 'ansi-colors'
+import colors         from 'ansi-colors'
+import childProcess   from 'child_process'
+import log            from 'fancy-log'
+import { existsSync } from 'fs'
+import path           from 'path'
 import {
-    packageTestsBenchmarksDirectory,
-    packageName
-}                           from '../../_utils.mjs'
+    packageName,
+    packageTestsBenchmarksDirectory
+}                     from '../../_utils.mjs'
 
 const yellow = colors.yellow
 

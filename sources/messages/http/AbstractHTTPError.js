@@ -27,7 +27,7 @@ class AbstractHTTPError extends AbstractError {
      * @default true
      * @type {boolean}
      */
-    static get isAbstractHTTPError () { return true }
+    static get isAbstractHTTPError() { return true }
 
     /**
      * The abstract getter of http status code, internally it call the static getter statusCode that need to be reimplemented by extended class.
@@ -36,14 +36,14 @@ class AbstractHTTPError extends AbstractError {
      * @type {number}
      * @throws {ReferenceError} In case the static statusCode getter is not redefined in class that inherit this class.
      */
-    get statusCode () {
+    get statusCode() {
         if ( isNotDefined( this.constructor.statusCode ) ) {
             throw new ReferenceError( `${ this.name } class need to reimplement static statusCode getter.` )
         }
         return this.constructor.statusCode
     }
 
-    set statusCode ( value ) {
+    set statusCode( value ) {
         throw new SyntaxError( 'Try to assign a read only property.' )
     }
 }

@@ -1,28 +1,26 @@
-import {
-    join,
-    normalize,
-    basename,
-    dirname,
-    extname,
-    relative
-}                               from 'path'
-import {
-    packageSourcesDirectory as sourcesDir,
-    packageTestsUnitsDirectory as unitsDir,
-    nodeModulesDirectory,
-    packageName
-}                               from '../../_utils.mjs'
-import glob                     from 'glob'
+import colors              from 'ansi-colors'
+import childProcess        from 'child_process'
+import log                 from 'fancy-log'
 import {
     existsSync,
     mkdirSync,
     writeFileSync
-}                               from 'fs'
-import log                      from 'fancy-log'
-import colors                   from 'ansi-colors'
-import childProcess             from 'child_process'
-import { isNotEmptyArray }      from 'itee-validators'
-import { sourcesFiles } from '../../configs/compute-unit-tests.conf.mjs'
+}                          from 'fs'
+import { isNotEmptyArray } from 'itee-validators'
+import {
+    basename,
+    dirname,
+    extname,
+    join,
+    relative
+}                          from 'path'
+import {
+    nodeModulesDirectory,
+    packageName,
+    packageSourcesDirectory as sourcesDir,
+    packageTestsUnitsDirectory as unitsDir
+}                          from '../../_utils.mjs'
+import { sourcesFiles }    from '../../configs/compute-unit-tests.conf.mjs'
 
 const {
           red,

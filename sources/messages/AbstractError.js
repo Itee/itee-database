@@ -29,7 +29,7 @@ class AbstractError extends Error {
      * @constructor
      * @param message {string} The error message to dispatch
      */
-    constructor ( message ) {
+    constructor( message ) {
         super()
 
         this._uuid    = uuidv4()
@@ -67,28 +67,28 @@ class AbstractError extends Error {
      * @default true
      * @type {boolean}
      */
-    get isAbstractError () { return true }
+    get isAbstractError() { return true }
     /**
      * An auto-generated universally unique identifier, this allow to recognize any error by id
      * @readonly
      * @type {string}
      */
-    get uuid () { return this._uuid }
-    set uuid ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    get uuid() { return this._uuid }
+    set uuid( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
     /**
      * The name of current instanced error (a.k.a the constructor name)
      * @readonly
      * @type {string}
      */
-    get name () { return this._name }
-    set name ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    get name() { return this._name }
+    set name( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
     /**
      * The error message
      * @readonly
      * @type {string}
      */
-    get message () { return this._message }
-    set message ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    get message() { return this._message }
+    set message( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
 
 }
 

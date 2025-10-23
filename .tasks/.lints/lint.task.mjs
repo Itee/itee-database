@@ -1,7 +1,7 @@
-import { lintConf as filesToLint } from '../configs/lint.conf.mjs'
+import log                         from 'fancy-log'
 import gulp                        from 'gulp'
 import eslint                      from 'gulp-eslint'
-import log                         from 'fancy-log'
+import { lintConf as filesToLint } from '../configs/lint.conf.mjs'
 
 function lintTask( done ) {
 

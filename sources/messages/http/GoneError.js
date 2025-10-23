@@ -28,14 +28,14 @@ class GoneError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 410 }
+    static get statusCode() { return 410 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isGoneError () { return true }
+    get isGoneError() { return true }
 
 }
 

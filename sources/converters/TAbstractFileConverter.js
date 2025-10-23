@@ -20,7 +20,7 @@ import { Writable }      from 'stream'
 /* Writable memory stream */
 class MemoryWriteStream extends Writable {
 
-    constructor ( options ) {
+    constructor( options ) {
 
         super( options )
 
@@ -29,13 +29,13 @@ class MemoryWriteStream extends Writable {
         this.offset       = 0
     }
 
-    _final ( callback ) {
+    _final( callback ) {
 
         callback()
 
     }
 
-    _write ( chunk, encoding, callback ) {
+    _write( chunk, encoding, callback ) {
 
         // our memory store stores things in buffers
         const buffer = ( Buffer.isBuffer( chunk ) ) ? chunk : new Buffer( chunk, encoding )
@@ -51,7 +51,7 @@ class MemoryWriteStream extends Writable {
 
     }
 
-    _writev ( chunks, callback ) {
+    _writev( chunks, callback ) {
 
         for ( let chunkIndex = 0, numberOfChunks = chunks.length ; chunkIndex < numberOfChunks ; chunkIndex++ ) {
             this.memoryBuffer = Buffer.concat( [ this.memoryBuffer, chunks[ chunkIndex ] ] )
@@ -62,13 +62,13 @@ class MemoryWriteStream extends Writable {
 
     }
 
-    _releaseMemory () {
+    _releaseMemory() {
 
         this.memoryBuffer = null
 
     }
 
-    toArrayBuffer () {
+    toArrayBuffer() {
 
         const buffer      = this.memoryBuffer
         const arrayBuffer = new ArrayBuffer( buffer.length )
@@ -84,13 +84,13 @@ class MemoryWriteStream extends Writable {
 
     }
 
-    toJSON () {
+    toJSON() {
 
         return JSON.parse( this.toString() )
 
     }
 
-    toString () {
+    toString() {
 
         const string = this.memoryBuffer.toString()
         this._releaseMemory()
@@ -105,7 +105,7 @@ class MemoryWriteStream extends Writable {
 
 class TAbstractFileConverter {
 
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -120,13 +120,13 @@ class TAbstractFileConverter {
 
     }
 
-    get dumpType () {
+    get dumpType() {
 
         return this._dumpType
 
     }
 
-    set dumpType ( value ) {
+    set dumpType( value ) {
 
         if ( isNull( value ) ) { throw new TypeError( 'Dump type cannot be null ! Expect a non empty string.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Dump type cannot be undefined ! Expect a non empty string.' ) }
@@ -135,14 +135,14 @@ class TAbstractFileConverter {
 
     }
 
-    setDumpType ( value ) {
+    setDumpType( value ) {
 
         this.dumpType = value
         return this
 
     }
 
-    convert ( file, parameters, onSuccess, onProgress, onError ) {
+    convert( file, parameters, onSuccess, onProgress, onError ) {
 
         if ( !file ) {
             onError( 'File cannot be null or empty, aborting file convertion !!!' )
@@ -161,7 +161,7 @@ class TAbstractFileConverter {
 
     }
 
-    _processQueue () {
+    _processQueue() {
 
         if ( this._queue.length === 0 || this._isProcessing ) { return }
 
@@ -222,7 +222,7 @@ class TAbstractFileConverter {
 
         }
 
-        function _onDumpSuccess ( data ) {
+        function _onDumpSuccess( data ) {
 
             self._convert(
                 data,
@@ -234,7 +234,7 @@ class TAbstractFileConverter {
 
         }
 
-        function _onProcessSuccess ( threeData ) {
+        function _onProcessSuccess( threeData ) {
 
             onSuccess( threeData )
 
@@ -243,13 +243,13 @@ class TAbstractFileConverter {
 
         }
 
-        function _onProcessProgress ( progress ) {
+        function _onProcessProgress( progress ) {
 
             onProgress( progress )
 
         }
 
-        function _onProcessError ( error ) {
+        function _onProcessError( error ) {
 
             onError( error )
 
@@ -260,7 +260,7 @@ class TAbstractFileConverter {
 
     }
 
-    _dumpFileInMemoryAs ( dumpType, file, parameters, onSuccess, onProgress, onError ) {
+    _dumpFileInMemoryAs( dumpType, file, parameters, onSuccess, onProgress, onError ) {
 
         let isOnError = false
 
@@ -318,7 +318,7 @@ class TAbstractFileConverter {
 
     }
 
-    _convert ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
+    _convert( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 

@@ -28,14 +28,14 @@ class LockedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 423 }
+    static get statusCode() { return 423 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isLockedError () { return true }
+    get isLockedError() { return true }
 
 }
 

@@ -1,24 +1,24 @@
-import {
-    join,
-    basename,
-    dirname,
-    extname,
-    relative
-}                       from 'path'
-import {
-    packageSourcesDirectory as sourcesDir,
-    packageTestsBenchmarksDirectory as benchesDir,
-    nodeModulesDirectory,
-    packageName
-}                       from '../../_utils.mjs'
+import colors           from 'ansi-colors'
+import childProcess     from 'child_process'
+import log              from 'fancy-log'
 import {
     existsSync,
     mkdirSync,
     writeFileSync
 }                       from 'fs'
-import log              from 'fancy-log'
-import colors           from 'ansi-colors'
-import childProcess     from 'child_process'
+import {
+    basename,
+    dirname,
+    extname,
+    join,
+    relative
+}                       from 'path'
+import {
+    nodeModulesDirectory,
+    packageName,
+    packageSourcesDirectory as sourcesDir,
+    packageTestsBenchmarksDirectory as benchesDir
+}                       from '../../_utils.mjs'
 import { sourcesFiles } from '../../configs/compute-benchmarks.conf.mjs'
 
 const {

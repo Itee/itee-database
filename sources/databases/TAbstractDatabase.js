@@ -18,7 +18,7 @@ import { TAbstractDatabasePlugin } from '../plugins/TAbstractDatabasePlugin'
 
 class TAbstractDatabase extends TAbstractObject {
 
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -38,13 +38,13 @@ class TAbstractDatabase extends TAbstractObject {
         this.plugins     = _parameters.plugins
     }
 
-    get plugins () {
+    get plugins() {
 
         return this._plugins
 
     }
 
-    set plugins ( value ) {
+    set plugins( value ) {
 
         if ( isNull( value ) ) { throw new TypeError( 'Plugins cannot be null ! Expect an array of TDatabasePlugin.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
@@ -54,13 +54,13 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    get router () {
+    get router() {
 
         return this._router
 
     }
 
-    set router ( value ) {
+    set router( value ) {
 
         if ( isNull( value ) ) { throw new TypeError( 'Router cannot be null ! Expect a Express Router.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Router cannot be undefined ! Expect a Express Router.' ) }
@@ -69,13 +69,13 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    get application () {
+    get application() {
 
         return this._application
 
     }
 
-    set application ( value ) {
+    set application( value ) {
 
         if ( isNull( value ) ) { throw new TypeError( 'Application cannot be null ! Expect a Express Application.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Application cannot be undefined ! Expect a Express Application.' ) }
@@ -84,13 +84,13 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    get driver () {
+    get driver() {
 
         return this._driver
 
     }
 
-    set driver ( value ) {
+    set driver( value ) {
 
         if ( isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
@@ -99,14 +99,14 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    setPlugins ( value ) {
+    setPlugins( value ) {
 
         this.plugins = value
         return this
 
     }
 
-    addPlugin ( value ) {
+    addPlugin( value ) {
 
         this._plugins.push( value )
 
@@ -117,30 +117,30 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    setRouter ( value ) {
+    setRouter( value ) {
 
         this.router = value
         return this
 
     }
 
-    setApplication ( value ) {
+    setApplication( value ) {
 
         this.application = value
         return this
 
     }
 
-    setDriver ( value ) {
+    setDriver( value ) {
 
         this.driver = value
         return this
 
     }
 
-    init () {}
+    init() {}
 
-    _registerPlugins () {
+    _registerPlugins() {
 
         for ( let [ name, config ] of Object.entries( this._plugins ) ) {
             this._registerPlugin( name, config )
@@ -148,7 +148,7 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    _registerPlugin ( name, config ) {
+    _registerPlugin( name, config ) {
 
         if ( this._registerPackagePlugin( name, config ) ) { return }
         if ( this._registerLocalPlugin( name, config ) ) { return }
@@ -157,7 +157,7 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    _registerPackagePlugin ( name, config ) {
+    _registerPackagePlugin( name, config ) {
 
         let success = false
 
@@ -165,7 +165,7 @@ class TAbstractDatabase extends TAbstractObject {
 
             //[Itee:01/03/2022] Todo: Waiting better plugin management for package that expose more than instancied plugin
             let plugin = require( name )
-            if(plugin.registerPlugin) {
+            if ( plugin.registerPlugin ) {
                 plugin = plugin.registerPlugin( config )
             }
 
@@ -197,7 +197,7 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    _registerLocalPlugin ( name, config ) {
+    _registerLocalPlugin( name, config ) {
 
         let success = false
 
@@ -206,8 +206,8 @@ class TAbstractDatabase extends TAbstractObject {
             //[Itee:01/03/2022] Todo: Waiting better plugin management for package that expose more than instancied plugin
             // todo use rootPath or need to resolve depth correctly !
             const localPluginPath = path.join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` )
-            let plugin = require( localPluginPath )
-            if(plugin.registerPlugin) {
+            let plugin            = require( localPluginPath )
+            if ( plugin.registerPlugin ) {
                 plugin = plugin.registerPlugin( config )
             }
 
@@ -235,11 +235,11 @@ class TAbstractDatabase extends TAbstractObject {
 
     }
 
-    connect () {}
+    connect() {}
 
-    close ( /*callback*/ ) {}
+    close( /*callback*/ ) {}
 
-    on ( /*eventName, callback*/ ) {}
+    on( /*eventName, callback*/ ) {}
 
 }
 

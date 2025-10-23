@@ -1,10 +1,10 @@
-import log    from 'fancy-log'
 import colors from 'ansi-colors'
+import log    from 'fancy-log'
 import {
-    getPrettyPackageName,
-    getPrettyPackageVersion,
     getPrettyNodeVersion,
     getPrettyNpmVersion,
+    getPrettyPackageName,
+    getPrettyPackageVersion,
     Indenter
 }             from '../_utils.mjs'
 

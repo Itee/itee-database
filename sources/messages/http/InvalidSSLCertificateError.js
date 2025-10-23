@@ -28,14 +28,14 @@ class InvalidSSLCertificateError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 526 }
+    static get statusCode() { return 526 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isInvalidSSLCertificateError () { return true }
+    get isInvalidSSLCertificateError() { return true }
 
 }
 

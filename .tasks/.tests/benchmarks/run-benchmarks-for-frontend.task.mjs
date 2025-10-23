@@ -1,8 +1,8 @@
-import { existsSync }           from 'fs'
-import path                     from 'path'
-import karma                    from 'karma'
-import log                      from 'fancy-log'
 import colors                   from 'ansi-colors'
+import log                      from 'fancy-log'
+import { existsSync }           from 'fs'
+import karma                    from 'karma'
+import path                     from 'path'
 import { packageRootDirectory } from '../../_utils.mjs'
 
 const {

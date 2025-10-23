@@ -1,7 +1,7 @@
-import { cleanConf as filesToClean } from '../configs/clean.conf.mjs'
+import colors                        from 'ansi-colors'
 import { deleteAsync }               from 'del'
 import log                           from 'fancy-log'
-import colors                        from 'ansi-colors'
+import { cleanConf as filesToClean } from '../configs/clean.conf.mjs'
 
 const red = colors.red
 

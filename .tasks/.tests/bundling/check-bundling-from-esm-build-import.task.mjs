@@ -1,26 +1,23 @@
-import {
-    join,
-    normalize,
-    basename,
-    parse,
-    dirname,
-    relative
-}                      from 'path'
+import colors                        from 'ansi-colors'
+import log                           from 'fancy-log'
 import {
     existsSync,
-    rmSync,
     mkdirSync,
-    writeFileSync,
-    readFileSync
-}                      from 'fs'
-import log             from 'fancy-log'
-import { rollup }      from 'rollup'
-import colors          from 'ansi-colors'
+    readFileSync,
+    rmSync,
+    writeFileSync
+}                                    from 'fs'
+import {
+    basename,
+    join,
+    relative
+}                                    from 'path'
+import { rollup }                    from 'rollup'
 import {
     packageBuildsDirectory as buildsDir,
-    packageTestsBundlesDirectory as bundlesDir,
-    packageName
-}                      from '../../_utils.mjs'
+    packageName,
+    packageTestsBundlesDirectory as bundlesDir
+}                                    from '../../_utils.mjs'
 import { getRollupConfigurationFor } from '../../configs/build.conf.mjs'
 
 
@@ -80,7 +77,7 @@ async function checkBundlingFromEsmBuildImportTask( done ) {
         }
 
         // Bundle each temporary files and check side effects
-        const config = getRollupConfigurationFor('check-bundling-from-esm-build-import')
+        const config = getRollupConfigurationFor( 'check-bundling-from-esm-build-import' )
         let fileName, bundleFileName, bundleFilePath
         for ( const temporaryFilePath of temporaryFilePaths ) {
 
@@ -111,7 +108,7 @@ async function checkBundlingFromEsmBuildImportTask( done ) {
             }
         }
 
-    } catch ( err ) {
+    } catch ( error ) {
         log( red( error.message ) )
     } finally {
 

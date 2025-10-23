@@ -24,6 +24,14 @@ import { UnknownError }    from '../messages/http/UnknownError'
  */
 class TAbstractResponder extends TAbstractObject {
 
+    constructor( parameters = {} ) {
+        const _parameters = {
+            ...{},
+            ...parameters
+        }
+
+        super( _parameters )
+    }
     /**
      * Normalize errors that can be in different format like single string, object, array of string, or array of object.
      *
@@ -37,7 +45,7 @@ class TAbstractResponder extends TAbstractObject {
      * @returns {Array.<Object>}
      * @private
      */
-    static _formatErrors ( errors = [] ) {
+    static _formatErrors( errors = [] ) {
 
         const _errors = ( isArray( errors ) ) ? errors : [ errors ]
 
@@ -63,13 +71,13 @@ class TAbstractResponder extends TAbstractObject {
      * @returns {AbstractHTTPError}
      * @private
      */
-    static _formatError ( error ) {
+    static _formatError( error ) {
 
         let formattedError
 
         if ( error instanceof Error ) {
 
-            formattedError = error
+            formattedError            = error
             formattedError.statusCode = 500
 
         } else if ( isString( error ) ) {
@@ -103,7 +111,7 @@ class TAbstractResponder extends TAbstractObject {
      * @param response - The server response or returnNotFound callback
      * @returns {*} callback call or response with status 204
      */
-    static returnNotFound ( response ) {
+    static returnNotFound( response ) {
 
         if ( isFunction( response ) ) { return response() }
         if ( response.headersSent ) { return }
@@ -121,7 +129,7 @@ class TAbstractResponder extends TAbstractObject {
      * @param response - The server response or returnError callback
      * @returns {*} callback call or response with status 500 and associated error
      */
-    static returnError ( error, response ) {
+    static returnError( error, response ) {
 
         if ( isFunction( response ) ) { return response( error, null ) }
         if ( response.headersSent ) { return }
@@ -151,7 +159,7 @@ class TAbstractResponder extends TAbstractObject {
      * @param response - The server response or returnData callback
      * @returns {*} callback call or response with status 200 and associated data
      */
-    static returnData ( data, response ) {
+    static returnData( data, response ) {
 
         if ( isFunction( response ) ) { return response( null, data ) }
         if ( response.headersSent ) { return }
@@ -182,7 +190,7 @@ class TAbstractResponder extends TAbstractObject {
      * @param response - The server response or returnErrorAndData callback
      * @returns {*} callback call or response with status 406, associated error and data
      */
-    static returnErrorAndData ( error, data, response ) {
+    static returnErrorAndData( error, data, response ) {
 
         if ( isFunction( response ) ) { return response( error, data ) }
         if ( response.headersSent ) { return }
@@ -205,9 +213,10 @@ class TAbstractResponder extends TAbstractObject {
         } )
 
     }
-    static return ( response, callbacks = {} ) {
+    static return( response, callbacks = {} ) {
 
-        const _callbacks = Object.assign( {
+        const _callbacks = Object.assign(
+            {
                 immediate:                null,
                 beforeAll:                null,
                 beforeReturnErrorAndData: null,
@@ -226,12 +235,13 @@ class TAbstractResponder extends TAbstractObject {
                 returnError:        TAbstractResponder.returnError.bind( this ),
                 returnData:         TAbstractResponder.returnData.bind( this ),
                 returnNotFound:     TAbstractResponder.returnNotFound.bind( this )
-            } )
+            }
+        )
 
         /**
          * The callback that will be used for parse database response
          */
-        function dispatchResult ( error = null, data = null ) {
+        function dispatchResult( error = null, data = null ) {
 
             const haveData  = isDefined( data )
             const haveError = isDefined( error )
@@ -273,14 +283,6 @@ class TAbstractResponder extends TAbstractObject {
 
         return dispatchResult
 
-    }
-    constructor ( parameters = {} ) {
-        const _parameters = {
-            ...{},
-            ...parameters
-        }
-
-        super( _parameters )
     }
 
 }

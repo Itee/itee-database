@@ -1,15 +1,12 @@
-import {
-    join,
-    dirname
-}                        from 'path'
-import {
-    readFileSync,
-    existsSync
-}                        from 'fs'
-import { fileURLToPath } from 'url'
+import colors            from 'ansi-colors'
 import childProcess      from 'child_process'
 import log               from 'fancy-log'
-import colors            from 'ansi-colors'
+import { readFileSync }  from 'fs'
+import {
+    dirname,
+    join
+}                        from 'path'
+import { fileURLToPath } from 'url'
 
 const red    = colors.red
 const yellow = colors.yellow
