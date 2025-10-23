@@ -25,7 +25,6 @@
  * @requires {@link module: [gulp-jsdoc3]{@link https://github.com/mlucool/gulp-jsdoc3}}
  * @requires {@link module: [gulp-eslint]{@link https://github.com/adametry/gulp-eslint}}
  * @requires {@link module: [del]{@link https://github.com/sindresorhus/del}}
- * @requires {@link module: [minimist]{@link https://github.com/substack/minimist}}
  * @requires {@link module: [rollup]{@link https://github.com/rollup/rollup}}
  * @requires {@link module: [path]{@link https://nodejs.org/api/path.html}}
  * @requires {@link module: [karma]{@link https://github.com/karma-runner/karma}}
