@@ -1,30 +1,28 @@
-import log                         from 'fancy-log'
-import gulp                        from 'gulp'
-import eslint                      from 'gulp-eslint'
-import { lintConf as filesToLint } from '../configs/lint.conf.mjs'
+import colors        from 'ansi-colors'
+import log           from 'fancy-log'
+import child_process from 'node:child_process'
+import { promisify } from 'node:util'
 
-function lintTask( done ) {
+const execFile = promisify( child_process.execFile )
+const red      = colors.red
 
-    for ( let fileIndex = 0, numberOfFiles = filesToLint.length ; fileIndex < numberOfFiles ; fileIndex++ ) {
-        log( `[${ fileIndex + 1 }/${ numberOfFiles }] Lint ${ filesToLint[ fileIndex ] }` )
+async function lintTask( done ) {
+
+    try {
+
+        const { stdout } = await execFile( 'npx', [ 'eslint', '--config', './.tasks/configs/eslint.conf.mjs', '--fix' ] )
+        if ( stdout !== '' ) {
+            log( stdout )
+        }
+
+        done()
+
+    } catch ( error ) {
+
+        log( error.stdout )
+        done( red( error.message ) )
+
     }
-
-    return gulp.src( filesToLint, { base: './' } )
-               .pipe( eslint( {
-                   allowInlineConfig: true,
-                   globals:           [],
-                   fix:               true,
-                   quiet:             false,
-                   envs:              [],
-                   configFile:        './.tasks/configs/eslint.conf.json',
-                   parserOptions:     {},
-                   plugins:           [],
-                   rules:             {},
-                   useEslintrc:       false
-               } ) )
-               .pipe( eslint.format( 'stylish' ) )
-               .pipe( gulp.dest( '.' ) )
-               .pipe( eslint.failAfterError() )
 
 }
 
