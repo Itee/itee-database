@@ -10,8 +10,6 @@
  */
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 var iteeValidators = require('itee-validators');
 var iteeCore = require('itee-core');
 var path = require('path');
@@ -19,7 +17,7 @@ var globalBuffer = require('buffer');
 var fs = require('fs');
 var stream = require('stream');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+function _interopDefault (e) { return e && e.__esModule ? e : { default: e }; }
 
 function _interopNamespace(e) {
 	if (e && e.__esModule) return e;
@@ -35,13 +33,13 @@ function _interopNamespace(e) {
 			}
 		});
 	}
-	n["default"] = e;
+	n.default = e;
 	return Object.freeze(n);
 }
 
-var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
+var path__default = /*#__PURE__*/_interopDefault(path);
 var globalBuffer__namespace = /*#__PURE__*/_interopNamespace(globalBuffer);
-var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
+var fs__default = /*#__PURE__*/_interopDefault(fs);
 
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
@@ -103,16 +101,6 @@ function v4(options, buf, offset) {
 
   rnds[6] = rnds[6] & 0x0f | 0x40;
   rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
-
-  if (buf) {
-    offset = offset || 0;
-
-    for (var i = 0; i < 16; ++i) {
-      buf[offset + i] = rnds[i];
-    }
-
-    return buf;
-  }
 
   return stringify(rnds);
 }
@@ -215,6 +203,7 @@ class AbstractError extends Error {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The AbstractHTTPError is the base class for all derived HTTPError.
@@ -262,6 +251,7 @@ class AbstractHTTPError extends AbstractError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -298,6 +288,7 @@ class UnknownError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -580,6 +571,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -615,6 +607,7 @@ class UnprocessableEntityError extends AbstractHTTPError {
  * @class TDatabaseController
  * @classdesc The TDatabaseController is the base class to perform CRUD operations on the database
  */
+
 
 /**
  * @class
@@ -1104,6 +1097,7 @@ class TAbstractDataConverter {
  *
  */
 
+
 // Todo: Extend sort of Factory
 class TAbstractConverterManager extends TAbstractResponder {
 
@@ -1270,7 +1264,7 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     _processFiles( files, parameters, response, next ) {
 
-        const fileExtensions = files.map( ( file ) => path__default["default"].extname( file.name ) );
+        const fileExtensions = files.map( ( file ) => path__default.default.extname( file.name ) );
         const matchingRules  = this._rules.filter( elem => {
 
             const availables = elem.on;
@@ -1472,6 +1466,7 @@ class TAbstractDataInserter {
  * @example Todo
  *
  */
+
 
 /* Writable memory stream */
 class MemoryWriteStream extends stream.Writable {
@@ -1720,7 +1715,7 @@ class TAbstractFileConverter {
 
         let isOnError = false;
 
-        const fileReadStream = fs__default["default"].createReadStream( file );
+        const fileReadStream = fs__default.default.createReadStream( file );
 
         fileReadStream.on( 'error', ( error ) => {
 
@@ -1791,6 +1786,7 @@ TAbstractFileConverter.DumpType = /*#__PURE__*/Object.freeze( {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  *
  */
+
 
 class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
 
@@ -1902,6 +1898,7 @@ class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
  * @example Todo
  *
  */
+
 
 class TAbstractDatabase extends iteeCore.TAbstractObject {
 
@@ -2059,7 +2056,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from node_modules` );
-                plugin.__dirname = path__default["default"].dirname( require.resolve( name ) );
+                plugin.__dirname = path__default.default.dirname( require.resolve( name ) );
                 plugin.registerTo( this.driver, this.application, this.router );
 
                 success = true;
@@ -2092,7 +2089,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
             //[Itee:01/03/2022] Todo: Waiting better plugin management for package that expose more than instancied plugin
             // todo use rootPath or need to resolve depth correctly !
-            const localPluginPath = path__default["default"].join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` );
+            const localPluginPath = path__default.default.join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` );
             let plugin            = require( localPluginPath );
             if ( plugin.registerPlugin ) {
                 plugin = plugin.registerPlugin( config );
@@ -2101,7 +2098,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from local folder` );
-                plugin.__dirname = path__default["default"].dirname( require.resolve( localPluginPath ) );
+                plugin.__dirname = path__default.default.dirname( require.resolve( localPluginPath ) );
                 plugin.registerTo( this.driver, this.application, this.router );
 
                 success = true;
@@ -2140,6 +2137,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2180,6 +2178,7 @@ class BadRequestError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2218,6 +2217,7 @@ class BadMappingError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2258,6 +2258,7 @@ class BlockedByWindowsParentalControlsError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2296,6 +2297,7 @@ class ClientClosedRequestError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2336,6 +2338,7 @@ class ConflictError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2374,6 +2377,7 @@ class ExpectationFailedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2414,6 +2418,7 @@ class ForbiddenError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2452,6 +2457,7 @@ class GoneError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2492,6 +2498,7 @@ class HTTPRequestSentToHTTPSPortError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2530,6 +2537,7 @@ class ImATeapotError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2570,6 +2578,7 @@ class LengthRequiredError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2608,6 +2617,7 @@ class LockedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2648,6 +2658,7 @@ class MethodFailureError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2686,6 +2697,7 @@ class MethodNotAllowedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2726,6 +2738,7 @@ class NoResponseError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2764,6 +2777,7 @@ class NotAcceptableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2804,6 +2818,7 @@ class NotFoundError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2842,6 +2857,7 @@ class PaymentRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2882,6 +2898,7 @@ class PreconditionFailedError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2920,6 +2937,7 @@ class PreconditionRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2960,6 +2978,7 @@ class ProxyAuthenticationRequiredError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -2998,6 +3017,7 @@ class RequestEntityTooLargeError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3038,6 +3058,7 @@ class RequestHeaderFieldsTooLargeError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3076,6 +3097,7 @@ class RequestRangeUnsatisfiableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3116,6 +3138,7 @@ class RequestTimeOutError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3154,6 +3177,7 @@ class RetryWithError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3194,6 +3218,7 @@ class SSLCertificateError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3232,6 +3257,7 @@ class SSLCertificateRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3272,6 +3298,7 @@ class TooManyRequestsError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3310,6 +3337,7 @@ class UnauthorizedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3350,6 +3378,7 @@ class UnavailableForLegalReasonsError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3388,6 +3417,7 @@ class UnorderedCollectionError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3428,6 +3458,7 @@ class UnrecoverableError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3466,6 +3497,7 @@ class UpgradeRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3506,6 +3538,7 @@ class ATimeoutOccuredError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3544,6 +3577,7 @@ class BadGatewayError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3584,6 +3618,7 @@ class BandwidthLimitExceededError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3622,6 +3657,7 @@ class ConnectionTimedOutError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3662,6 +3698,7 @@ class GatewayTimeOutError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3700,6 +3737,7 @@ class HTTPVersionNotSupportedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3740,6 +3778,7 @@ class InsufficientStorageError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3778,6 +3817,7 @@ class InternalServerError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3818,6 +3858,7 @@ class InvalidSSLCertificateError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3856,6 +3897,7 @@ class LoopDetectedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3896,6 +3938,7 @@ class NetworkAuthenticationRequiredError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -3934,6 +3977,7 @@ class NotExtendedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3974,6 +4018,7 @@ class NotImplementedError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -4012,6 +4057,7 @@ class OriginIsUnreachableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -4052,6 +4098,7 @@ class RailgunError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -4090,6 +4137,7 @@ class ServiceUnavailableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -4130,6 +4178,7 @@ class SSLHandshakeFailedError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -4169,6 +4218,7 @@ class VariantAlsoNegotiatesError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The UnprocessableEntityError is the error class for this kind of error.
@@ -4206,6 +4256,7 @@ class WebServerIsDownError extends AbstractHTTPError {
  * @example Todo
  *
  */
+
 
 const Databases = new Map();
 
