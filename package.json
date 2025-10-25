@@ -76,7 +76,7 @@
     "eslint-plugin-mocha": "^11.2.0",
     "fancy-log": "^2.0.0",
     "figlet": "^1.9.3",
-    "glob": "^7.2.0",
+    "glob": "^11.0.3",
     "globals": "^16.4.0",
     "gulp": "^5.0.1",
     "gulp-replace": "^1.1.3",
