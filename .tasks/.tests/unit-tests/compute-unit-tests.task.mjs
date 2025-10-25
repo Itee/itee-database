@@ -121,7 +121,7 @@ function computeUnitTestsTask( done ) {
                         let paramName = param.name
                         if ( !paramName ) {
                             paramName = `param${ pIndex }`
-                            // eslint-disable-next-line no-console
+                             
                             console.warn( `Missing parameter name for [${ docData.longname }]. Defaulting to [${ paramName }]` )
                         }
 
