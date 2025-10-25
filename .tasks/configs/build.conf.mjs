@@ -189,7 +189,7 @@ function _createRollupConfigs( options ) {
                     intro:     ( !isProd && format === 'iife' ) ? _computeIntro() : '',
                     outro:     '',
                     sourcemap: !isProd,
-                    interop:   true,
+                    interop:   'auto',
 
                     // danger zone
                     exports: 'auto',
