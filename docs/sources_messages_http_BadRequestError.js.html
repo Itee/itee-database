@@ -114,14 +114,14 @@ class BadRequestError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 400 }
+    static get statusCode() { return 400 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isBadRequestError () { return true }
+    get isBadRequestError() { return true }
 
 }
 

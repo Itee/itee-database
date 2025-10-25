@@ -114,14 +114,14 @@ class GatewayTimeOutError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 504 }
+    static get statusCode() { return 504 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isGatewayTimeOutError () { return true }
+    get isGatewayTimeOutError() { return true }
 
 }
 

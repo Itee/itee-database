@@ -114,14 +114,14 @@ class RetryWithError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 449 }
+    static get statusCode() { return 449 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isRetryWithError () { return true }
+    get isRetryWithError() { return true }
 
 }
 
