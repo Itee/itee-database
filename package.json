@@ -39,7 +39,7 @@
   ],
   "scripts":         {
     "default":                     "gulp --tasks",
-    "refresh":                     "gulp refresh",
+    "refresh":                     "node ./.tasks/_refresh.mjs",
     "help":                        "gulp help",
     "patch":                       "gulp patch",
     "clean":                       "gulp clean",
