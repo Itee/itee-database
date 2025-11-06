@@ -19,7 +19,8 @@ import {
     nodeModulesDirectory,
     packageName,
     packageSourcesDirectory as sourcesDir,
-    packageTestsUnitsDirectory as unitsDir
+    packageTestsUnitsDirectory as unitsDir,
+    getPrettyPackageName
 }                          from '../../_utils.mjs'
 import { sourcesFiles }    from '../../configs/compute-unit-tests.conf.mjs'
 
@@ -515,10 +516,8 @@ const computeUnitTestsTask       = ( done ) => {
 
         log( yellow( 'No tests were generated. Create fallback global root import file.' ) )
 
-        unitsTemplate = '' +
-            'import { describe }      from \'mocha\'' + '\n' +
-            '\n' +
-            'describe( \'Itee#Validators\', () => {} )' + '\n'
+        const prettyPackageName = getPrettyPackageName('#')
+        unitsTemplate = `describe( '${prettyPackageName}', () => {} )` + '\n'
 
     }
 
