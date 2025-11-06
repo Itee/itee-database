@@ -1,94 +1,94 @@
 {
-  "name": "itee-database",
-  "version": "8.3.0",
-  "description": "The abstract database side of the Itee solution for 3d web content, this package is design to be inherited and run on an Itee server.",
-  "keywords": [
+  "name":            "itee-database",
+  "version":         "8.3.0",
+  "description":     "The abstract database side of the Itee solution for 3d web content, this package is design to be inherited and run on an Itee server.",
+  "keywords":        [
     "itee",
     "database",
     "library"
   ],
-  "author": {
+  "author":          {
     "name": "Itee (Tristan Valcke)",
-    "url": "https://github.com/Itee"
+    "url":  "https://github.com/Itee"
   },
-  "contributors": [],
-  "license": "BSD-3-Clause",
-  "private": false,
-  "repository": {
+  "contributors":    [],
+  "license":         "BSD-3-Clause",
+  "private":         false,
+  "repository":      {
     "type": "git",
-    "url": "https://github.com/Itee/itee-database.git"
+    "url":  "https://github.com/Itee/itee-database.git"
   },
-  "main": "builds/itee-database.cjs.js",
-  "module": "builds/itee-database.esm.js",
-  "browser": "",
-  "homepage": "https://github.com/Itee/itee-database#readme",
-  "man": "./docs/index.html",
-  "bugs": {
+  "main":            "builds/itee-database.cjs.js",
+  "module":          "builds/itee-database.esm.js",
+  "browser":         "",
+  "homepage":        "https://github.com/Itee/itee-database#readme",
+  "man":             "./docs/index.html",
+  "bugs":            {
     "url": "https://github.com/Itee/itee-database/issues"
   },
-  "engines": {
+  "engines":         {
     "node": ">=20"
   },
-  "os": [
+  "os":              [
     "win32",
     "linux"
   ],
-  "cpu": [
+  "cpu":             [
     "x64",
     "ia32"
   ],
-  "scripts": {
-    "default": "gulp",
-    "help": "gulp help",
-    "patch": "gulp patch",
-    "clean": "gulp clean",
-    "lint": "gulp lint",
-    "doc": "gulp doc",
-    "build-test": "gulp build-tests",
-    "bench": "gulp run-benchmarks",
-    "unit": "gulp run-unit-tests",
-    "test": "gulp test",
-    "build": "gulp build",
-    "release": "gulp release",
+  "scripts":         {
+    "default":          "gulp",
+    "help":             "gulp help",
+    "patch":            "gulp patch",
+    "clean":            "gulp clean",
+    "lint":             "gulp lint",
+    "doc":              "gulp doc",
+    "build-test":       "gulp build-tests",
+    "bench":            "gulp run-benchmarks",
+    "unit":             "gulp run-unit-tests",
+    "test":             "gulp test",
+    "build":            "gulp build",
+    "release":          "gulp release",
     "semantic-release": "semantic-release --dry-run --no-ci",
-    "postversion": "gulp build"
+    "postversion":      "gulp build"
   },
-  "dependencies": {
-    "itee-core": "^1.4.0",
-    "itee-utils": "^5.6.0",
+  "dependencies":    {
+    "itee-core":       "^1.4.0",
+    "itee-utils":      "^5.6.0",
     "itee-validators": "^5.6.0",
-    "uuid": "^13.0.0"
+    "uuid":            "^13.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.38.0",
-    "@rollup/plugin-commonjs": "^28.0.9",
+    "@eslint/js":                  "^9.38.0",
+    "@rollup/plugin-commonjs":     "^28.0.9",
     "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser":       "^0.4.4",
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^11.0.6",
-    "@semantic-release/npm": "^12.0.2",
-    "ansi-colors": "^4.1.1",
-    "benchmark": "^2.1.4",
-    "chai": "^6.2.0",
-    "cz-emoji": "^1.3.2-canary.2",
-    "del": "^8.0.1",
-    "eslint": "^9.38.0",
-    "eslint-plugin-mocha": "^11.2.0",
-    "fancy-log": "^2.0.0",
-    "figlet": "^1.9.3",
-    "glob": "^11.0.3",
-    "globals": "^16.4.0",
-    "gulp": "^5.0.1",
-    "gulp-replace": "^1.1.3",
-    "ink-docstrap": "^1.3.2",
-    "jsdoc": "^4.0.5",
-    "mocha": "^11.7.4",
-    "mochawesome": "^7.1.4",
-    "rollup": "^4.52.5",
-    "rollup-plugin-cleanup": "^3.2.1",
-    "semantic-release": "^24.2.9",
-    "semantic-release-gitmoji": "^1.6.8",
-    "taffydb": "^2.7.3"
+    "@semantic-release/git":       "^10.0.1",
+    "@semantic-release/github":    "^11.0.6",
+    "@semantic-release/npm":       "^12.0.2",
+    "ansi-colors":                 "^4.1.1",
+    "benchmark":                   "^2.1.4",
+    "chai":                        "^6.2.0",
+    "cz-emoji":                    "^1.3.2-canary.2",
+    "del":                         "^8.0.1",
+    "eslint":                      "^9.38.0",
+    "eslint-plugin-mocha":         "^11.2.0",
+    "fancy-log":                   "^2.0.0",
+    "figlet":                      "^1.9.3",
+    "glob":                        "^11.0.3",
+    "globals":                     "^16.4.0",
+    "gulp":                        "^5.0.1",
+    "gulp-replace":                "^1.1.3",
+    "ink-docstrap":                "^1.3.2",
+    "jsdoc":                       "^4.0.5",
+    "mocha":                       "^11.7.4",
+    "mochawesome":                 "^7.1.4",
+    "rollup":                      "^4.52.5",
+    "rollup-plugin-cleanup":       "^3.2.1",
+    "semantic-release":            "^24.2.9",
+    "semantic-release-gitmoji":    "^1.6.8",
+    "taffydb":                     "^2.7.3"
   }
 }
