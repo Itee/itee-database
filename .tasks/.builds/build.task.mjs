@@ -9,7 +9,7 @@ const {
           yellow
       } = colors
 
-async function buildTask( done ) {
+const buildTask       = async ( done ) => {
 
     const configs = getRollupConfigurationFor( 'build' )
 
@@ -39,5 +39,8 @@ async function buildTask( done ) {
     done()
 
 }
+buildTask.displayName = 'build'
+buildTask.description = 'Todo...'
+buildTask.flags       = null
 
 export { buildTask }

@@ -14,7 +14,10 @@ const {
           yellow,
       } = colors
 
-function runUnitTestsForBackendTask( done ) {
+/**
+ * @description Will run unit tests with node
+ */
+const runUnitTestsForBackendTask       = ( done ) => {
 
     const testsPath = join( packageTestsUnitsDirectory, `/builds/${ packageName }.units.cjs.js` )
     if ( !existsSync( testsPath ) ) {
@@ -34,5 +37,8 @@ function runUnitTestsForBackendTask( done ) {
     } )
 
 }
+runUnitTestsForBackendTask.displayName = 'run-unit-tests-for-backend'
+runUnitTestsForBackendTask.description = 'Will run unit tests with node'
+runUnitTestsForBackendTask.flags       = null
 
 export { runUnitTestsForBackendTask }

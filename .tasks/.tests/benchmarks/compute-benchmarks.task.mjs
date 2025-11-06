@@ -27,7 +27,10 @@ const {
           yellow
       } = colors
 
-function computeBenchmarksTask( done ) {
+/**
+ * @description Will generate benchmarks files from source code against provided alternatives
+ */
+const computeBenchmarksTask       = ( done ) => {
 
     if ( !existsSync( benchesDir ) ) {
         log( 'Creating', green( benchesDir ) )
@@ -96,7 +99,7 @@ function computeBenchmarksTask( done ) {
             } )
 
             if ( jsonData.length === 0 ) {
-                log( yellow( `No usable exports found in [${ sourceFile }]. Ignore it !` ) )
+                log( 'Ignoring', yellow( `${ sourceFile }, no usable exports found` ) )
                 continue
             }
 
@@ -138,9 +141,8 @@ function computeBenchmarksTask( done ) {
                 benchSuites += '\n'
             }
 
-            const template = '' + '\n' +
-                `import Benchmark   from 'benchmark'` + '\n' +
-                `import { Testing }      from 'itee-utils'` + '\n' +
+            const template = '' +
+                `import { Testing }      from 'itee-utils/sources/testings/benchmarks.js'` + '\n' +
                 `import * as ${ nsName } from '${ importFilePath }'` + '\n' +
                 '\n' +
                 `${ benchSuites }` +
@@ -154,8 +156,12 @@ function computeBenchmarksTask( done ) {
                 exports: suitesToExports
             } )
 
-            log( green( `Create ${ benchFilePath }` ) )
-            mkdirSync( benchDirPath, { recursive: true } )
+            if ( !existsSync( benchDirPath ) ) {
+                log( 'Creating', green( benchDirPath ) )
+                mkdirSync( benchDirPath, { recursive: true } )
+            }
+
+            log( 'Creating', green( benchFilePath ) )
             writeFileSync( benchFilePath, template )
 
         } catch ( error ) {
@@ -171,9 +177,9 @@ function computeBenchmarksTask( done ) {
     for ( let i = 0 ; i < benchRootImports.length ; i++ ) {
 
         const currentBench = benchRootImports[ i ]
-        const exports      = currentBench.exports
-        const imports      = exports.join( ', ' )
-        suites.push( ...exports )
+        const namedExports = currentBench.exports
+        const imports      = namedExports.join( ', ' )
+        suites.push( ...namedExports )
 
         templateImports += `import {${ imports }} from './${ currentBench.path }'` + '\n'
 
@@ -189,13 +195,16 @@ function computeBenchmarksTask( done ) {
         `\tsuite.run()` + '\n' +
         `}` + '\n'
 
-    const benchesFilePath = join( benchesDir, `${ packageName }.benchs.js` )
+    const benchesFilePath = join( benchesDir, `${ packageName }.benchmarks.js` )
 
-    log( green( `Create ${ benchesFilePath }` ) )
+    log( 'Creating', green( benchesFilePath ) )
     writeFileSync( benchesFilePath, benchesTemplate )
 
     done()
 
 }
+computeBenchmarksTask.displayName = 'compute-benchmarks'
+computeBenchmarksTask.description = 'Will generate benchmarks files from source code against provided alternatives.'
+computeBenchmarksTask.flags       = null
 
 export { computeBenchmarksTask }

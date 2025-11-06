@@ -24,7 +24,13 @@ const {
           magenta
       } = colors
 
-async function checkBundlingFromEsmFilesDirectTask( done ) {
+/**
+ * @description In view to detect bundling side effects this task will
+ * create intermediary file for each individual export from this package
+ * and then create rollup config for each of them and bundle
+ * Todo: Check for different target env like next task below this one
+ */
+const checkBundlingFromEsmFilesDirectTask       = async ( done ) => {
 
     const outputDir = join( bundlesDir, 'from_files_direct' )
     if ( existsSync( outputDir ) ) {
@@ -64,5 +70,8 @@ async function checkBundlingFromEsmFilesDirectTask( done ) {
     done()
 
 }
+checkBundlingFromEsmFilesDirectTask.displayName = 'check-bundling-from-esm-files-direct'
+checkBundlingFromEsmFilesDirectTask.description = 'In view to detect bundling side effects this task will create intermediary file for each individual export from this package and then create rollup config for each of them and bundle'
+checkBundlingFromEsmFilesDirectTask.flags       = null
 
 export { checkBundlingFromEsmFilesDirectTask }

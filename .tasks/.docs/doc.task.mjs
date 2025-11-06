@@ -6,7 +6,12 @@ import { promisify } from 'node:util'
 const execFile = promisify( child_process.execFile )
 const red      = colors.red
 
-async function docTask( done ) {
+/**
+ * @method npm run doc
+ * @global
+ * @description Will generate this documentation
+ */
+const docTask       = async ( done ) => {
 
     try {
         const { stdout } = await execFile(
@@ -23,5 +28,8 @@ async function docTask( done ) {
     }
 
 }
+docTask.displayName = 'doc'
+docTask.description = 'Will generate this documentation.'
+docTask.flags       = null
 
 export { docTask }

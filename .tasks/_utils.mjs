@@ -124,27 +124,41 @@ function getPrettyNpmVersion() {
 
 }
 
+function IndenterFactory( indentationChar = '\t', indentationLevel = 5 ) {
+
+    const indentationLevels = {}
+    let currentProperty     = 'I_'
+    for ( let currentIndentationLevel = 1 ; currentIndentationLevel <= indentationLevel ; currentIndentationLevel++ ) {
+        indentationLevels[ currentProperty ] = indentationChar.repeat( currentIndentationLevel )
+        currentProperty += '_'
+    }
+
+    return {
+        I: new Indenter( indentationChar ),
+        ...indentationLevels
+    }
+
+}
+
 class Indenter {
 
-    _          = ''
-    __         = ''
-    ___        = ''
-    ____       = ''
-    _____      = ''
-    ______     = ''
-    _______    = ''
-    ________   = ''
-    _________  = ''
-    __________ = ''
+    constructor( indentationChar = '\t' ) {
 
-    constructor( indentationChar = '\t', maxIndentationLevel = 10 ) {
+        this.indentationChar         = indentationChar
+        this.currentIndentationLevel = 0
 
-        let currentProperty = '_'
-        for ( let currentIndentationLevel = 1 ; currentIndentationLevel <= maxIndentationLevel ; currentIndentationLevel++ ) {
-            this[ currentProperty ] = indentationChar.repeat( currentIndentationLevel )
-            currentProperty += '_'
-        }
+    }
 
+    _( indentationLevel = null ) {
+        return this.indentationChar.repeat( indentationLevel ?? this.currentIndentationLevel )
+    }
+
+    deeper( level = 1 ) {
+        this.currentIndentationLevel += level
+    }
+
+    shallower( level = 1 ) {
+        this.currentIndentationLevel -= level
     }
 
 }
@@ -174,5 +188,5 @@ export {
     getPrettyNodeVersion,
     getPrettyNpmVersion,
 
-    Indenter
+    IndenterFactory as Indenter
 }

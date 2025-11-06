@@ -6,7 +6,12 @@ import { promisify } from 'node:util'
 const execFile = promisify( child_process.execFile )
 const red      = colors.red
 
-async function lintTask( done ) {
+/**
+ * @method npm run lint
+ * @global
+ * @description Will lint the sources files and try to fix the style when possible
+ */
+const lintTask       = async ( done ) => {
 
     try {
 
@@ -25,5 +30,8 @@ async function lintTask( done ) {
     }
 
 }
+lintTask.displayName = 'lint'
+lintTask.description = 'Will lint the sources files and try to fix the style when possible.'
+lintTask.flags       = null
 
 export { lintTask }

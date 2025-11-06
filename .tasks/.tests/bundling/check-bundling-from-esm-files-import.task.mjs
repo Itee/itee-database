@@ -26,7 +26,7 @@ const {
           magenta
       } = colors
 
-async function checkBundlingFromEsmFilesImportTask( done ) {
+const checkBundlingFromEsmFilesImportTask       = async ( done ) => {
 
     const outputDir      = join( bundleDir, 'from_files_import' )
     const temporariesDir = join( outputDir, '.tmp' )
@@ -88,5 +88,8 @@ async function checkBundlingFromEsmFilesImportTask( done ) {
     done()
 
 }
+checkBundlingFromEsmFilesImportTask.displayName = 'check-bundling-from-esm-files-import'
+checkBundlingFromEsmFilesImportTask.description = 'In view to detect bundling side effects this task will create intermediary file for each individual export from this package and then create rollup config for each of them and bundle'
+checkBundlingFromEsmFilesImportTask.flags       = null
 
 export { checkBundlingFromEsmFilesImportTask }
