@@ -341,58 +341,6 @@ const configs = {
             file:   null
         }
     },
-    'benchmarks-backend':                   {
-        input:     `tests/benchmarks/${ packageName }.benchs.js`,
-        external:  [
-            'benchmark',
-            'express',
-            'http',
-            'https',
-            'fs',
-            'path',
-            'crypto'
-        ],
-        plugins:   [
-            nodeResolve( {
-                preferBuiltins: true
-            } ),
-            cleanup( {
-                comments: 'none'
-            } )
-        ],
-        treeshake: true,
-        output:    {
-            indent: '\t',
-            format: 'cjs',
-            name:   'Itee.Benchs',
-            file:   `tests/benchmarks/builds/${ packageName }.benchs.cjs.js`
-        }
-    },
-    'benchmarks-frontend':                  null,
-    'units-backend':                        {
-        input:     `tests/units/${ packageName }.units.js`,
-        external:  [
-            'mocha',
-            'chai',
-            'express'
-        ],
-        plugins:   [
-            nodeResolve( {
-                preferBuiltins: true
-            } ),
-            cleanup( {
-                comments: 'none'
-            } )
-        ],
-        treeshake: true,
-        output:    {
-            indent: '\t',
-            format: 'cjs',
-            name:   'Itee.Units',
-            file:   `tests/units/builds/${ packageName }.units.cjs.js`
-        }
-    },
-    'units-frontend':                       null,
 }
 
 function getRollupConfigurationFor( bundleName ) {
