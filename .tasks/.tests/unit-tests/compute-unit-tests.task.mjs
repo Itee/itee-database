@@ -1,11 +1,6 @@
 import colors              from 'ansi-colors'
 import childProcess        from 'child_process'
 import log                 from 'fancy-log'
-import {
-    existsSync,
-    mkdirSync,
-    writeFileSync
-}                          from 'fs'
 import { isNotEmptyArray } from 'itee-validators'
 import {
     basename,
@@ -15,18 +10,19 @@ import {
     relative
 }                          from 'path'
 import {
+    createDirectoryIfNotExist,
+    createFile,
+    getPrettyPackageName,
     Indenter,
     nodeModulesDirectory,
     packageName,
     packageSourcesDirectory as sourcesDir,
-    packageTestsUnitsDirectory as unitsDir,
-    getPrettyPackageName
+    packageTestsUnitsDirectory as unitsDir
 }                          from '../../_utils.mjs'
 import { sourcesFiles }    from '../../configs/compute-unit-tests.conf.mjs'
 
 const {
           red,
-          green,
           yellow
       } = colors
 
@@ -35,10 +31,7 @@ const {
  */
 const computeUnitTestsTask       = ( done ) => {
 
-    if ( !existsSync( unitsDir ) ) {
-        log( 'Creating', green( unitsDir ) )
-        mkdirSync( unitsDir, { recursive: true } )
-    }
+    createDirectoryIfNotExist( unitsDir )
 
     const unitsImportMap = []
     for ( let sourceFile of sourcesFiles ) {
@@ -484,13 +477,8 @@ const computeUnitTestsTask       = ( done ) => {
                 path:       importUnitFilePath.replace( /\\/g, '/' )
             } )
 
-            if ( !existsSync( unitDirPath ) ) {
-                log( 'Creating', green( unitDirPath ) )
-                mkdirSync( unitDirPath, { recursive: true } )
-            }
-
-            log( 'Creating', green( unitFilePath ) )
-            writeFileSync( unitFilePath, template )
+            createDirectoryIfNotExist( unitDirPath )
+            createFile( unitFilePath, template )
 
         } catch ( error ) {
 
@@ -514,17 +502,20 @@ const computeUnitTestsTask       = ( done ) => {
 
     } else {
 
-        log( yellow( 'No tests were generated. Create fallback global root import file.' ) )
+        log( 'Warning ', yellow( 'No tests were generated. Create fallback global root import file.' ) )
+        const defaultUnitsDir  = join( unitsDir, 'default' )
+        const defaultUnitsPath = join( defaultUnitsDir, 'default.unit.mjs' )
 
-        const prettyPackageName = getPrettyPackageName('#')
-        unitsTemplate = `describe( '${prettyPackageName}', () => {} )` + '\n'
+        createDirectoryIfNotExist( defaultUnitsDir )
+        createFile( defaultUnitsPath, '// Avoid web test runner crash on empty benches' )
+
+        const prettyPackageName = getPrettyPackageName( '#' )
+        unitsTemplate           = `describe( '${ prettyPackageName }', () => {} )` + '\n'
 
     }
 
     const unitsFilePath = join( unitsDir, `${ packageName }.units.mjs` )
-
-    log( 'Creating', green( unitsFilePath ) )
-    writeFileSync( unitsFilePath, unitsTemplate )
+    createFile( unitsFilePath, unitsTemplate )
 
     done()
 

@@ -1,15 +1,25 @@
 import colors            from 'ansi-colors'
 import childProcess      from 'child_process'
 import log               from 'fancy-log'
-import { readFileSync }  from 'fs'
+import {
+    existsSync,
+    mkdirSync,
+    readFileSync,
+    writeFileSync
+}                        from 'fs'
 import {
     dirname,
     join
 }                        from 'path'
 import { fileURLToPath } from 'url'
 
-const red    = colors.red
-const yellow = colors.yellow
+const {
+          red,
+          green,
+          yellow
+      } = colors
+
+///
 
 function getDirname() {
 
@@ -51,6 +61,8 @@ const packageTestsBundlesDirectory    = join( packageTestsDirectory, 'bundles' )
 const packageTestsUnitsDirectory      = join( packageTestsDirectory, 'units' )
 const packageDocsDirectory            = join( packageRootDirectory, 'docs' )
 const packageTutorialsDirectory       = join( packageRootDirectory, 'tutorials' )
+
+///
 
 function getPackageJson() {
 
@@ -124,6 +136,26 @@ function getPrettyNpmVersion() {
 
 }
 
+///
+
+function createDirectoryIfNotExist( directoryPath ) {
+
+    if ( !existsSync( directoryPath ) ) {
+        log( 'Creating', green( directoryPath ) )
+        mkdirSync( directoryPath, { recursive: true } )
+    }
+
+}
+
+function createFile( filePath, fileContent ) {
+
+    log( 'Creating', green( filePath ) )
+    writeFileSync( filePath, fileContent )
+
+}
+
+///
+
 function IndenterFactory( indentationChar = '\t', indentationLevel = 5 ) {
 
     const indentationLevels = {}
@@ -163,6 +195,8 @@ class Indenter {
 
 }
 
+///
+
 export {
     packageRootDirectory,
     packageJsonPath,
@@ -187,6 +221,9 @@ export {
     getPrettyPackageVersion,
     getPrettyNodeVersion,
     getPrettyNpmVersion,
+
+    createDirectoryIfNotExist,
+    createFile,
 
     IndenterFactory as Indenter
 }

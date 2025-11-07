@@ -2,11 +2,6 @@ import colors           from 'ansi-colors'
 import childProcess     from 'child_process'
 import log              from 'fancy-log'
 import {
-    existsSync,
-    mkdirSync,
-    writeFileSync
-}                       from 'fs'
-import {
     basename,
     dirname,
     extname,
@@ -17,13 +12,14 @@ import {
     nodeModulesDirectory,
     packageName,
     packageSourcesDirectory as sourcesDir,
-    packageTestsBenchmarksDirectory as benchesDir
+    packageTestsBenchmarksDirectory as benchesDir,
+    createDirectoryIfNotExist,
+    createFile
 }                       from '../../_utils.mjs'
 import { sourcesFiles } from '../../configs/compute-benchmarks.conf.mjs'
 
 const {
           red,
-          green,
           yellow
       } = colors
 
@@ -32,10 +28,7 @@ const {
  */
 const computeBenchmarksTask       = ( done ) => {
 
-    if ( !existsSync( benchesDir ) ) {
-        log( 'Creating', green( benchesDir ) )
-        mkdirSync( benchesDir, { recursive: true } )
-    }
+    createDirectoryIfNotExist( benchesDir )
 
     const benchRootImports = []
     for ( let sourceFile of sourcesFiles ) {
@@ -156,13 +149,8 @@ const computeBenchmarksTask       = ( done ) => {
                 exports: suitesToExports
             } )
 
-            if ( !existsSync( benchDirPath ) ) {
-                log( 'Creating', green( benchDirPath ) )
-                mkdirSync( benchDirPath, { recursive: true } )
-            }
-
-            log( 'Creating', green( benchFilePath ) )
-            writeFileSync( benchFilePath, template )
+            createDirectoryIfNotExist( benchDirPath )
+            createFile( benchFilePath, template )
 
         } catch ( error ) {
 
@@ -185,6 +173,16 @@ const computeBenchmarksTask       = ( done ) => {
 
     }
 
+    // Use a fallback in case no benches were found at all
+    if ( benchRootImports.length === 0 ) {
+        log( 'Warning ', yellow( 'No usable exports found, generate default file to avoid frontend breakage.' ) )
+        const defaultBenchesDir  = join( benchesDir, 'default' )
+        const defaultBenchesPath = join( defaultBenchesDir, 'default.bench.js' )
+
+        createDirectoryIfNotExist( defaultBenchesDir )
+        createFile( defaultBenchesPath, '// Avoid web test runner crash on empty benches' )
+    }
+
     const benchesTemplate = '' +
         `${ templateImports }` + '\n' +
         'const suites = [' + '\n' +
@@ -196,9 +194,7 @@ const computeBenchmarksTask       = ( done ) => {
         `}` + '\n'
 
     const benchesFilePath = join( benchesDir, `${ packageName }.benchmarks.js` )
-
-    log( 'Creating', green( benchesFilePath ) )
-    writeFileSync( benchesFilePath, benchesTemplate )
+    createFile( benchesFilePath, benchesTemplate )
 
     done()
 
