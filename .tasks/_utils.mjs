@@ -7,16 +7,26 @@ import {
     readFileSync,
     writeFileSync
 }                        from 'fs'
+import { glob }          from 'glob'
+import {
+    parallel,
+    series
+}                        from 'gulp'
 import {
     dirname,
-    join
+    join,
+    normalize,
+    relative
 }                        from 'path'
 import { fileURLToPath } from 'url'
 
 const {
           red,
           green,
-          yellow
+          yellow,
+          blue,
+          magenta,
+          cyan
       } = colors
 
 ///
@@ -154,6 +164,67 @@ function createFile( filePath, fileContent ) {
 
 }
 
+function getFilesFrom( globPattern, filter = ( any ) => true ) {
+
+    return glob.sync( globPattern )
+               .map( filePath => normalize( filePath ) )
+               .filter( filter )
+
+}
+
+///
+
+async function getTasksFrom( taskFiles = [] ) {
+
+    const tasks = []
+    for ( const taskFile of taskFiles ) {
+        const relativeTaskFile = relative( packageRootDirectory, taskFile )
+
+        try {
+
+            const module = await import(taskFile)
+
+            const exportStrings = []
+            for ( const moduleKey in module ) {
+                const task = module[ moduleKey ]
+                tasks.push( task )
+
+                const name         = task.name ?? null
+                const displayName  = task.displayName ?? null
+                const fullName     = ( moduleKey !== name ) ? `${ blue( moduleKey ) }( ${ magenta( name ) } )` : `${ blue( name ) }`
+                const exportAs     = ( displayName ) ? ` as ${ cyan( displayName ) }` : ''
+                const exportString = fullName + exportAs
+                exportStrings.push( exportString )
+            }
+
+            log( 'Process', green( relativeTaskFile ), `with task${ ( exportStrings.length > 1 ) ? 's' : '' }`, exportStrings.join( ', ' ) )
+
+        } catch ( error ) {
+
+            log( 'Error  ', red( relativeTaskFile ), error.message )
+
+        }
+
+    }
+
+    return tasks
+
+}
+
+async function serializeTasksFrom( taskFiles = [] ) {
+
+    const tasks = await getTasksFrom( taskFiles )
+    return series( ...tasks )
+
+}
+
+async function parallelizeTasksFrom( taskFiles = [] ) {
+
+    const tasks = await getTasksFrom( taskFiles )
+    return parallel( ...tasks )
+
+}
+
 ///
 
 function IndenterFactory( indentationChar = '\t', indentationLevel = 5 ) {
@@ -224,6 +295,11 @@ export {
 
     createDirectoryIfNotExist,
     createFile,
+    getFilesFrom,
+
+    getTasksFrom,
+    serializeTasksFrom,
+    parallelizeTasksFrom,
 
     IndenterFactory as Indenter
 }
