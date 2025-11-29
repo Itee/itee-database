@@ -14,8 +14,9 @@ import {
     packageSourcesDirectory as sourcesDir,
     packageTestsBenchmarksDirectory as benchesDir,
     createDirectoryIfNotExist,
-    createFile
-}                       from '../../_utils.mjs'
+    createFile,
+    packageTestsDirectory
+} from '../../_utils.mjs'
 import { sourcesFiles } from '../../configs/compute-benchmarks.conf.mjs'
 
 const {
@@ -134,9 +135,18 @@ const computeBenchmarksTask       = ( done ) => {
                 benchSuites += '\n'
             }
 
+            // compute relative level to get import wrappers
+            const wrapperDirPath  = relative( benchDirPath, packageTestsDirectory )
+            const importBenchmarkFilePath = join( wrapperDirPath, 'import.benchmarks.js' )
+            const importTestingFilePath = join( wrapperDirPath, 'import.testing.js' )
+
             const template = '' +
-                `import { Testing }      from 'itee-utils/sources/testings/benchmarks.js'` + '\n' +
                 `import * as ${ nsName } from '${ importFilePath }'` + '\n' +
+                `import { getBenchmarkPackage } from '${importBenchmarkFilePath}'` + '\n' +
+                `import { getTestingPackage } from '${importTestingFilePath}'` + '\n' +
+                '\n' +
+                `const Benchmark = await getBenchmarkPackage()` + '\n' +
+                `const Testing   = await getTestingPackage()` + '\n' +
                 '\n' +
                 `${ benchSuites }` +
                 // '\n' +

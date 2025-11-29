@@ -5,12 +5,9 @@
  */
 
 export * from './.tasks/.tests/run-tests.task.mjs'
-export * from './.tasks/.tests/build-tests.task.mjs'
 export * from './.tasks/.tests/unit-tests/run-unit-tests.task.mjs'
 export * from './.tasks/.tests/unit-tests/run-unit-tests-for-backend.task.mjs'
 export * from './.tasks/.tests/unit-tests/compute-unit-tests.task.mjs'
-export * from './.tasks/.tests/unit-tests/build-unit-tests.task.mjs'
-export * from './.tasks/.tests/unit-tests/build-unit-tests-backend.task.mjs'
 export * from './.tasks/.tests/bundling/check-bundling.task.mjs'
 export * from './.tasks/.tests/bundling/check-bundling-from-esm-files-import.task.mjs'
 export * from './.tasks/.tests/bundling/check-bundling-from-esm-files-direct.task.mjs'
@@ -18,8 +15,6 @@ export * from './.tasks/.tests/bundling/check-bundling-from-esm-build-import.tas
 export * from './.tasks/.tests/benchmarks/run-benchmarks.task.mjs'
 export * from './.tasks/.tests/benchmarks/run-benchmarks-for-backend.task.mjs'
 export * from './.tasks/.tests/benchmarks/compute-benchmarks.task.mjs'
-export * from './.tasks/.tests/benchmarks/build-benchmarks.task.mjs'
-export * from './.tasks/.tests/benchmarks/build-benchmarks-backend.task.mjs'
 export * from './.tasks/.releases/release.task.mjs'
 export * from './.tasks/.patches/patch.task.mjs'
 export * from './.tasks/.lints/lint.task.mjs'

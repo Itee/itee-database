@@ -5,7 +5,7 @@ import { join }       from 'path'
 import {
     packageName,
     packageTestsBenchmarksDirectory
-}                     from '../../_utils.mjs'
+} from '../../_utils.mjs'
 
 const {
           red,
@@ -17,7 +17,7 @@ const {
  */
 const runBenchmarksForBackendTask       = async ( done ) => {
 
-    const benchesPath = join( packageTestsBenchmarksDirectory, `/builds/${ packageName }.benchmarks.cjs.js` )
+    const benchesPath = join( packageTestsBenchmarksDirectory, `/${ packageName }.benchmarks.js` )
     if ( !existsSync( benchesPath ) ) {
         log( yellow( `${ benchesPath } does not exist, skip backend benchmarks...` ) )
         done()

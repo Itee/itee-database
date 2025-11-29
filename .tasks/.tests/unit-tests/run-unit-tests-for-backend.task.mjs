@@ -19,7 +19,7 @@ const {
  */
 const runUnitTestsForBackendTask       = ( done ) => {
 
-    const testsPath = join( packageTestsUnitsDirectory, `/builds/${ packageName }.units.cjs.js` )
+    const testsPath = join( packageTestsUnitsDirectory, `/${ packageName }.units.mjs` )
     if ( !existsSync( testsPath ) ) {
         log( yellow( `${ testsPath } does not exist, skip backend unit tests...` ) )
         done()
