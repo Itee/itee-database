@@ -14,6 +14,7 @@ import {
 }                                    from 'path'
 import { rollup }                    from 'rollup'
 import {
+    packageRootDirectory,
     packageSourcesDirectory as sourcesDir,
     packageTestsBundlesDirectory as bundleDir
 }                                    from '../../_utils.mjs'
@@ -23,6 +24,7 @@ import { sourcesFiles }              from '../../configs/check-bundling.conf.mjs
 const {
           red,
           green,
+          blue,
           magenta
       } = colors
 
@@ -91,5 +93,7 @@ const checkBundlingFromEsmFilesImportTask       = async ( done ) => {
 checkBundlingFromEsmFilesImportTask.displayName = 'check-bundling-from-esm-files-import'
 checkBundlingFromEsmFilesImportTask.description = 'In view to detect bundling side effects this task will create intermediary file for each individual export from this package and then create rollup config for each of them and bundle'
 checkBundlingFromEsmFilesImportTask.flags       = null
+
+log( 'Loading ', green( relative( packageRootDirectory, import.meta.filename ) ), `with task ${ blue( checkBundlingFromEsmFilesImportTask.displayName ) }` )
 
 export { checkBundlingFromEsmFilesImportTask }

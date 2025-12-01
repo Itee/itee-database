@@ -197,11 +197,11 @@ async function getTasksFrom( taskFiles = [] ) {
                 exportStrings.push( exportString )
             }
 
-            log( 'Process', green( relativeTaskFile ), `with task${ ( exportStrings.length > 1 ) ? 's' : '' }`, exportStrings.join( ', ' ) )
+            //log( 'Process ', green( relativeTaskFile ), `with task${ ( exportStrings.length > 1 ) ? 's' : '' }`, exportStrings.join( ', ' ) )
 
         } catch ( error ) {
 
-            log( 'Error  ', red( relativeTaskFile ), error.message )
+            log( 'Error   ', red( relativeTaskFile ), error.message )
 
         }
 

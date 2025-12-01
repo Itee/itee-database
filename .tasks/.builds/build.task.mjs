@@ -1,11 +1,14 @@
 import colors                        from 'ansi-colors'
 import log                           from 'fancy-log'
+import { relative }                  from 'path'
 import { rollup }                    from 'rollup'
+import { packageRootDirectory }      from '../_utils.mjs'
 import { getRollupConfigurationFor } from '../configs/build.conf.mjs'
 
 const {
           red,
           green,
+          blue,
           yellow
       } = colors
 
@@ -42,5 +45,7 @@ const buildTask       = async ( done ) => {
 buildTask.displayName = 'build'
 buildTask.description = 'Todo...'
 buildTask.flags       = null
+
+log( 'Loading ', green( relative( packageRootDirectory, import.meta.filename ) ), `with task ${ blue( buildTask.displayName ) }` )
 
 export { buildTask }

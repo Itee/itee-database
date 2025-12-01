@@ -16,6 +16,7 @@ import { rollup }                    from 'rollup'
 import {
     packageBuildsDirectory as buildsDir,
     packageName,
+    packageRootDirectory,
     packageTestsBundlesDirectory as bundlesDir
 }                                    from '../../_utils.mjs'
 import { getRollupConfigurationFor } from '../../configs/build.conf.mjs'
@@ -23,6 +24,7 @@ import { getRollupConfigurationFor } from '../../configs/build.conf.mjs'
 const {
           red,
           green,
+          blue,
           magenta
       } = colors
 
@@ -119,5 +121,7 @@ const checkBundlingFromEsmBuildImportTask       = async ( done ) => {
 checkBundlingFromEsmBuildImportTask.displayName = 'check-bundling-from-esm-build-import'
 checkBundlingFromEsmBuildImportTask.description = 'Verify that the project esm build is correctly importable in third party esm files'
 checkBundlingFromEsmBuildImportTask.flags       = null
+
+log( 'Loading ', green( relative( packageRootDirectory, import.meta.filename ) ), `with task ${ blue( checkBundlingFromEsmBuildImportTask.displayName ) }` )
 
 export { checkBundlingFromEsmBuildImportTask }

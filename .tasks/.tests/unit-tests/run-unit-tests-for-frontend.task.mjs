@@ -1,8 +1,15 @@
-import { startTestRunner }   from '@web/test-runner'
-import colors                from 'ansi-colors'
-import { default as config } from '../../configs/units.conf.mjs'
+import { startTestRunner }      from '@web/test-runner'
+import colors                   from 'ansi-colors'
+import log                      from 'fancy-log'
+import { relative }             from 'path'
+import { packageRootDirectory } from '../../_utils.mjs'
+import { default as config }    from '../../configs/units.conf.mjs'
 
-const { red } = colors
+const {
+          red,
+          green,
+          blue
+      } = colors
 
 /**
  * @description Will run unit tests with web-test-runner
@@ -37,5 +44,7 @@ const runUnitTestsForFrontendTask       = () => {
 runUnitTestsForFrontendTask.displayName = 'run-unit-tests-for-frontend'
 runUnitTestsForFrontendTask.description = 'Will run unit tests with web-test-runner'
 runUnitTestsForFrontendTask.flags       = null
+
+log( 'Loading ', green( relative( packageRootDirectory, import.meta.filename ) ), `with task ${ blue( runUnitTestsForFrontendTask.displayName ) }` )
 
 export { runUnitTestsForFrontendTask }

@@ -16,6 +16,7 @@ import {
     Indenter,
     nodeModulesDirectory,
     packageName,
+    packageRootDirectory,
     packageSourcesDirectory as sourcesDir,
     packageTestsUnitsDirectory as unitsDir
 }                          from '../../_utils.mjs'
@@ -23,6 +24,8 @@ import { sourcesFiles }    from '../../configs/compute-unit-tests.conf.mjs'
 
 const {
           red,
+          green,
+          blue,
           yellow
       } = colors
 
@@ -523,5 +526,7 @@ const computeUnitTestsTask       = ( done ) => {
 computeUnitTestsTask.displayName = 'compute-unit-tests'
 computeUnitTestsTask.description = 'Will generate unit test files from source code using type inference from comments'
 computeUnitTestsTask.flags       = null
+
+log( 'Loading ', green( relative( packageRootDirectory, import.meta.filename ) ), `with task ${ blue( computeUnitTestsTask.displayName ) }` )
 
 export { computeUnitTestsTask }
