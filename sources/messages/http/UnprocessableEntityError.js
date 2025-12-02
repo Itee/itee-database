@@ -10,7 +10,7 @@
  */
 
 
-import { AbstractHTTPError } from './AbstractHTTPError'
+import { AbstractHTTPError } from './AbstractHTTPError.js'
 
 /**
  * @class

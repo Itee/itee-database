@@ -10,22 +10,22 @@
 
 
 // Controllers
-export * from './controllers/TAbstractDataController'
+export * from './controllers/TAbstractDataController.js'
 
 // Converters
-export * from './converters/TAbstractDataConverter'
-export * from './converters/TAbstractConverterManager'
-export * from './converters/TAbstractDataInserter'
-export * from './converters/TAbstractFileConverter'
+export * from './converters/TAbstractDataConverter.js'
+export * from './converters/TAbstractConverterManager.js'
+export * from './converters/TAbstractDataInserter.js'
+export * from './converters/TAbstractFileConverter.js'
 
 // Databases
-export * from './databases/TAbstractDatabase'
-export * from './databases/TAbstractResponder'
+export * from './databases/TAbstractDatabase.js'
+export * from './databases/TAbstractResponder.js'
 
 // Messages
-export * from './messages/_messages'
+export * from './messages/_messages.js'
 
 // Plugins interfaces
-export * from './plugins/TAbstractDatabasePlugin'
+export * from './plugins/TAbstractDatabasePlugin.js'
 
 export const Databases = new Map()

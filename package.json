@@ -18,6 +18,7 @@
     "type": "git",
     "url":  "https://github.com/Itee/itee-database.git"
   },
+  "type":            "module",
   "main":            "builds/itee-database.cjs.js",
   "module":          "builds/itee-database.esm.js",
   "browser":         "",

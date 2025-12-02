@@ -10,7 +10,7 @@
  */
 
 import { isNotDefined }  from 'itee-validators'
-import { AbstractError } from '../AbstractError'
+import { AbstractError } from '../AbstractError.js'
 
 /**
  * @class

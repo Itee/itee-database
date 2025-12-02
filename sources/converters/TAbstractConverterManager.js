@@ -6,7 +6,7 @@
 
 import { isArray }            from 'itee-validators'
 import path                   from 'path'
-import { TAbstractResponder } from '../databases/TAbstractResponder'
+import { TAbstractResponder } from '../databases/TAbstractResponder.js'
 
 // Todo: Extend sort of Factory
 class TAbstractConverterManager extends TAbstractResponder {

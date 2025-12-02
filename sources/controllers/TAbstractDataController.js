@@ -22,8 +22,8 @@ import {
     isObject,
     isUndefined
 }                                   from 'itee-validators'
-import { TAbstractResponder }       from '../databases/TAbstractResponder'
-import { UnprocessableEntityError } from '../messages/http/UnprocessableEntityError'
+import { TAbstractResponder }       from '../databases/TAbstractResponder.js'
+import { UnprocessableEntityError } from '../messages/http/UnprocessableEntityError.js'
 
 /**
  * @class

@@ -14,7 +14,7 @@ import {
     isUndefined
 }                                  from 'itee-validators'
 import path                        from 'path'
-import { TAbstractDatabasePlugin } from '../plugins/TAbstractDatabasePlugin'
+import { TAbstractDatabasePlugin } from '../plugins/TAbstractDatabasePlugin.js'
 
 class TAbstractDatabase extends TAbstractObject {
 

@@ -15,7 +15,7 @@ import {
     isObject,
     isString
 }                          from 'itee-validators'
-import { UnknownError }    from '../messages/http/UnknownError'
+import { UnknownError }    from '../messages/http/UnknownError.js'
 
 /**
  * @class
