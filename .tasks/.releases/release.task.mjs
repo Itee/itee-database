@@ -7,9 +7,9 @@ import { cleanTask }             from '../.cleans/clean.task.mjs'
 import { docTask }               from '../.docs/doc.task.mjs'
 import { lintTask }              from '../.lints/lint.task.mjs'
 import { computeBenchmarksTask } from '../.tests/benchmarks/compute-benchmarks.task.mjs'
-import { runTestsTask }          from '../.tests/run-tests.task.mjs'
-import { computeUnitTestsTask }  from '../.tests/unit-tests/compute-unit-tests.task.mjs'
-import { packageRootDirectory }  from '../_utils.mjs'
+import { runTestsTask }         from '../.tests/run-tests.task.mjs'
+import { computeUnitTestsTask } from '../.tests/units/compute-unit-tests.task.mjs'
+import { packageRootDirectory } from '../_utils.mjs'
 
 const {
           green,

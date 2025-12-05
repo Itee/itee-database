@@ -4,7 +4,7 @@ import { series }                 from 'gulp'
 import { relative }               from 'path'
 import { packageRootDirectory }   from '../_utils.mjs'
 import { runBenchmarksTestsTask } from './benchmarks/run-benchmarks.task.mjs'
-import { runUnitTestsTask }       from './unit-tests/run-unit-tests.task.mjs'
+import { runUnitTestsTask }       from './units/run-unit-tests.task.mjs'
 
 const {
           green,

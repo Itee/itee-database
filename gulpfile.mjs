@@ -5,9 +5,9 @@
  */
 
 export * from './.tasks/.tests/run-tests.task.mjs'
-export * from './.tasks/.tests/unit-tests/run-unit-tests.task.mjs'
-export * from './.tasks/.tests/unit-tests/run-unit-tests-for-backend.task.mjs'
-export * from './.tasks/.tests/unit-tests/compute-unit-tests.task.mjs'
+export * from './.tasks/.tests/units/run-unit-tests.task.mjs'
+export * from './.tasks/.tests/units/run-unit-tests-for-backend.task.mjs'
+export * from './.tasks/.tests/units/compute-unit-tests.task.mjs'
 export * from './.tasks/.tests/bundlings/check-bundling.task.mjs'
 export * from './.tasks/.tests/bundlings/check-bundling-from-esm-files-import.task.mjs'
 export * from './.tasks/.tests/bundlings/check-bundling-from-esm-files-direct.task.mjs'
