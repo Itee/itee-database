@@ -40,7 +40,7 @@
   ],
   "scripts":         {
     "default":                     "gulp --tasks",
-    "refresh":                     "node ./.tasks/_refresh.mjs",
+    "refresh":                     "node ./node_modules/@itee/tasks/scripts/refresh.mjs",
     "help":                        "gulp help",
     "patch":                       "gulp patch",
     "clean":                       "gulp clean",
@@ -61,8 +61,7 @@
     "tests:units:run:back":        "gulp run-unit-tests-for-backend",
     "tests:units:run:front":       "gulp run-unit-tests-for-frontend",
     "release":                     "gulp release",
-    "semantic-release":            "semantic-release --dry-run --no-ci",
-    "postversion":                 "gulp build"
+    "semantic-release":            "semantic-release --dry-run --no-ci"
   },
   "dependencies":    {
     "itee-core":       "^1.4.0",
