@@ -16,16 +16,16 @@
   "private":         false,
   "repository":      {
     "type": "git",
-    "url":  "https://github.com/Itee/itee-database.git"
+    "url":  "https://github.com/Itee/database.git"
   },
   "type":            "module",
-  "main":            "builds/itee-database.cjs.js",
-  "module":          "builds/itee-database.esm.js",
+  "main":            "builds/database.cjs.js",
+  "module":          "builds/database.esm.js",
   "browser":         "",
-  "homepage":        "https://github.com/Itee/itee-database#readme",
+  "homepage":        "https://github.com/Itee/database#readme",
   "man":             "./docs/index.html",
   "bugs":            {
-    "url": "https://github.com/Itee/itee-database/issues"
+    "url": "https://github.com/Itee/database/issues"
   },
   "engines":         {
     "node": ">=20"
