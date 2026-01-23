@@ -7,14 +7,14 @@
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
-import { TAbstractObject } from 'itee-core'
+import { TAbstractObject } from '@itee/core'
 import {
     isArray,
     isDefined,
     isFunction,
     isObject,
     isString
-}                          from 'itee-validators'
+}                          from '@itee/validators'
 import { UnknownError }    from '../messages/http/UnknownError.js'
 
 /**

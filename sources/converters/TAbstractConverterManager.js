@@ -4,7 +4,7 @@
  *
  */
 
-import { isArray }            from 'itee-validators'
+import { isArray }            from '@itee/validators'
 import path                   from 'node:path'
 import { TAbstractResponder } from '../databases/TAbstractResponder.js'
 

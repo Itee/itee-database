@@ -8,11 +8,11 @@
  *
  */
 
-import { TAbstractObject }         from 'itee-core'
+import { TAbstractObject }         from '@itee/core'
 import {
     isNull,
     isUndefined
-}                                  from 'itee-validators'
+}                                  from '@itee/validators'
 import path                        from 'node:path'
 import { TAbstractDatabasePlugin } from '../plugins/TAbstractDatabasePlugin.js'
 

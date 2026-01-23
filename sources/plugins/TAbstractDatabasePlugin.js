@@ -4,11 +4,11 @@
  *
  */
 
-import { TAbstractObject } from 'itee-core'
+import { TAbstractObject } from '@itee/core'
 import {
     isNull,
     isUndefined
-}                          from 'itee-validators'
+}                          from '@itee/validators'
 
 class TAbstractDatabasePlugin extends TAbstractObject {
 
