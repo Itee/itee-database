@@ -1,3 +1,19 @@
+# [v9.0.0](https://github.com/Itee/database/compare/v8.3.0...v9.0.0) (2026-01-23)
+
+## ✨ New Features
+- [`54f687f`](https://github.com/Itee/database/commit/54f687f)  (tasks) upgrade tasks to latest itee and gulp standards 
+- [`10a0717`](https://github.com/Itee/database/commit/10a0717)  (tests) remove the need to build backend file to run unit and benches tests 
+
+## 🐛 Bug Fixes
+- [`31380aa`](https://github.com/Itee/database/commit/31380aa)  (gulpfile) fix broken import links 
+- [`bbe5a04`](https://github.com/Itee/database/commit/bbe5a04)  (gulpfile-refresh) use external script that do not require gulp to be loaded for refreshing it 
+- [`72cba4d`](https://github.com/Itee/database/commit/72cba4d)  (compute-unit-tests-task) fix default template for empty units 
+- [`437ab92`](https://github.com/Itee/database/commit/437ab92)  (tasks) fix frontend task run on empty test generation 
+- [`c3fbe29`](https://github.com/Itee/database/commit/c3fbe29)  (release) fix release task and update others to latest standards 
+
+## 💥 Breaking Changes
+- [`b61e07f`](https://github.com/Itee/database/commit/b61e07f)  (node) drop nodejs v18 support and introduce nodejs v24
+
 # [v8.3.0](https://github.com/Itee/itee-database/compare/v8.2.2...v8.3.0) (2025-10-19)
 
 ## ✨ New Features
