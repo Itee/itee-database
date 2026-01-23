@@ -16,7 +16,7 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/Itee/database.git"
+    "url": "git+https://github.com/Itee/database.git"
   },
   "type": "module",
   "main": "builds/database.cjs.js",
