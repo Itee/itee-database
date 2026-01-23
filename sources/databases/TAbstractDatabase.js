@@ -13,7 +13,7 @@ import {
     isNull,
     isUndefined
 }                                  from 'itee-validators'
-import path                        from 'path'
+import path                        from 'node:path'
 import { TAbstractDatabasePlugin } from '../plugins/TAbstractDatabasePlugin.js'
 
 class TAbstractDatabase extends TAbstractObject {

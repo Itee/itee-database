@@ -4,10 +4,10 @@ export default createRollupConfigs( {
     formats:     [ 'esm', 'cjs' ],
     externalMap: {
         'esm': [
-            'path',
-            'buffer',
-            'fs',
-            'stream',
+            'node:path',
+            'node:buffer',
+            'node:fs',
+            'node:stream',
             'crypto',
 
             'itee-validators',
@@ -15,10 +15,10 @@ export default createRollupConfigs( {
             'itee-core'
         ],
         'cjs': [
-            'path',
-            'buffer',
-            'fs',
-            'stream',
+            'node:path',
+            'node:buffer',
+            'node:fs',
+            'node:stream',
             'crypto',
 
             'itee-validators',

@@ -5,7 +5,7 @@
  */
 
 import { isArray }            from 'itee-validators'
-import path                   from 'path'
+import path                   from 'node:path'
 import { TAbstractResponder } from '../databases/TAbstractResponder.js'
 
 // Todo: Extend sort of Factory

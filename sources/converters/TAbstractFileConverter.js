@@ -8,14 +8,14 @@
  *
  */
 
-import * as globalBuffer from 'buffer'
-import fs                from 'fs'
+import * as globalBuffer from 'node:buffer'
+import fs                from 'node:fs'
 import {
     isNull,
     isString,
     isUndefined
 }                        from 'itee-validators'
-import { Writable }      from 'stream'
+import { Writable }      from 'node:stream'
 
 /* Writable memory stream */
 class MemoryWriteStream extends Writable {
