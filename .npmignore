@@ -1,4 +1,6 @@
 /.github/
+/.idea/
+/.reports/
 /.tasks/
 /docs/
 /tests/
