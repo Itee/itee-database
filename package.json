@@ -64,9 +64,9 @@
     "semantic-release": "semantic-release --dry-run --no-ci"
   },
   "dependencies": {
-    "itee-core": "^2.0.0",
-    "itee-utils": "^6.0.6",
-    "itee-validators": "^6.1.3",
+    "@itee/core": "^3.0.1",
+    "@itee/utils": "^7.0.1",
+    "@itee/validators": "^7.0.1",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
