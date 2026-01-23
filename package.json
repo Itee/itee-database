@@ -1,5 +1,5 @@
 {
-  "name": "itee-database",
+  "name": "@itee/database",
   "version": "9.0.0",
   "description": "The abstract database side of the Itee solution for 3d web content, this package is design to be inherited and run on an Itee server.",
   "keywords": [
