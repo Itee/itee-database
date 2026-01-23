@@ -1,6 +1,4 @@
 /.idea/
 /.reports/
 /node_modules/
-/tests/benchmarks/builds/
 /tests/bundles/
-/tests/units/builds/
