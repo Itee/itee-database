@@ -70,6 +70,6 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "@itee/tasks": "^1.4.4"
+    "@itee/tasks": "^1.4.6"
   }
 }
