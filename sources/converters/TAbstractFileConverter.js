@@ -14,7 +14,7 @@ import {
     isNull,
     isString,
     isUndefined
-}                        from 'itee-validators'
+}                        from '@itee/validators'
 import { Writable }      from 'node:stream'
 
 /* Writable memory stream */

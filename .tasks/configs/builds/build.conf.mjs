@@ -10,9 +10,9 @@ export default createRollupConfigs( {
             'node:stream',
             'crypto',
 
-            'itee-validators',
-            'itee-utils',
-            'itee-core'
+            '@itee/validators',
+            '@itee/utils',
+            '@itee/core'
         ],
         'cjs': [
             'node:path',
@@ -21,9 +21,9 @@ export default createRollupConfigs( {
             'node:stream',
             'crypto',
 
-            'itee-validators',
-            'itee-utils',
-            'itee-core'
+            '@itee/validators',
+            '@itee/utils',
+            '@itee/core'
         ],
     }
 } )

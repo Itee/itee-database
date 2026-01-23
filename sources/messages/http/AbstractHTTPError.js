@@ -9,7 +9,7 @@
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
-import { isNotDefined }  from 'itee-validators'
+import { isNotDefined }  from '@itee/validators'
 import { AbstractError } from '../AbstractError.js'
 
 /**
