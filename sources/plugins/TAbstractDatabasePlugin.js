@@ -12,39 +12,7 @@ import {
 
 class TAbstractDatabasePlugin extends TAbstractObject {
 
-    static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors, Logger ) {
-
-        for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
-
-            const descriptor      = descriptors[ index ]
-            const ControllerClass = ControllerCtors.get( descriptor.controller.name )
-            const controller      = new ControllerClass( {
-                driver: Driver,
-                ...descriptor.controller.options
-            } )
-            const router          = Router( { mergeParams: true } )
-
-            Logger.log( `\tAdd controller for base route: ${ descriptor.route }` )
-            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can, Logger ) )
-
-        }
-
-    }
-    static _populateRouter ( router, controller, can = {}, Logger ) {
-
-        for ( let _do in can ) {
-
-            const action = can[ _do ]
-
-            Logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` )
-            router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
-
-        }
-
-        return router
-
-    }
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -62,10 +30,10 @@ class TAbstractDatabasePlugin extends TAbstractObject {
         this.__dirname = undefined
 
     }
-    get controllers () {
+    get controllers() {
         return this._controllers
     }
-    set controllers ( value ) {
+    set controllers( value ) {
 
         if ( isNull( value ) ) { throw new TypeError( 'Controllers cannot be null ! Expect a map of controller.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Controllers cannot be undefined ! Expect a map of controller.' ) }
@@ -74,10 +42,10 @@ class TAbstractDatabasePlugin extends TAbstractObject {
         this._controllers = value
 
     }
-    get descriptors () {
+    get descriptors() {
         return this._descriptors
     }
-    set descriptors ( value ) {
+    set descriptors( value ) {
 
         if ( isNull( value ) ) { throw new TypeError( 'Descriptors cannot be null ! Expect an array of POJO.' ) }
         if ( isUndefined( value ) ) { throw new TypeError( 'Descriptors cannot be undefined ! Expect an array of POJO.' ) }
@@ -85,23 +53,55 @@ class TAbstractDatabasePlugin extends TAbstractObject {
         this._descriptors = value
 
     }
-    addController ( value ) {
+    static _registerRoutesTo( Driver, Application, Router, ControllerCtors, descriptors, Logger ) {
+
+        for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
+
+            const descriptor      = descriptors[ index ]
+            const ControllerClass = ControllerCtors.get( descriptor.controller.name )
+            const controller      = new ControllerClass( {
+                driver: Driver,
+                ...descriptor.controller.options
+            } )
+            const router          = Router( { mergeParams: true } )
+
+            Logger.log( `\tAdd controller for base route: ${ descriptor.route }` )
+            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can, Logger ) )
+
+        }
+
+    }
+    static _populateRouter( router, controller, can = {}, Logger ) {
+
+        for ( let _do in can ) {
+
+            const action = can[ _do ]
+
+            Logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` )
+            router[ action.on ]( action.over, controller[ _do ].bind( controller ) )
+
+        }
+
+        return router
+
+    }
+    addController( value ) {
 
         this._controllers.set( value.name, value )
         return this
 
     }
 
-    addDescriptor ( value ) {
+    addDescriptor( value ) {
 
         this._descriptors.push( value )
         return this
 
     }
 
-    beforeRegisterRoutes ( /*driver*/ ) {}
+    beforeRegisterRoutes( /*driver*/ ) {}
 
-    registerTo ( driver, application, router ) {
+    registerTo( driver, application, router ) {
 
         this.beforeRegisterRoutes( driver )
 

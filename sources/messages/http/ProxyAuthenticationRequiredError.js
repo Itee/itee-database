@@ -9,7 +9,7 @@
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
-import { AbstractHTTPError } from './AbstractHTTPError'
+import { AbstractHTTPError } from './AbstractHTTPError.js'
 
 /**
  * @class
@@ -28,14 +28,14 @@ class ProxyAuthenticationRequiredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 407 }
+    static get statusCode() { return 407 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isProxyAuthenticationRequiredError () { return true }
+    get isProxyAuthenticationRequiredError() { return true }
 
 }
 

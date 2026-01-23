@@ -1,0 +1,1 @@
+// Avoid web test runner crash on empty benches

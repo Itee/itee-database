@@ -9,7 +9,7 @@
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
-import { AbstractHTTPError } from './AbstractHTTPError'
+import { AbstractHTTPError } from './AbstractHTTPError.js'
 
 /**
  * @class
@@ -28,14 +28,14 @@ class HTTPRequestSentToHTTPSPortError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 497 }
+    static get statusCode() { return 497 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isHTTPRequestSentToHTTPSPortError () { return true }
+    get isHTTPRequestSentToHTTPSPortError() { return true }
 
 }
 

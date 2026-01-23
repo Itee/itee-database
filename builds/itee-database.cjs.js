@@ -10,8 +10,6 @@
  */
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 var iteeValidators = require('itee-validators');
 var iteeCore = require('itee-core');
 var path = require('path');
@@ -19,7 +17,7 @@ var globalBuffer = require('buffer');
 var fs = require('fs');
 var stream = require('stream');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+function _interopDefault (e) { return e && e.__esModule ? e : { default: e }; }
 
 function _interopNamespace(e) {
 	if (e && e.__esModule) return e;
@@ -35,86 +33,71 @@ function _interopNamespace(e) {
 			}
 		});
 	}
-	n["default"] = e;
+	n.default = e;
 	return Object.freeze(n);
 }
 
-var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
+var path__default = /*#__PURE__*/_interopDefault(path);
 var globalBuffer__namespace = /*#__PURE__*/_interopNamespace(globalBuffer);
-var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
+var fs__default = /*#__PURE__*/_interopDefault(fs);
 
-// Unique ID creation requires a high quality random # generator. In the browser we therefore
-// require the crypto API and do not support built-in fallback to lower quality random number
-// generators (like Math.random()).
-var getRandomValues;
-var rnds8 = new Uint8Array(16);
+const byteToHex = [];
+for (let i = 0; i < 256; ++i) {
+    byteToHex.push((i + 0x100).toString(16).slice(1));
+}
+function unsafeStringify(arr, offset = 0) {
+    return (byteToHex[arr[offset + 0]] +
+        byteToHex[arr[offset + 1]] +
+        byteToHex[arr[offset + 2]] +
+        byteToHex[arr[offset + 3]] +
+        '-' +
+        byteToHex[arr[offset + 4]] +
+        byteToHex[arr[offset + 5]] +
+        '-' +
+        byteToHex[arr[offset + 6]] +
+        byteToHex[arr[offset + 7]] +
+        '-' +
+        byteToHex[arr[offset + 8]] +
+        byteToHex[arr[offset + 9]] +
+        '-' +
+        byteToHex[arr[offset + 10]] +
+        byteToHex[arr[offset + 11]] +
+        byteToHex[arr[offset + 12]] +
+        byteToHex[arr[offset + 13]] +
+        byteToHex[arr[offset + 14]] +
+        byteToHex[arr[offset + 15]]).toLowerCase();
+}
+
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
 function rng() {
-  // lazy load so that environments that need to polyfill have a chance to do so
-  if (!getRandomValues) {
-    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
-    // find the complete implementation of crypto (msCrypto) on IE11.
-    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
-
     if (!getRandomValues) {
-      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+        if (typeof crypto === 'undefined' || !crypto.getRandomValues) {
+            throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+        }
+        getRandomValues = crypto.getRandomValues.bind(crypto);
     }
-  }
-
-  return getRandomValues(rnds8);
+    return getRandomValues(rnds8);
 }
 
-var REGEX = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+var native = { randomUUID };
 
-function validate(uuid) {
-  return typeof uuid === 'string' && REGEX.test(uuid);
+function _v4(options, buf, offset) {
+    options = options || {};
+    const rnds = options.random ?? options.rng?.() ?? rng();
+    if (rnds.length < 16) {
+        throw new Error('Random bytes length must be >= 16');
+    }
+    rnds[6] = (rnds[6] & 0x0f) | 0x40;
+    rnds[8] = (rnds[8] & 0x3f) | 0x80;
+    return unsafeStringify(rnds);
 }
-
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-
-var byteToHex = [];
-
-for (var i = 0; i < 256; ++i) {
-  byteToHex.push((i + 0x100).toString(16).substr(1));
-}
-
-function stringify(arr) {
-  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  // Note: Be careful editing this code!  It's been tuned for performance
-  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-  var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
-  // of the following:
-  // - One or more input array values don't map to a hex octet (leading to
-  // "undefined" in the uuid)
-  // - Invalid input values for the RFC `version` or `variant` fields
-
-  if (!validate(uuid)) {
-    throw TypeError('Stringified UUID is invalid');
-  }
-
-  return uuid;
-}
-
 function v4(options, buf, offset) {
-  options = options || {};
-  var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-
-  rnds[6] = rnds[6] & 0x0f | 0x40;
-  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
-
-  if (buf) {
-    offset = offset || 0;
-
-    for (var i = 0; i < 16; ++i) {
-      buf[offset + i] = rnds[i];
+    if (native.randomUUID && true && !options) {
+        return native.randomUUID();
     }
-
-    return buf;
-  }
-
-  return stringify(rnds);
+    return _v4(options);
 }
 
 /**
@@ -141,7 +124,7 @@ class AbstractError extends Error {
      * @constructor
      * @param message {string} The error message to dispatch
      */
-    constructor ( message ) {
+    constructor( message ) {
         super();
 
         this._uuid    = v4();
@@ -179,28 +162,28 @@ class AbstractError extends Error {
      * @default true
      * @type {boolean}
      */
-    get isAbstractError () { return true }
+    get isAbstractError() { return true }
     /**
      * An auto-generated universally unique identifier, this allow to recognize any error by id
      * @readonly
      * @type {string}
      */
-    get uuid () { return this._uuid }
-    set uuid ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    get uuid() { return this._uuid }
+    set uuid( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
     /**
      * The name of current instanced error (a.k.a the constructor name)
      * @readonly
      * @type {string}
      */
-    get name () { return this._name }
-    set name ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    get name() { return this._name }
+    set name( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
     /**
      * The error message
      * @readonly
      * @type {string}
      */
-    get message () { return this._message }
-    set message ( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
+    get message() { return this._message }
+    set message( value ) { throw new SyntaxError( 'Try to assign a read only property.' ) }
 
 }
 
@@ -214,6 +197,7 @@ class AbstractError extends Error {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -230,7 +214,7 @@ class AbstractHTTPError extends AbstractError {
      * @default true
      * @type {boolean}
      */
-    static get isAbstractHTTPError () { return true }
+    static get isAbstractHTTPError() { return true }
 
     /**
      * The abstract getter of http status code, internally it call the static getter statusCode that need to be reimplemented by extended class.
@@ -239,14 +223,14 @@ class AbstractHTTPError extends AbstractError {
      * @type {number}
      * @throws {ReferenceError} In case the static statusCode getter is not redefined in class that inherit this class.
      */
-    get statusCode () {
+    get statusCode() {
         if ( iteeValidators.isNotDefined( this.constructor.statusCode ) ) {
             throw new ReferenceError( `${ this.name } class need to reimplement static statusCode getter.` )
         }
         return this.constructor.statusCode
     }
 
-    set statusCode ( value ) {
+    set statusCode( value ) {
         throw new SyntaxError( 'Try to assign a read only property.' )
     }
 }
@@ -261,6 +245,7 @@ class AbstractHTTPError extends AbstractError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -279,14 +264,14 @@ class UnknownError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 520 }
+    static get statusCode() { return 520 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isUnknownError () { return true }
+    get isUnknownError() { return true }
 
 }
 
@@ -299,6 +284,7 @@ class UnknownError extends AbstractHTTPError {
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
+
 /**
  * @class
  * @classdesc The TAbstractResponder is the base class for all derived database controller that require to send a response to client.
@@ -306,6 +292,14 @@ class UnknownError extends AbstractHTTPError {
  */
 class TAbstractResponder extends iteeCore.TAbstractObject {
 
+    constructor( parameters = {} ) {
+        const _parameters = {
+            ...{},
+            ...parameters
+        };
+
+        super( _parameters );
+    }
     /**
      * Normalize errors that can be in different format like single string, object, array of string, or array of object.
      *
@@ -319,7 +313,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
      * @returns {Array.<Object>}
      * @private
      */
-    static _formatErrors ( errors = [] ) {
+    static _formatErrors( errors = [] ) {
 
         const _errors = ( iteeValidators.isArray( errors ) ) ? errors : [ errors ];
 
@@ -345,13 +339,13 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
      * @returns {AbstractHTTPError}
      * @private
      */
-    static _formatError ( error ) {
+    static _formatError( error ) {
 
         let formattedError;
 
         if ( error instanceof Error ) {
 
-            formattedError = error;
+            formattedError            = error;
             formattedError.statusCode = 500;
 
         } else if ( iteeValidators.isString( error ) ) {
@@ -385,7 +379,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
      * @param response - The server response or returnNotFound callback
      * @returns {*} callback call or response with status 204
      */
-    static returnNotFound ( response ) {
+    static returnNotFound( response ) {
 
         if ( iteeValidators.isFunction( response ) ) { return response() }
         if ( response.headersSent ) { return }
@@ -403,7 +397,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
      * @param response - The server response or returnError callback
      * @returns {*} callback call or response with status 500 and associated error
      */
-    static returnError ( error, response ) {
+    static returnError( error, response ) {
 
         if ( iteeValidators.isFunction( response ) ) { return response( error, null ) }
         if ( response.headersSent ) { return }
@@ -433,7 +427,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
      * @param response - The server response or returnData callback
      * @returns {*} callback call or response with status 200 and associated data
      */
-    static returnData ( data, response ) {
+    static returnData( data, response ) {
 
         if ( iteeValidators.isFunction( response ) ) { return response( null, data ) }
         if ( response.headersSent ) { return }
@@ -464,7 +458,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
      * @param response - The server response or returnErrorAndData callback
      * @returns {*} callback call or response with status 406, associated error and data
      */
-    static returnErrorAndData ( error, data, response ) {
+    static returnErrorAndData( error, data, response ) {
 
         if ( iteeValidators.isFunction( response ) ) { return response( error, data ) }
         if ( response.headersSent ) { return }
@@ -487,9 +481,10 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         } );
 
     }
-    static return ( response, callbacks = {} ) {
+    static return( response, callbacks = {} ) {
 
-        const _callbacks = Object.assign( {
+        const _callbacks = Object.assign(
+            {
                 immediate:                null,
                 beforeAll:                null,
                 beforeReturnErrorAndData: null,
@@ -508,12 +503,13 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
                 returnError:        TAbstractResponder.returnError.bind( this ),
                 returnData:         TAbstractResponder.returnData.bind( this ),
                 returnNotFound:     TAbstractResponder.returnNotFound.bind( this )
-            } );
+            }
+        );
 
         /**
          * The callback that will be used for parse database response
          */
-        function dispatchResult ( error = null, data = null ) {
+        function dispatchResult( error = null, data = null ) {
 
             const haveData  = iteeValidators.isDefined( data );
             const haveError = iteeValidators.isDefined( error );
@@ -556,14 +552,6 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
         return dispatchResult
 
     }
-    constructor ( parameters = {} ) {
-        const _parameters = {
-            ...{},
-            ...parameters
-        };
-
-        super( _parameters );
-    }
 
 }
 
@@ -577,6 +565,7 @@ class TAbstractResponder extends iteeCore.TAbstractObject {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -595,14 +584,14 @@ class UnprocessableEntityError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 422 }
+    static get statusCode() { return 422 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isUnprocessableEntityError () { return true }
+    get isUnprocessableEntityError() { return true }
 
 }
 
@@ -613,6 +602,7 @@ class UnprocessableEntityError extends AbstractHTTPError {
  * @class TDatabaseController
  * @classdesc The TDatabaseController is the base class to perform CRUD operations on the database
  */
+
 
 /**
  * @class
@@ -627,7 +617,7 @@ class TAbstractDataController extends TAbstractResponder {
      * @param {external:Others~DatabaseDriver} parameters.driver Any official database driver that will be used internally by inherited class
      * @param {boolean} [parameters.useNext=false] A boolean flag to indicate that this instance should use "next()" function instead of return response to client.
      */
-    constructor ( parameters ) {
+    constructor( parameters ) {
 
         const _parameters = {
             ...{
@@ -648,20 +638,20 @@ class TAbstractDataController extends TAbstractResponder {
         this.useNext = _parameters.useNext;
 
     }
-    get useNext () {
+    get useNext() {
         return this._useNext
     }
-    set useNext ( value ) {
+    set useNext( value ) {
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
         if ( iteeValidators.isNotBoolean( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
 
         this._useNext = value;
     }
-    get driver () {
+    get driver() {
         return this._driver
     }
-    set driver ( value ) {
+    set driver( value ) {
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
 
@@ -671,7 +661,7 @@ class TAbstractDataController extends TAbstractResponder {
     //////////////////
     // CRUD Methods //
     //////////////////
-    create ( request, response, next ) {
+    create( request, response, next ) {
 
         const data = request.body;
 
@@ -723,11 +713,11 @@ class TAbstractDataController extends TAbstractResponder {
 
     }
 
-    _createOne ( /*data, response, next*/ ) {}
+    _createOne( /*data, response, next*/ ) {}
 
-    _createMany ( /*datas, response, next*/ ) {}
+    _createMany( /*datas, response, next*/ ) {}
 
-    read ( request, response, next ) {
+    read( request, response, next ) {
 
         const id          = request.params[ 'id' ];
         const requestBody = request.body;
@@ -810,15 +800,15 @@ class TAbstractDataController extends TAbstractResponder {
 
     }
 
-    _readOne ( /*id, projection, response, next*/ ) {}
+    _readOne( /*id, projection, response, next*/ ) {}
 
-    _readMany ( /*ids, projection, response, next*/ ) {}
+    _readMany( /*ids, projection, response, next*/ ) {}
 
-    _readWhere ( /*query, projection, response, next*/ ) {}
+    _readWhere( /*query, projection, response, next*/ ) {}
 
-    _readAll ( /*projection, response, next*/ ) {}
+    _readAll( /*projection, response, next*/ ) {}
 
-    update ( request, response, next ) {
+    update( request, response, next ) {
 
         const id          = request.params[ 'id' ];
         const requestBody = request.body;
@@ -908,15 +898,15 @@ class TAbstractDataController extends TAbstractResponder {
 
     }
 
-    _updateOne ( /*id, update, response, next*/ ) {}
+    _updateOne( /*id, update, response, next*/ ) {}
 
-    _updateMany ( /*ids, updates, response, next*/ ) {}
+    _updateMany( /*ids, updates, response, next*/ ) {}
 
-    _updateWhere ( /*query, update, response, next*/ ) {}
+    _updateWhere( /*query, update, response, next*/ ) {}
 
-    _updateAll ( /*update, response, next*/ ) {}
+    _updateAll( /*update, response, next*/ ) {}
 
-    delete ( request, response, next ) {
+    delete( request, response, next ) {
 
         const id          = request.params[ 'id' ];
         const requestBody = request.body;
@@ -998,13 +988,13 @@ class TAbstractDataController extends TAbstractResponder {
 
     }
 
-    _deleteOne ( /*id, response, next*/ ) {}
+    _deleteOne( /*id, response, next*/ ) {}
 
-    _deleteMany ( /*ids, response, next*/ ) {}
+    _deleteMany( /*ids, response, next*/ ) {}
 
-    _deleteWhere ( /*query, response, next*/ ) {}
+    _deleteWhere( /*query, response, next*/ ) {}
 
-    _deleteAll ( /*response, next*/ ) {}
+    _deleteAll( /*response, next*/ ) {}
 
 }
 
@@ -1020,14 +1010,14 @@ class TAbstractDataController extends TAbstractResponder {
 
 class TAbstractDataConverter {
 
-    constructor () {
+    constructor() {
 
         this._isProcessing = false;
         this._queue        = [];
 
     }
 
-    convert ( file, parameters, onSuccess, onProgress, onError ) {
+    convert( file, parameters, onSuccess, onProgress, onError ) {
 
         this._queue.push( {
             file,
@@ -1043,7 +1033,7 @@ class TAbstractDataConverter {
 
     }
 
-    _processQueue () {
+    _processQueue() {
 
         if ( this._queue.length === 0 ) {
 
@@ -1070,20 +1060,20 @@ class TAbstractDataConverter {
             _onSaveError
         );
 
-        function _onSaveSuccess ( result ) {
+        function _onSaveSuccess( result ) {
 
             onSuccess( result );
             self._processQueue();
 
         }
 
-        function _onSaveProgress ( progress ) {
+        function _onSaveProgress( progress ) {
 
             onProgress( progress );
 
         }
 
-        function _onSaveError ( error ) {
+        function _onSaveError( error ) {
 
             onError( error );
             self._processQueue();
@@ -1092,7 +1082,7 @@ class TAbstractDataConverter {
 
     }
 
-    _convert ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
+    _convert( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 
@@ -1102,28 +1092,11 @@ class TAbstractDataConverter {
  *
  */
 
+
 // Todo: Extend sort of Factory
 class TAbstractConverterManager extends TAbstractResponder {
 
-    static _convertFilesObjectToArray ( files ) {
-
-        const fileArray = [];
-
-        for ( let field in files ) {
-
-            if ( Object.prototype.hasOwnProperty.call( files, field ) ) {
-
-                fileArray.push( files[ field ] );
-
-            }
-
-        }
-
-        return fileArray
-
-    }
-
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -1151,8 +1124,24 @@ class TAbstractConverterManager extends TAbstractResponder {
         this._processedFiles = [];
         this._filesToProcess = 0;
     }
+    static _convertFilesObjectToArray( files ) {
 
-    _fileConversionSuccessCallback ( response, next, extraSuccessCallback, data ) {
+        const fileArray = [];
+
+        for ( let field in files ) {
+
+            if ( Object.prototype.hasOwnProperty.call( files, field ) ) {
+
+                fileArray.push( files[ field ] );
+
+            }
+
+        }
+
+        return fileArray
+
+    }
+    _fileConversionSuccessCallback( response, next, extraSuccessCallback, data ) {
 
         if ( extraSuccessCallback ) {
             extraSuccessCallback( data );
@@ -1169,20 +1158,20 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     }
 
-    _fileInsertionSuccessCallback ( response, next, data ) {
+    _fileInsertionSuccessCallback( response, next, data ) {
 
         this._filesToProcess--;
         this._checkEndOfReturns( response, next, data );
 
     }
 
-    _fileConversionProgressCallback ( response, progress ) {
+    _fileConversionProgressCallback( response, progress ) {
 
         this.logger.log( progress );
 
     }
 
-    _fileConversionErrorCallback ( response, next, error ) {
+    _fileConversionErrorCallback( response, next, error ) {
 
         this._errors.push( error );
         this._filesToProcess--;
@@ -1190,7 +1179,7 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     }
 
-    _checkEndOfReturns ( response, next, data ) {
+    _checkEndOfReturns( response, next, data ) {
 
         if ( this._errors.length > 0 ) {
 
@@ -1211,7 +1200,7 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     }
 
-    processFiles ( request, response, next ) {
+    processFiles( request, response, next ) {
 
         const files         = TAbstractConverterManager._convertFilesObjectToArray( request.files );
         const numberOfFiles = files.length;
@@ -1268,9 +1257,9 @@ class TAbstractConverterManager extends TAbstractResponder {
 
     }
 
-    _processFiles ( files, parameters, response, next ) {
+    _processFiles( files, parameters, response, next ) {
 
-        const fileExtensions = files.map( ( file ) => path__default["default"].extname( file.name ) );
+        const fileExtensions = files.map( ( file ) => path__default.default.extname( file.name ) );
         const matchingRules  = this._rules.filter( elem => {
 
             const availables = elem.on;
@@ -1372,7 +1361,7 @@ class TAbstractConverterManager extends TAbstractResponder {
     // Todo: Extend from TDataQueueProcessor
 class TAbstractDataInserter {
 
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -1387,7 +1376,7 @@ class TAbstractDataInserter {
 
     }
 
-    save ( data, parameters, onSuccess, onProgress, onError ) {
+    save( data, parameters, onSuccess, onProgress, onError ) {
 
         if ( !data ) {
             onError( 'Data cannot be null or empty, aborting database insert !!!' );
@@ -1411,7 +1400,7 @@ class TAbstractDataInserter {
 
     }
 
-    _processQueue () {
+    _processQueue() {
 
         if ( this._queue.length === 0 || this._isProcessing ) { return }
 
@@ -1433,7 +1422,7 @@ class TAbstractDataInserter {
             _onSaveError
         );
 
-        function _onSaveSuccess ( result ) {
+        function _onSaveSuccess( result ) {
 
             onSuccess( result );
 
@@ -1442,13 +1431,13 @@ class TAbstractDataInserter {
 
         }
 
-        function _onSaveProgress ( progress ) {
+        function _onSaveProgress( progress ) {
 
             onProgress( progress );
 
         }
 
-        function _onSaveError ( error ) {
+        function _onSaveError( error ) {
 
             onError( error );
 
@@ -1459,7 +1448,7 @@ class TAbstractDataInserter {
 
     }
 
-    _save ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
+    _save( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 
@@ -1473,10 +1462,11 @@ class TAbstractDataInserter {
  *
  */
 
+
 /* Writable memory stream */
 class MemoryWriteStream extends stream.Writable {
 
-    constructor ( options ) {
+    constructor( options ) {
 
         super( options );
 
@@ -1485,13 +1475,13 @@ class MemoryWriteStream extends stream.Writable {
         this.offset       = 0;
     }
 
-    _final ( callback ) {
+    _final( callback ) {
 
         callback();
 
     }
 
-    _write ( chunk, encoding, callback ) {
+    _write( chunk, encoding, callback ) {
 
         // our memory store stores things in buffers
         const buffer = ( Buffer.isBuffer( chunk ) ) ? chunk : new Buffer( chunk, encoding );
@@ -1507,7 +1497,7 @@ class MemoryWriteStream extends stream.Writable {
 
     }
 
-    _writev ( chunks, callback ) {
+    _writev( chunks, callback ) {
 
         for ( let chunkIndex = 0, numberOfChunks = chunks.length ; chunkIndex < numberOfChunks ; chunkIndex++ ) {
             this.memoryBuffer = Buffer.concat( [ this.memoryBuffer, chunks[ chunkIndex ] ] );
@@ -1518,13 +1508,13 @@ class MemoryWriteStream extends stream.Writable {
 
     }
 
-    _releaseMemory () {
+    _releaseMemory() {
 
         this.memoryBuffer = null;
 
     }
 
-    toArrayBuffer () {
+    toArrayBuffer() {
 
         const buffer      = this.memoryBuffer;
         const arrayBuffer = new ArrayBuffer( buffer.length );
@@ -1540,13 +1530,13 @@ class MemoryWriteStream extends stream.Writable {
 
     }
 
-    toJSON () {
+    toJSON() {
 
         return JSON.parse( this.toString() )
 
     }
 
-    toString () {
+    toString() {
 
         const string = this.memoryBuffer.toString();
         this._releaseMemory();
@@ -1561,7 +1551,7 @@ class MemoryWriteStream extends stream.Writable {
 
 class TAbstractFileConverter {
 
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -1576,13 +1566,13 @@ class TAbstractFileConverter {
 
     }
 
-    get dumpType () {
+    get dumpType() {
 
         return this._dumpType
 
     }
 
-    set dumpType ( value ) {
+    set dumpType( value ) {
 
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Dump type cannot be null ! Expect a non empty string.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Dump type cannot be undefined ! Expect a non empty string.' ) }
@@ -1591,14 +1581,14 @@ class TAbstractFileConverter {
 
     }
 
-    setDumpType ( value ) {
+    setDumpType( value ) {
 
         this.dumpType = value;
         return this
 
     }
 
-    convert ( file, parameters, onSuccess, onProgress, onError ) {
+    convert( file, parameters, onSuccess, onProgress, onError ) {
 
         if ( !file ) {
             onError( 'File cannot be null or empty, aborting file convertion !!!' );
@@ -1617,7 +1607,7 @@ class TAbstractFileConverter {
 
     }
 
-    _processQueue () {
+    _processQueue() {
 
         if ( this._queue.length === 0 || this._isProcessing ) { return }
 
@@ -1678,7 +1668,7 @@ class TAbstractFileConverter {
 
         }
 
-        function _onDumpSuccess ( data ) {
+        function _onDumpSuccess( data ) {
 
             self._convert(
                 data,
@@ -1690,7 +1680,7 @@ class TAbstractFileConverter {
 
         }
 
-        function _onProcessSuccess ( threeData ) {
+        function _onProcessSuccess( threeData ) {
 
             onSuccess( threeData );
 
@@ -1699,13 +1689,13 @@ class TAbstractFileConverter {
 
         }
 
-        function _onProcessProgress ( progress ) {
+        function _onProcessProgress( progress ) {
 
             onProgress( progress );
 
         }
 
-        function _onProcessError ( error ) {
+        function _onProcessError( error ) {
 
             onError( error );
 
@@ -1716,11 +1706,11 @@ class TAbstractFileConverter {
 
     }
 
-    _dumpFileInMemoryAs ( dumpType, file, parameters, onSuccess, onProgress, onError ) {
+    _dumpFileInMemoryAs( dumpType, file, parameters, onSuccess, onProgress, onError ) {
 
         let isOnError = false;
 
-        const fileReadStream = fs__default["default"].createReadStream( file );
+        const fileReadStream = fs__default.default.createReadStream( file );
 
         fileReadStream.on( 'error', ( error ) => {
 
@@ -1774,7 +1764,7 @@ class TAbstractFileConverter {
 
     }
 
-    _convert ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
+    _convert( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 
@@ -1792,41 +1782,10 @@ TAbstractFileConverter.DumpType = /*#__PURE__*/Object.freeze( {
  *
  */
 
+
 class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
 
-    static _registerRoutesTo ( Driver, Application, Router, ControllerCtors, descriptors, Logger ) {
-
-        for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
-
-            const descriptor      = descriptors[ index ];
-            const ControllerClass = ControllerCtors.get( descriptor.controller.name );
-            const controller      = new ControllerClass( {
-                driver: Driver,
-                ...descriptor.controller.options
-            } );
-            const router          = Router( { mergeParams: true } );
-
-            Logger.log( `\tAdd controller for base route: ${ descriptor.route }` );
-            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can, Logger ) );
-
-        }
-
-    }
-    static _populateRouter ( router, controller, can = {}, Logger ) {
-
-        for ( let _do in can ) {
-
-            const action = can[ _do ];
-
-            Logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` );
-            router[ action.on ]( action.over, controller[ _do ].bind( controller ) );
-
-        }
-
-        return router
-
-    }
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -1844,10 +1803,10 @@ class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
         this.__dirname = undefined;
 
     }
-    get controllers () {
+    get controllers() {
         return this._controllers
     }
-    set controllers ( value ) {
+    set controllers( value ) {
 
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Controllers cannot be null ! Expect a map of controller.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Controllers cannot be undefined ! Expect a map of controller.' ) }
@@ -1856,10 +1815,10 @@ class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
         this._controllers = value;
 
     }
-    get descriptors () {
+    get descriptors() {
         return this._descriptors
     }
-    set descriptors ( value ) {
+    set descriptors( value ) {
 
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Descriptors cannot be null ! Expect an array of POJO.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Descriptors cannot be undefined ! Expect an array of POJO.' ) }
@@ -1867,23 +1826,55 @@ class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
         this._descriptors = value;
 
     }
-    addController ( value ) {
+    static _registerRoutesTo( Driver, Application, Router, ControllerCtors, descriptors, Logger ) {
+
+        for ( let index = 0, numberOfDescriptor = descriptors.length ; index < numberOfDescriptor ; index++ ) {
+
+            const descriptor      = descriptors[ index ];
+            const ControllerClass = ControllerCtors.get( descriptor.controller.name );
+            const controller      = new ControllerClass( {
+                driver: Driver,
+                ...descriptor.controller.options
+            } );
+            const router          = Router( { mergeParams: true } );
+
+            Logger.log( `\tAdd controller for base route: ${ descriptor.route }` );
+            Application.use( descriptor.route, TAbstractDatabasePlugin._populateRouter( router, controller, descriptor.controller.can, Logger ) );
+
+        }
+
+    }
+    static _populateRouter( router, controller, can = {}, Logger ) {
+
+        for ( let _do in can ) {
+
+            const action = can[ _do ];
+
+            Logger.log( `\t\tMap route ${ action.over } on (${ action.on }) to ${ controller.constructor.name }.${ _do } method.` );
+            router[ action.on ]( action.over, controller[ _do ].bind( controller ) );
+
+        }
+
+        return router
+
+    }
+    addController( value ) {
 
         this._controllers.set( value.name, value );
         return this
 
     }
 
-    addDescriptor ( value ) {
+    addDescriptor( value ) {
 
         this._descriptors.push( value );
         return this
 
     }
 
-    beforeRegisterRoutes ( /*driver*/ ) {}
+    beforeRegisterRoutes( /*driver*/ ) {}
 
-    registerTo ( driver, application, router ) {
+    registerTo( driver, application, router ) {
 
         this.beforeRegisterRoutes( driver );
 
@@ -1903,9 +1894,10 @@ class TAbstractDatabasePlugin extends iteeCore.TAbstractObject {
  *
  */
 
+
 class TAbstractDatabase extends iteeCore.TAbstractObject {
 
-    constructor ( parameters = {} ) {
+    constructor( parameters = {} ) {
 
         const _parameters = {
             ...{
@@ -1925,13 +1917,13 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
         this.plugins     = _parameters.plugins;
     }
 
-    get plugins () {
+    get plugins() {
 
         return this._plugins
 
     }
 
-    set plugins ( value ) {
+    set plugins( value ) {
 
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Plugins cannot be null ! Expect an array of TDatabasePlugin.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Plugins cannot be undefined ! Expect an array of TDatabasePlugin.' ) }
@@ -1941,13 +1933,13 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    get router () {
+    get router() {
 
         return this._router
 
     }
 
-    set router ( value ) {
+    set router( value ) {
 
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Router cannot be null ! Expect a Express Router.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Router cannot be undefined ! Expect a Express Router.' ) }
@@ -1956,13 +1948,13 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    get application () {
+    get application() {
 
         return this._application
 
     }
 
-    set application ( value ) {
+    set application( value ) {
 
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Application cannot be null ! Expect a Express Application.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Application cannot be undefined ! Expect a Express Application.' ) }
@@ -1971,13 +1963,13 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    get driver () {
+    get driver() {
 
         return this._driver
 
     }
 
-    set driver ( value ) {
+    set driver( value ) {
 
         if ( iteeValidators.isNull( value ) ) { throw new TypeError( 'Driver cannot be null ! Expect a database driver.' ) }
         if ( iteeValidators.isUndefined( value ) ) { throw new TypeError( 'Driver cannot be undefined ! Expect a database driver.' ) }
@@ -1986,14 +1978,14 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    setPlugins ( value ) {
+    setPlugins( value ) {
 
         this.plugins = value;
         return this
 
     }
 
-    addPlugin ( value ) {
+    addPlugin( value ) {
 
         this._plugins.push( value );
 
@@ -2004,30 +1996,30 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    setRouter ( value ) {
+    setRouter( value ) {
 
         this.router = value;
         return this
 
     }
 
-    setApplication ( value ) {
+    setApplication( value ) {
 
         this.application = value;
         return this
 
     }
 
-    setDriver ( value ) {
+    setDriver( value ) {
 
         this.driver = value;
         return this
 
     }
 
-    init () {}
+    init() {}
 
-    _registerPlugins () {
+    _registerPlugins() {
 
         for ( let [ name, config ] of Object.entries( this._plugins ) ) {
             this._registerPlugin( name, config );
@@ -2035,7 +2027,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    _registerPlugin ( name, config ) {
+    _registerPlugin( name, config ) {
 
         if ( this._registerPackagePlugin( name, config ) ) { return }
         if ( this._registerLocalPlugin( name, config ) ) { return }
@@ -2044,7 +2036,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    _registerPackagePlugin ( name, config ) {
+    _registerPackagePlugin( name, config ) {
 
         let success = false;
 
@@ -2052,14 +2044,14 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
             //[Itee:01/03/2022] Todo: Waiting better plugin management for package that expose more than instancied plugin
             let plugin = require( name );
-            if(plugin.registerPlugin) {
+            if ( plugin.registerPlugin ) {
                 plugin = plugin.registerPlugin( config );
             }
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from node_modules` );
-                plugin.__dirname = path__default["default"].dirname( require.resolve( name ) );
+                plugin.__dirname = path__default.default.dirname( require.resolve( name ) );
                 plugin.registerTo( this.driver, this.application, this.router );
 
                 success = true;
@@ -2084,7 +2076,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    _registerLocalPlugin ( name, config ) {
+    _registerLocalPlugin( name, config ) {
 
         let success = false;
 
@@ -2092,16 +2084,16 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
             //[Itee:01/03/2022] Todo: Waiting better plugin management for package that expose more than instancied plugin
             // todo use rootPath or need to resolve depth correctly !
-            const localPluginPath = path__default["default"].join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` );
-            let plugin = require( localPluginPath );
-            if(plugin.registerPlugin) {
+            const localPluginPath = path__default.default.join( __dirname, '../../../', 'databases/plugins/', name, `${ name }.js` );
+            let plugin            = require( localPluginPath );
+            if ( plugin.registerPlugin ) {
                 plugin = plugin.registerPlugin( config );
             }
 
             if ( plugin instanceof TAbstractDatabasePlugin ) {
 
                 this.logger.log( `Use ${ name } plugin from local folder` );
-                plugin.__dirname = path__default["default"].dirname( require.resolve( localPluginPath ) );
+                plugin.__dirname = path__default.default.dirname( require.resolve( localPluginPath ) );
                 plugin.registerTo( this.driver, this.application, this.router );
 
                 success = true;
@@ -2122,11 +2114,11 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
 
     }
 
-    connect () {}
+    connect() {}
 
-    close ( /*callback*/ ) {}
+    close( /*callback*/ ) {}
 
-    on ( /*eventName, callback*/ ) {}
+    on( /*eventName, callback*/ ) {}
 
 }
 
@@ -2140,6 +2132,7 @@ class TAbstractDatabase extends iteeCore.TAbstractObject {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2158,14 +2151,14 @@ class BadRequestError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 400 }
+    static get statusCode() { return 400 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isBadRequestError () { return true }
+    get isBadRequestError() { return true }
 
 }
 
@@ -2179,6 +2172,7 @@ class BadRequestError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2197,14 +2191,14 @@ class BadMappingError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 421 }
+    static get statusCode() { return 421 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isBadMappingError () { return true }
+    get isBadMappingError() { return true }
 
 }
 
@@ -2218,6 +2212,7 @@ class BadMappingError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2236,14 +2231,14 @@ class BlockedByWindowsParentalControlsError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 450 }
+    static get statusCode() { return 450 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isBlockedByWindowsParentalControlsError () { return true }
+    get isBlockedByWindowsParentalControlsError() { return true }
 
 }
 
@@ -2257,6 +2252,7 @@ class BlockedByWindowsParentalControlsError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2275,14 +2271,14 @@ class ClientClosedRequestError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 499 }
+    static get statusCode() { return 499 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isClientClosedRequestError () { return true }
+    get isClientClosedRequestError() { return true }
 
 }
 
@@ -2296,6 +2292,7 @@ class ClientClosedRequestError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2314,14 +2311,14 @@ class ConflictError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 409 }
+    static get statusCode() { return 409 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isConflictError () { return true }
+    get isConflictError() { return true }
 
 }
 
@@ -2335,6 +2332,7 @@ class ConflictError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2353,14 +2351,14 @@ class ExpectationFailedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 417 }
+    static get statusCode() { return 417 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isExpectationFailedError () { return true }
+    get isExpectationFailedError() { return true }
 
 }
 
@@ -2374,6 +2372,7 @@ class ExpectationFailedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2392,14 +2391,14 @@ class ForbiddenError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 403 }
+    static get statusCode() { return 403 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isForbiddenError () { return true }
+    get isForbiddenError() { return true }
 
 }
 
@@ -2413,6 +2412,7 @@ class ForbiddenError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2431,14 +2431,14 @@ class GoneError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 410 }
+    static get statusCode() { return 410 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isGoneError () { return true }
+    get isGoneError() { return true }
 
 }
 
@@ -2452,6 +2452,7 @@ class GoneError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2470,14 +2471,14 @@ class HTTPRequestSentToHTTPSPortError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 497 }
+    static get statusCode() { return 497 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isHTTPRequestSentToHTTPSPortError () { return true }
+    get isHTTPRequestSentToHTTPSPortError() { return true }
 
 }
 
@@ -2491,6 +2492,7 @@ class HTTPRequestSentToHTTPSPortError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2509,14 +2511,14 @@ class ImATeapotError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 418 }
+    static get statusCode() { return 418 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isImATeapotError () { return true }
+    get isImATeapotError() { return true }
 
 }
 
@@ -2530,6 +2532,7 @@ class ImATeapotError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2548,14 +2551,14 @@ class LengthRequiredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 411 }
+    static get statusCode() { return 411 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isLengthRequiredError () { return true }
+    get isLengthRequiredError() { return true }
 
 }
 
@@ -2569,6 +2572,7 @@ class LengthRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2587,14 +2591,14 @@ class LockedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 423 }
+    static get statusCode() { return 423 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isLockedError () { return true }
+    get isLockedError() { return true }
 
 }
 
@@ -2608,6 +2612,7 @@ class LockedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2626,14 +2631,14 @@ class MethodFailureError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 424 }
+    static get statusCode() { return 424 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isMethodFailureError () { return true }
+    get isMethodFailureError() { return true }
 
 }
 
@@ -2647,6 +2652,7 @@ class MethodFailureError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2665,14 +2671,14 @@ class MethodNotAllowedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 405 }
+    static get statusCode() { return 405 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isMethodNotAllowedError () { return true }
+    get isMethodNotAllowedError() { return true }
 
 }
 
@@ -2686,6 +2692,7 @@ class MethodNotAllowedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2704,14 +2711,14 @@ class NoResponseError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 444 }
+    static get statusCode() { return 444 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isNoResponseError () { return true }
+    get isNoResponseError() { return true }
 
 }
 
@@ -2725,6 +2732,7 @@ class NoResponseError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2743,14 +2751,14 @@ class NotAcceptableError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 406 }
+    static get statusCode() { return 406 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isNotAcceptableError () { return true }
+    get isNotAcceptableError() { return true }
 
 }
 
@@ -2764,6 +2772,7 @@ class NotAcceptableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2782,14 +2791,14 @@ class NotFoundError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 404 }
+    static get statusCode() { return 404 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isNotFoundError () { return true }
+    get isNotFoundError() { return true }
 
 }
 
@@ -2803,6 +2812,7 @@ class NotFoundError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2821,14 +2831,14 @@ class PaymentRequiredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 402 }
+    static get statusCode() { return 402 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isPaymentRequiredError () { return true }
+    get isPaymentRequiredError() { return true }
 
 }
 
@@ -2842,6 +2852,7 @@ class PaymentRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2860,14 +2871,14 @@ class PreconditionFailedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 412 }
+    static get statusCode() { return 412 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isPreconditionFailedError () { return true }
+    get isPreconditionFailedError() { return true }
 
 }
 
@@ -2881,6 +2892,7 @@ class PreconditionFailedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2899,14 +2911,14 @@ class PreconditionRequiredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 428 }
+    static get statusCode() { return 428 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isPreconditionRequiredError () { return true }
+    get isPreconditionRequiredError() { return true }
 
 }
 
@@ -2920,6 +2932,7 @@ class PreconditionRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2938,14 +2951,14 @@ class ProxyAuthenticationRequiredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 407 }
+    static get statusCode() { return 407 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isProxyAuthenticationRequiredError () { return true }
+    get isProxyAuthenticationRequiredError() { return true }
 
 }
 
@@ -2959,6 +2972,7 @@ class ProxyAuthenticationRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -2977,14 +2991,14 @@ class RequestEntityTooLargeError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 413 }
+    static get statusCode() { return 413 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isRequestEntityTooLargeError () { return true }
+    get isRequestEntityTooLargeError() { return true }
 
 }
 
@@ -2998,6 +3012,7 @@ class RequestEntityTooLargeError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3016,14 +3031,14 @@ class RequestHeaderFieldsTooLargeError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 431 }
+    static get statusCode() { return 431 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isRequestHeaderFieldsTooLargeError () { return true }
+    get isRequestHeaderFieldsTooLargeError() { return true }
 
 }
 
@@ -3037,6 +3052,7 @@ class RequestHeaderFieldsTooLargeError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3055,14 +3071,14 @@ class RequestRangeUnsatisfiableError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 416 }
+    static get statusCode() { return 416 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isRequestRangeUnsatisfiableError () { return true }
+    get isRequestRangeUnsatisfiableError() { return true }
 
 }
 
@@ -3076,6 +3092,7 @@ class RequestRangeUnsatisfiableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3094,14 +3111,14 @@ class RequestTimeOutError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 408 }
+    static get statusCode() { return 408 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isRequestTimeOutError () { return true }
+    get isRequestTimeOutError() { return true }
 
 }
 
@@ -3115,6 +3132,7 @@ class RequestTimeOutError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3133,14 +3151,14 @@ class RetryWithError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 449 }
+    static get statusCode() { return 449 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isRetryWithError () { return true }
+    get isRetryWithError() { return true }
 
 }
 
@@ -3154,6 +3172,7 @@ class RetryWithError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3172,14 +3191,14 @@ class SSLCertificateError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 495 }
+    static get statusCode() { return 495 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isSSLCertificateError () { return true }
+    get isSSLCertificateError() { return true }
 
 }
 
@@ -3193,6 +3212,7 @@ class SSLCertificateError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3211,14 +3231,14 @@ class SSLCertificateRequiredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 496 }
+    static get statusCode() { return 496 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isSSLCertificateRequiredError () { return true }
+    get isSSLCertificateRequiredError() { return true }
 
 }
 
@@ -3232,6 +3252,7 @@ class SSLCertificateRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3250,14 +3271,14 @@ class TooManyRequestsError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 429 }
+    static get statusCode() { return 429 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isTooManyRequestsError () { return true }
+    get isTooManyRequestsError() { return true }
 
 }
 
@@ -3271,6 +3292,7 @@ class TooManyRequestsError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3289,14 +3311,14 @@ class UnauthorizedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 401 }
+    static get statusCode() { return 401 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isUnauthorizedError () { return true }
+    get isUnauthorizedError() { return true }
 
 }
 
@@ -3310,6 +3332,7 @@ class UnauthorizedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3328,14 +3351,14 @@ class UnavailableForLegalReasonsError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 451 }
+    static get statusCode() { return 451 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isUnavailableForLegalReasonsError () { return true }
+    get isUnavailableForLegalReasonsError() { return true }
 
 }
 
@@ -3349,6 +3372,7 @@ class UnavailableForLegalReasonsError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3367,14 +3391,14 @@ class UnorderedCollectionError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 425 }
+    static get statusCode() { return 425 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isUnorderedCollectionError () { return true }
+    get isUnorderedCollectionError() { return true }
 
 }
 
@@ -3388,6 +3412,7 @@ class UnorderedCollectionError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3406,14 +3431,14 @@ class UnrecoverableError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 456 }
+    static get statusCode() { return 456 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isUnrecoverableError () { return true }
+    get isUnrecoverableError() { return true }
 
 }
 
@@ -3427,6 +3452,7 @@ class UnrecoverableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3445,14 +3471,14 @@ class UpgradeRequiredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 426 }
+    static get statusCode() { return 426 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isUpgradeRequiredError () { return true }
+    get isUpgradeRequiredError() { return true }
 
 }
 
@@ -3466,6 +3492,7 @@ class UpgradeRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3484,14 +3511,14 @@ class ATimeoutOccuredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 524 }
+    static get statusCode() { return 524 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isATimeoutOccuredError () { return true }
+    get isATimeoutOccuredError() { return true }
 
 }
 
@@ -3505,6 +3532,7 @@ class ATimeoutOccuredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3523,14 +3551,14 @@ class BadGatewayError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 502 }
+    static get statusCode() { return 502 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isBadGatewayError () { return true }
+    get isBadGatewayError() { return true }
 
 }
 
@@ -3544,6 +3572,7 @@ class BadGatewayError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3562,14 +3591,14 @@ class BandwidthLimitExceededError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 509 }
+    static get statusCode() { return 509 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isBandwidthLimitExceededError () { return true }
+    get isBandwidthLimitExceededError() { return true }
 
 }
 
@@ -3583,6 +3612,7 @@ class BandwidthLimitExceededError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3601,14 +3631,14 @@ class ConnectionTimedOutError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 522 }
+    static get statusCode() { return 522 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isConnectionTimedOutError () { return true }
+    get isConnectionTimedOutError() { return true }
 
 }
 
@@ -3622,6 +3652,7 @@ class ConnectionTimedOutError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3640,14 +3671,14 @@ class GatewayTimeOutError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 504 }
+    static get statusCode() { return 504 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isGatewayTimeOutError () { return true }
+    get isGatewayTimeOutError() { return true }
 
 }
 
@@ -3661,6 +3692,7 @@ class GatewayTimeOutError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3679,14 +3711,14 @@ class HTTPVersionNotSupportedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 505 }
+    static get statusCode() { return 505 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isHTTPVersionNotSupportedError () { return true }
+    get isHTTPVersionNotSupportedError() { return true }
 
 }
 
@@ -3700,6 +3732,7 @@ class HTTPVersionNotSupportedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3718,14 +3751,14 @@ class InsufficientStorageError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 507 }
+    static get statusCode() { return 507 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isInsufficientStorageError () { return true }
+    get isInsufficientStorageError() { return true }
 
 }
 
@@ -3739,6 +3772,7 @@ class InsufficientStorageError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3757,14 +3791,14 @@ class InternalServerError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 500 }
+    static get statusCode() { return 500 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isInternalServerError () { return true }
+    get isInternalServerError() { return true }
 
 }
 
@@ -3778,6 +3812,7 @@ class InternalServerError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3796,14 +3831,14 @@ class InvalidSSLCertificateError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 526 }
+    static get statusCode() { return 526 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isInvalidSSLCertificateError () { return true }
+    get isInvalidSSLCertificateError() { return true }
 
 }
 
@@ -3817,6 +3852,7 @@ class InvalidSSLCertificateError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3835,14 +3871,14 @@ class LoopDetectedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 508 }
+    static get statusCode() { return 508 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isLoopDetectedError () { return true }
+    get isLoopDetectedError() { return true }
 
 }
 
@@ -3856,6 +3892,7 @@ class LoopDetectedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3874,14 +3911,14 @@ class NetworkAuthenticationRequiredError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 511 }
+    static get statusCode() { return 511 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isNetworkAuthenticationRequiredError () { return true }
+    get isNetworkAuthenticationRequiredError() { return true }
 
 }
 
@@ -3895,6 +3932,7 @@ class NetworkAuthenticationRequiredError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3913,14 +3951,14 @@ class NotExtendedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 510 }
+    static get statusCode() { return 510 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isNotExtendedError () { return true }
+    get isNotExtendedError() { return true }
 
 }
 
@@ -3934,6 +3972,7 @@ class NotExtendedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3952,14 +3991,14 @@ class NotImplementedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 501 }
+    static get statusCode() { return 501 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isNotImplementedError () { return true }
+    get isNotImplementedError() { return true }
 
 }
 
@@ -3973,6 +4012,7 @@ class NotImplementedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -3991,14 +4031,14 @@ class OriginIsUnreachableError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 523 }
+    static get statusCode() { return 523 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isOriginIsUnreachableError () { return true }
+    get isOriginIsUnreachableError() { return true }
 
 }
 
@@ -4012,6 +4052,7 @@ class OriginIsUnreachableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -4030,14 +4071,14 @@ class RailgunError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 527 }
+    static get statusCode() { return 527 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isRailgunError () { return true }
+    get isRailgunError() { return true }
 
 }
 
@@ -4051,6 +4092,7 @@ class RailgunError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -4069,14 +4111,14 @@ class ServiceUnavailableError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 503 }
+    static get statusCode() { return 503 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isServiceUnavailableError () { return true }
+    get isServiceUnavailableError() { return true }
 
 }
 
@@ -4090,6 +4132,7 @@ class ServiceUnavailableError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -4108,14 +4151,14 @@ class SSLHandshakeFailedError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 525 }
+    static get statusCode() { return 525 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isSSLHandshakeFailedError () { return true }
+    get isSSLHandshakeFailedError() { return true }
 
 }
 
@@ -4129,6 +4172,7 @@ class SSLHandshakeFailedError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -4147,14 +4191,14 @@ class VariantAlsoNegotiatesError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 506 }
+    static get statusCode() { return 506 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isVariantAlsoNegotiatesError () { return true }
+    get isVariantAlsoNegotiatesError() { return true }
 
 }
 
@@ -4168,6 +4212,7 @@ class VariantAlsoNegotiatesError extends AbstractHTTPError {
  * @author [Tristan Valcke]{@link https://github.com/Itee}
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
+
 
 /**
  * @class
@@ -4186,14 +4231,14 @@ class WebServerIsDownError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 521 }
+    static get statusCode() { return 521 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isWebServerIsDownError () { return true }
+    get isWebServerIsDownError() { return true }
 
 }
 
@@ -4206,6 +4251,7 @@ class WebServerIsDownError extends AbstractHTTPError {
  * @example Todo
  *
  */
+
 
 const Databases = new Map();
 

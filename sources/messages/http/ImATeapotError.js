@@ -9,7 +9,7 @@
  * @license [BSD-3-Clause]{@link https://opensource.org/licenses/BSD-3-Clause}
  */
 
-import { AbstractHTTPError } from './AbstractHTTPError'
+import { AbstractHTTPError } from './AbstractHTTPError.js'
 
 /**
  * @class
@@ -28,14 +28,14 @@ class ImATeapotError extends AbstractHTTPError {
      * @default 422
      * @type {number}
      */
-    static get statusCode () { return 418 }
+    static get statusCode() { return 418 }
     /**
      * A boolean based on classname that allow fast type checking, will ever be true
      * @constant
      * @default true
      * @type {boolean}
      */
-    get isImATeapotError () { return true }
+    get isImATeapotError() { return true }
 
 }
 

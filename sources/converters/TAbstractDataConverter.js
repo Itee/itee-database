@@ -10,14 +10,14 @@
 
 class TAbstractDataConverter {
 
-    constructor () {
+    constructor() {
 
         this._isProcessing = false
         this._queue        = []
 
     }
 
-    convert ( file, parameters, onSuccess, onProgress, onError ) {
+    convert( file, parameters, onSuccess, onProgress, onError ) {
 
         this._queue.push( {
             file,
@@ -33,7 +33,7 @@ class TAbstractDataConverter {
 
     }
 
-    _processQueue () {
+    _processQueue() {
 
         if ( this._queue.length === 0 ) {
 
@@ -60,20 +60,20 @@ class TAbstractDataConverter {
             _onSaveError
         )
 
-        function _onSaveSuccess ( result ) {
+        function _onSaveSuccess( result ) {
 
             onSuccess( result )
             self._processQueue()
 
         }
 
-        function _onSaveProgress ( progress ) {
+        function _onSaveProgress( progress ) {
 
             onProgress( progress )
 
         }
 
-        function _onSaveError ( error ) {
+        function _onSaveError( error ) {
 
             onError( error )
             self._processQueue()
@@ -82,7 +82,7 @@ class TAbstractDataConverter {
 
     }
 
-    _convert ( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
+    _convert( /*data, parameters, onSuccess, onProgress, onError*/ ) {}
 
 }
 
