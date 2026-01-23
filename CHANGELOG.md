@@ -1,3 +1,11 @@
+# [v10.0.0](https://github.com/Itee/database/compare/v9.0.0...v10.0.0) (2026-01-23)
+
+## 🐛 Bug Fixes
+- [`46f3e3b`](https://github.com/Itee/database/commit/46f3e3b)  (package) apply package override to fix trust publishing 
+
+## 💥 Breaking Changes
+- [`6202303`](https://github.com/Itee/database/commit/6202303)  (package) change package name itee-database to scoped version @itee/database
+
 # [v9.0.0](https://github.com/Itee/database/compare/v8.3.0...v9.0.0) (2026-01-23)
 
 ## ✨ New Features
